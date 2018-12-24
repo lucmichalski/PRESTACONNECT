@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRESTACONNECT", "PRESTACONNECT\PRESTACONNECT-100CV3-1.6.1.csproj", "{86854B4F-6406-4904-A5C7-D0BFF87DDF9D}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{EDB37BBC-3E09-4A37-AD22-AB1619E724D0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86854B4F-6406-4904-A5C7-D0BFF87DDF9D}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{86854B4F-6406-4904-A5C7-D0BFF87DDF9D}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{86854B4F-6406-4904-A5C7-D0BFF87DDF9D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{86854B4F-6406-4904-A5C7-D0BFF87DDF9D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{86854B4F-6406-4904-A5C7-D0BFF87DDF9D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{86854B4F-6406-4904-A5C7-D0BFF87DDF9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86854B4F-6406-4904-A5C7-D0BFF87DDF9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86854B4F-6406-4904-A5C7-D0BFF87DDF9D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{86854B4F-6406-4904-A5C7-D0BFF87DDF9D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{86854B4F-6406-4904-A5C7-D0BFF87DDF9D}.Release|x86.ActiveCfg = Release|Any CPU
+		{EDB37BBC-3E09-4A37-AD22-AB1619E724D0}.Debug|Any CPU.ActiveCfg = Debug
+		{EDB37BBC-3E09-4A37-AD22-AB1619E724D0}.Debug|Mixed Platforms.ActiveCfg = Debug
+		{EDB37BBC-3E09-4A37-AD22-AB1619E724D0}.Debug|x86.ActiveCfg = Debug
+		{EDB37BBC-3E09-4A37-AD22-AB1619E724D0}.Debug|x86.Build.0 = Debug
+		{EDB37BBC-3E09-4A37-AD22-AB1619E724D0}.Release|Any CPU.ActiveCfg = Release
+		{EDB37BBC-3E09-4A37-AD22-AB1619E724D0}.Release|Mixed Platforms.ActiveCfg = Release
+		{EDB37BBC-3E09-4A37-AD22-AB1619E724D0}.Release|Mixed Platforms.Build.0 = Release
+		{EDB37BBC-3E09-4A37-AD22-AB1619E724D0}.Release|x86.ActiveCfg = Release
+		{EDB37BBC-3E09-4A37-AD22-AB1619E724D0}.Release|x86.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

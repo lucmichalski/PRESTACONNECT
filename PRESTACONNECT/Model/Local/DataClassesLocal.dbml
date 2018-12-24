@@ -1,0 +1,442 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="PRESTACONNECT" Class="DataClassesLocalDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=ALTERNETIS-SAND;Initial Catalog=PRESTACONNECT;Integrated Security=True" SettingsObjectName="PRESTACONNECT.Properties.Settings" SettingsPropertyName="PRESTACONNECTConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Address" Member="Address">
+    <Type Name="Address">
+      <Column Name="Pre_Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Sag_Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Add_Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ArticleCatalog" Member="ArticleCatalog">
+    <Type Name="ArticleCatalog">
+      <Column Name="Art_Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Cat_Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Catalog_ArticleCatalog" Member="Catalog" ThisKey="Cat_Id" OtherKey="Cat_Id" Type="Catalog" IsForeignKey="true" />
+      <Association Name="Article_ArticleCatalog" Member="Article" ThisKey="Art_Id" OtherKey="Art_Id" Type="Article" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AttributeArticleImage" Member="AttributeArticleImage">
+    <Type Name="AttributeArticleImage">
+      <Column Name="AttArt_Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ImaArt_Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="ArticleImage_AttributeArticleImage" Member="ArticleImage" ThisKey="ImaArt_Id" OtherKey="ImaArt_Id" Type="ArticleImage" IsForeignKey="true" />
+      <Association Name="AttributeArticle_AttributeArticleImage" Member="AttributeArticle" ThisKey="AttArt_Id" OtherKey="AttArt_Id" Type="AttributeArticle" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Carrier" Member="Carrier">
+    <Type Name="Carrier">
+      <Column Name="Pre_Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Sag_Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Sag_Name" Type="System.String" DbType="VarChar(35) NOT NULL" CanBeNull="false" />
+      <Column Name="Pre_Name" Type="System.String" DbType="VarChar(64) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog" Member="Catalog">
+    <Type Name="Catalog">
+      <Column Name="Cat_Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Cat_Name" Type="System.String" DbType="VarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="Cat_Description" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Cat_Level" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Cat_Parent" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Cat_MetaTitle" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="Cat_MetaDescription" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Cat_MetaKeyword" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Cat_LinkRewrite" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="Cat_Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Cat_Sync" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Cat_Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Sag_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Pre_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Catalog_ArticleCatalog" Member="ArticleCatalog" ThisKey="Cat_Id" OtherKey="Cat_Id" Type="ArticleCatalog" />
+      <Association Name="Catalog_Catalog" Member="Catalog2" ThisKey="Cat_Id" OtherKey="Cat_Parent" Type="Catalog" />
+      <Association Name="Catalog_CatalogImage" Member="CatalogImage" ThisKey="Cat_Id" OtherKey="Cat_Id" Type="CatalogImage" />
+      <Association Name="Catalog_Article" Member="Article" ThisKey="Cat_Id" OtherKey="Cat_Id" Type="Article" />
+      <Association Name="Catalog_Catalog" Member="Catalog1" ThisKey="Cat_Parent" OtherKey="Cat_Id" Type="Catalog" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CatalogImage" Member="CatalogImage">
+    <Type Name="CatalogImage">
+      <Column Name="ImaCat_Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ImaCat_Image" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="ImaCat_Default" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Cat_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Catalog_CatalogImage" Member="Catalog" ThisKey="Cat_Id" OtherKey="Cat_Id" Type="Catalog" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Characteristic" Member="Characteristic">
+    <Type Name="Characteristic">
+      <Column Name="Cha_Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Cha_IdFeature" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Cha_Value" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Cha_Custom" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Art_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Pre_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Article_Characteristic" Member="Article" ThisKey="Art_Id" OtherKey="Art_Id" Type="Article" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Config" Member="Config">
+    <Type Name="Config">
+      <Column Name="Con_Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Con_Name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Con_Value" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Customer" Member="Customer">
+    <Type Name="Customer">
+      <Column Name="Pre_Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Sag_Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[Order]" Member="Order">
+    <Type Name="Order">
+      <Column Name="Pre_Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Sag_Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OrderMail" Member="OrderMail">
+    <Type Name="OrderMail">
+      <Column Name="OrdMai_Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OrdMai_Type" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OrdMai_Header" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="OrdMai_Content" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="OrdMai_Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Supplier" Member="Supplier">
+    <Type Name="Supplier">
+      <Column Name="Sup_Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Sup_Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Sup_Description" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Sup_MetaTitle" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="Sup_MetaKeyword" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Sup_MetaDescription" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Sup_Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Sup_Sync" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Sup_Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Sag_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Pre_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Supply" Member="Supply">
+    <Type Name="Supply">
+      <Column Name="Sup_Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Sup_Name" Type="System.String" DbType="VarChar(35) NOT NULL" CanBeNull="false" />
+      <Column Name="Sup_Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Sag_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ArticleImage" Member="ArticleImage">
+    <Type Name="ArticleImage">
+      <Column Name="ImaArt_Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ImaArt_Name" Type="System.String" DbType="VarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="ImaArt_Default" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ImaArt_Position" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ImaArt_Image" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Pre_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Art_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ImaArt_SourceFile" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="ImaArt_DateAdd" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="ArticleImage_AttributeArticleImage" Member="AttributeArticleImage" ThisKey="ImaArt_Id" OtherKey="ImaArt_Id" Type="AttributeArticleImage" />
+      <Association Name="ArticleImage_CompositionArticleImage" Member="CompositionArticleImage" ThisKey="ImaArt_Id" OtherKey="ImaArt_Id" Type="CompositionArticleImage" />
+      <Association Name="Article_ArticleImage" Member="Article" ThisKey="Art_Id" OtherKey="Art_Id" Type="Article" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[Group]" Member="Group">
+    <Type Name="Group">
+      <Column Name="Grp_Pre_Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Grp_ShowCatalog" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Grp_CatTarifId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.InformationLibre" Member="InformationLibre">
+    <Type Name="InformationLibre">
+      <Column Name="Sag_InfoLibre" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Inf_Mode" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Cha_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Settlement" Member="Settlement">
+    <Type Name="Settlement">
+      <Column Name="Set_Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Set_PaymentMethod" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Set_Journal" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Set_Intitule" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Sag_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OrderPayment" Member="OrderPayment">
+    <Type Name="OrderPayment">
+      <Column Name="Pre_Id_Order_Payment" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Pre_Id_Order" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.StatistiqueArticle" Member="StatistiqueArticle">
+    <Type Name="StatistiqueArticle">
+      <Column Name="Sag_StatArt" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Inf_Mode" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Cha_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Replacement" Member="Replacement">
+    <Type Name="Replacement">
+      <Column Name="OriginText" Type="System.String" DbType="VarChar(500) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ReplacementText" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.InformationLibreClient" Member="InformationLibreClient">
+    <Type Name="InformationLibreClient">
+      <Column Name="Sag_InfoLibreClient" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Inf_Mode" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Cha_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.StatistiqueClient" Member="StatistiqueClient">
+    <Type Name="StatistiqueClient">
+      <Column Name="Sag_StatClient" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Inf_Mode" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Cha_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.InformationArticle" Member="InformationArticle">
+    <Type Name="InformationArticle">
+      <Column Name="Sag_InfoArt" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Inf_SendValue" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Inf_Mode" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Cha_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MediaAssignmentRule" Member="MediaAssignmentRule">
+    <Type Name="MediaAssignmentRule">
+      <Column Name="SuffixText" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="AssignName" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="[Rule]" Member="Rule" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Attribute" Member="Attribute">
+    <Type Name="Attribute">
+      <Column Name="Sag_Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Pre_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AttributeGroup" Member="AttributeGroup">
+    <Type Name="AttributeGroup">
+      <Column Name="Sag_Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Pre_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ConditioningGroup" Member="ConditioningGroup">
+    <Type Name="ConditioningGroup">
+      <Column Name="Sag_Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Pre_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ConditioningArticle" Member="ConditioningArticle">
+    <Type Name="ConditioningArticle">
+      <Column Name="ConArt_Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ConArt_Default" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ConArt_Sync" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Con_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Art_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Sag_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Pre_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Article_ConditioningArticle" Member="Article" ThisKey="Art_Id" OtherKey="Art_Id" Type="Article" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Conditioning" Member="Conditioning">
+    <Type Name="Conditioning">
+      <Column Name="Sag_Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Pre_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.InformationLibreArticle" Member="InformationLibreArticle">
+    <Type Name="InformationLibreArticle">
+      <Column Name="Sag_InfoLibreArticle" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Inf_Catalogue" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Inf_Parent" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="Inf_IsStat" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Inf_Stat" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Country" Member="Country">
+    <Type Name="Country">
+      <Column Name="Pre_IdCountry" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Sag_CatCompta" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Sag_CatComptaPro" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Replace_ISOCode" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Attachment" Member="Attachment">
+    <Type Name="Attachment">
+      <Column Name="Att_Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Att_File" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="Att_FileName" Type="System.String" DbType="VarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="Att_Mime" Type="System.String" DbType="VarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="Att_Name" Type="System.String" DbType="VarChar(32) NOT NULL" CanBeNull="false" />
+      <Column Name="Att_Description" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Art_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Pre_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Sag_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Article_Attachment" Member="Article" ThisKey="Art_Id" OtherKey="Art_Id" Type="Article" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Group_CRisque" Member="Group_CRisque">
+    <Type Name="Group_CRisque">
+      <Column Name="Sag_CRisque" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Grp_Pre_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Grp_PreId_Default" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Grp_LockCondition" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Employee_Collaborateur" Member="Employee_Collaborateur">
+    <Type Name="Employee_Collaborateur">
+      <Column Name="Sage_CO_No" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IdEmployee" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CompositionArticleAttribute" Member="CompositionArticleAttribute">
+    <Type Name="CompositionArticleAttribute">
+      <Column Name="Caa_ComArtId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Caa_AttributeGroup_PreId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Caa_Attribute_PreId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="CompositionArticle_CompositionArticleAttribute" Member="CompositionArticle" ThisKey="Caa_ComArtId" OtherKey="ComArt_Id" Type="CompositionArticle" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CompositionArticleAttributeGroup" Member="CompositionArticleAttributeGroup">
+    <Type Name="CompositionArticleAttributeGroup">
+      <Column Name="Cag_ArtId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Cag_AttributeGroup_PreId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Article_CompositionArticleAttributeGroup" Member="Article" ThisKey="Cag_ArtId" OtherKey="Art_Id" Type="Article" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CompositionArticle" Member="CompositionArticle">
+    <Type Name="CompositionArticle">
+      <Column Name="ComArt_Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ComArt_ArtId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ComArt_F_ARTICLE_SagId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ComArt_F_ARTENUMREF_SagId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ComArt_F_CONDITION_SagId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ComArt_Quantity" Type="System.Decimal" DbType="Decimal(20,6) NOT NULL" CanBeNull="false" />
+      <Column Name="ComArt_Default" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ComArt_Sync" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ComArt_Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Pre_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="CompositionArticle_CompositionArticleAttribute" Member="CompositionArticleAttribute" ThisKey="ComArt_Id" OtherKey="Caa_ComArtId" Type="CompositionArticleAttribute" />
+      <Association Name="CompositionArticle_CompositionArticleImage" Member="CompositionArticleImage" ThisKey="ComArt_Id" OtherKey="ComArt_Id" Type="CompositionArticleImage" />
+      <Association Name="Article_CompositionArticle" Member="Article" ThisKey="ComArt_ArtId" OtherKey="Art_Id" Type="Article" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CompositionArticleImage" Member="CompositionArticleImage">
+    <Type Name="CompositionArticleImage">
+      <Column Name="ComArt_Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ImaArt_Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="ArticleImage_CompositionArticleImage" Member="ArticleImage" ThisKey="ImaArt_Id" OtherKey="ImaArt_Id" Type="ArticleImage" IsForeignKey="true" />
+      <Association Name="CompositionArticle_CompositionArticleImage" Member="CompositionArticle" ThisKey="ComArt_Id" OtherKey="ComArt_Id" Type="CompositionArticle" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Tax" Member="Tax">
+    <Type Name="Tax">
+      <Column Name="Sag_Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Pre_Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Sag_Name" Type="System.String" DbType="VarChar(35)" CanBeNull="true" />
+      <Column Name="Pre_Name" Type="System.String" DbType="VarChar(32)" CanBeNull="true" />
+      <Column Name="Sag_ArticleRemise" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Sag_ArticleRemplacement" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Sag_ArticleReduction" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Article" Member="Article">
+    <Type Name="Article">
+      <Column Name="Art_Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Art_Name" Type="System.String" DbType="VarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="Art_Description" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Art_Description_Short" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Art_LinkRewrite" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="Art_MetaTitle" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="Art_MetaKeyword" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Art_MetaDescription" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Art_Ref" Type="System.String" DbType="VarChar(19) NOT NULL" CanBeNull="false" />
+      <Column Name="Art_Ean13" Type="System.String" DbType="VarChar(13)" CanBeNull="true" />
+      <Column Name="Art_Pack" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Art_Solde" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Art_Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Art_Sync" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Art_Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Art_RedirectType" Type="System.String" DbType="VarChar(3) NOT NULL" CanBeNull="false" />
+      <Column Name="Art_RedirectProduct" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Art_Manufacturer" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Art_Supplier" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Sag_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Pre_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Cat_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Art_Type" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Art_SyncPrice" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Article_ArticleCatalog" Member="ArticleCatalog" ThisKey="Art_Id" OtherKey="Art_Id" Type="ArticleCatalog" />
+      <Association Name="Article_Characteristic" Member="Characteristic" ThisKey="Art_Id" OtherKey="Art_Id" Type="Characteristic" />
+      <Association Name="Article_ArticleImage" Member="ArticleImage" ThisKey="Art_Id" OtherKey="Art_Id" Type="ArticleImage" />
+      <Association Name="Article_ConditioningArticle" Member="ConditioningArticle" ThisKey="Art_Id" OtherKey="Art_Id" Type="ConditioningArticle" />
+      <Association Name="Article_Attachment" Member="Attachment" ThisKey="Art_Id" OtherKey="Art_Id" Type="Attachment" />
+      <Association Name="Article_CompositionArticleAttributeGroup" Member="CompositionArticleAttributeGroup" ThisKey="Art_Id" OtherKey="Cag_ArtId" Type="CompositionArticleAttributeGroup" />
+      <Association Name="Article_CompositionArticle" Member="CompositionArticle" ThisKey="Art_Id" OtherKey="ComArt_ArtId" Type="CompositionArticle" />
+      <Association Name="Article_AttributeArticle" Member="AttributeArticle" ThisKey="Art_Id" OtherKey="Art_Id" Type="AttributeArticle" />
+      <Association Name="Article_ArticleAdditionalField" Member="ArticleAdditionalField" ThisKey="Art_Id" OtherKey="Art_id" Type="ArticleAdditionalField" />
+      <Association Name="Catalog_Article" Member="Catalog" ThisKey="Cat_Id" OtherKey="Cat_Id" Type="Catalog" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Article" Member="Article_Sync_Infos">
+    <Type Name="Article_Sync_Infos">
+      <Column Name="Art_Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Art_Name" Type="System.String" DbType="VarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="Art_Ref" Type="System.String" DbType="VarChar(19) NOT NULL" CanBeNull="false" />
+      <Column Name="Pre_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Art_Type" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ImportSageFilter" Member="ImportSageFilter">
+    <Type Name="ImportSageFilter">
+      <Column Name="Imp_Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Imp_Value" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Imp_TypeSearchValue" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Imp_TargetData" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Imp_Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Sag_Infolibre" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AttributeArticle" Member="AttributeArticle">
+    <Type Name="AttributeArticle">
+      <Column Name="AttArt_Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="AttArt_Default" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="AttArt_Sync" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="AttArt_Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Art_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Att_IdFirst" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Att_IdSecond" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Sag_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Pre_Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="AttributeArticle_AttributeArticleImage" Member="AttributeArticleImage" ThisKey="AttArt_Id" OtherKey="AttArt_Id" Type="AttributeArticleImage" />
+      <Association Name="Article_AttributeArticle" Member="Article" ThisKey="Art_Id" OtherKey="Art_Id" Type="Article" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ArticleAdditionalField" Member="ArticleAdditionalField">
+    <Type Name="ArticleAdditionalField">
+      <Column Name="Art_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FieldName" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FieldValue" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="FieldValue2" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="Article_ArticleAdditionalField" Member="Article" ThisKey="Art_id" OtherKey="Art_Id" Type="Article" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OrderMacketplace" Member="OrderMacketplace">
+    <Type Name="OrderMacketplace">
+      <Column Name="Ord_MacketplaceId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Ord_ColoumName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Ord_ReplaceText" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Ord_MySQLRequest" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OrderCartRule" Member="OrderCartRule">
+    <Type Name="OrderCartRule">
+      <Column Name="Pre_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Sag_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

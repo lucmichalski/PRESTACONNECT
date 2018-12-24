@@ -1,0 +1,26 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+	x:Class="PRESTACONNECT.SuppressionImage"
+	x:Name="Window"
+    xmlns:dg="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit"
+	Title="Suppression des images"
+	Width="400" Height="220"
+	WindowStyle="None" 
+    Icon="/PRESTACONNECT;component/prestaconnect.ico" 
+    ResizeMode="NoResize" 
+    WindowStartupLocation="CenterScreen" 
+    ShowInTaskbar="True"
+    AllowsTransparency="True"
+    Background="Transparent" 
+    >
+    <Grid>
+        <Border BorderThickness="2" CornerRadius="6" 
+                BorderBrush="{DynamicResource ResourceKey=SelectedBackgroundBrush}"
+                Background="{DynamicResource ResourceKey=WindowBackgroundBrush}" />
+        <ProgressBar Name="ProgressBarImage" Height="23" Margin="0,53,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="300" />
+		<Label Name="LabelInformation" Content="Informations :" HorizontalAlignment="Left" Margin="75,31,0,0" Height="16" VerticalAlignment="Top" />
+	</Grid>
+</Window>

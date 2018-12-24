@@ -1,0 +1,19 @@
+﻿<Window x:Class="PRESTACONNECT.ColorDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:PRESTACONNECT"
+    Icon="/PRESTACONNECT;component/prestaconnect.ico"
+    Title="Palette" Height="410" 
+    KeyDown="Window_KeyDown"
+    Width="520" WindowStartupLocation="CenterOwner">
+
+    <Grid>
+        <local:ColorPicker x:Name="colorPicker" VerticalAlignment="Top" />
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Bottom">
+            <Button x:Name="btnOk" Content="Ok" Click="btnOk_Click" Width="60" Height="25" Margin="5" />
+            <Button x:Name="btnCancel" Content="Annuler" Click="btnCancel_Click" Height="25" Width="60" Margin="5" />
+        </StackPanel>
+    </Grid>
+
+
+</Window>

@@ -1,0 +1,13 @@
+﻿<Window x:Class="PRESTACONNECT.UpdatesDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:view="clr-namespace:PRESTACONNECT.View"
+    Icon="/PRESTACONNECT;component/prestaconnect.ico"
+    Title="Liste complètes des actualités" Height="440" 
+    Width="620"
+    WindowStartupLocation="CenterScreen"
+    Background="{DynamicResource ResourceKey=WindowBackgroundBrush}" >
+    <Grid>
+        <view:Updates />
+    </Grid>
+</Window>

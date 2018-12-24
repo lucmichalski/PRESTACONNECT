@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.prestaconnect.fr/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.prestaconnect.fr/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.prestaconnect.fr/">
+      <s:element name="HelloWorld">
+        <s:complexType />
+      </s:element>
+      <s:element name="HelloWorldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExistVersion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="current" type="s:unsignedInt" />
+            <s:element minOccurs="1" maxOccurs="1" name="sage" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="prestashop" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExistVersionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ExistVersionResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadVersion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="current" type="s:unsignedInt" />
+            <s:element minOccurs="1" maxOccurs="1" name="sage" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="prestashop" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadVersionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReadVersionResult" type="tns:Version" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Version">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Product" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Value" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Sage" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Prestashop" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Target" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ExistVersionProduct">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="product" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="current" type="s:unsignedInt" />
+            <s:element minOccurs="1" maxOccurs="1" name="sage" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="prestashop" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExistVersionProductResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ExistVersionProductResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadVersionProduct">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="product" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="current" type="s:unsignedInt" />
+            <s:element minOccurs="1" maxOccurs="1" name="sage" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="prestashop" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadVersionProductResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReadVersionProductResult" type="tns:Version" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HelloWorldSoapIn">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldSoapOut">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExistVersionSoapIn">
+    <wsdl:part name="parameters" element="tns:ExistVersion" />
+  </wsdl:message>
+  <wsdl:message name="ExistVersionSoapOut">
+    <wsdl:part name="parameters" element="tns:ExistVersionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReadVersionSoapIn">
+    <wsdl:part name="parameters" element="tns:ReadVersion" />
+  </wsdl:message>
+  <wsdl:message name="ReadVersionSoapOut">
+    <wsdl:part name="parameters" element="tns:ReadVersionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExistVersionProductSoapIn">
+    <wsdl:part name="parameters" element="tns:ExistVersionProduct" />
+  </wsdl:message>
+  <wsdl:message name="ExistVersionProductSoapOut">
+    <wsdl:part name="parameters" element="tns:ExistVersionProductResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReadVersionProductSoapIn">
+    <wsdl:part name="parameters" element="tns:ReadVersionProduct" />
+  </wsdl:message>
+  <wsdl:message name="ReadVersionProductSoapOut">
+    <wsdl:part name="parameters" element="tns:ReadVersionProductResponse" />
+  </wsdl:message>
+  <wsdl:portType name="WSVersionSoap">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input message="tns:HelloWorldSoapIn" />
+      <wsdl:output message="tns:HelloWorldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExistVersion">
+      <wsdl:input message="tns:ExistVersionSoapIn" />
+      <wsdl:output message="tns:ExistVersionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReadVersion">
+      <wsdl:input message="tns:ReadVersionSoapIn" />
+      <wsdl:output message="tns:ReadVersionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExistVersionProduct">
+      <wsdl:input message="tns:ExistVersionProductSoapIn" />
+      <wsdl:output message="tns:ExistVersionProductSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReadVersionProduct">
+      <wsdl:input message="tns:ReadVersionProductSoapIn" />
+      <wsdl:output message="tns:ReadVersionProductSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSVersionSoap" type="tns:WSVersionSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap:operation soapAction="http://www.prestaconnect.fr/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExistVersion">
+      <soap:operation soapAction="http://www.prestaconnect.fr/ExistVersion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadVersion">
+      <soap:operation soapAction="http://www.prestaconnect.fr/ReadVersion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExistVersionProduct">
+      <soap:operation soapAction="http://www.prestaconnect.fr/ExistVersionProduct" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadVersionProduct">
+      <soap:operation soapAction="http://www.prestaconnect.fr/ReadVersionProduct" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WSVersionSoap12" type="tns:WSVersionSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap12:operation soapAction="http://www.prestaconnect.fr/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExistVersion">
+      <soap12:operation soapAction="http://www.prestaconnect.fr/ExistVersion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadVersion">
+      <soap12:operation soapAction="http://www.prestaconnect.fr/ReadVersion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExistVersionProduct">
+      <soap12:operation soapAction="http://www.prestaconnect.fr/ExistVersionProduct" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadVersionProduct">
+      <soap12:operation soapAction="http://www.prestaconnect.fr/ReadVersionProduct" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WSVersion">
+    <wsdl:port name="WSVersionSoap" binding="tns:WSVersionSoap">
+      <soap:address location="https://46.105.150.20:5875/wsversion.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WSVersionSoap12" binding="tns:WSVersionSoap12">
+      <soap12:address location="https://46.105.150.20:5875/wsversion.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

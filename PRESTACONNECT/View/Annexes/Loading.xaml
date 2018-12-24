@@ -1,0 +1,19 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+	x:Class="PRESTACONNECT.Loading"
+	x:Name="Window"
+    xmlns:dg="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit"
+	Title="Chargement"
+	Width="250" Height="100"
+	WindowStyle="None" Icon="/PRESTACONNECT;component/prestaconnect.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False"
+    AllowsTransparency="True"
+    Background="Transparent">
+    <Grid x:Name="LayoutRoot">
+        <Border BorderThickness="2" CornerRadius="6" 
+                BorderBrush="{DynamicResource ResourceKey=SelectedBackgroundBrush}"
+                Background="{DynamicResource ResourceKey=WindowBackgroundBrush}" />
+        <Label Content="Chargement en cours" HorizontalAlignment="Left" Margin="16,36,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="21.333"/>
+    </Grid>
+</Window>

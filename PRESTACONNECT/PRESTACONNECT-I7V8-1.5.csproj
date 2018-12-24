@@ -1,0 +1,1535 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ExpressionBlendVersion>4.0.30816.0</ExpressionBlendVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{86854B4F-6406-4904-A5C7-D0BFF87DDF9D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <DefaultClrNameSpace>PRESTACONNECT</DefaultClrNameSpace>
+    <RootNamespace>PRESTACONNECT</RootNamespace>
+    <AssemblyName>PRESTACONNECT</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <ApplicationIcon>prestaconnect.ico</ApplicationIcon>
+    <Utf8Output>true</Utf8Output>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SAGE_VERSION_18;PRESTASHOP_VERSION_15</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ABSTRACTION_SAGE1801">
+      <HintPath>..\Dependance\ABSTRACTION_SAGE1801.dll</HintPath>
+    </Reference>
+    <Reference Include="Alternetis.Windows, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Assemblies\Alternetis.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Documents\Visual Studio 2010\Ressources\Crystal Report\DLL 13\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.TemplateEngine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\..\..\..\Documents\Visual Studio 2010\Ressources\Crystal Report\DLL 13\wpf\CrystalDecisions.CrystalReports.TemplateEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Documents\Visual Studio 2010\Ressources\Crystal Report\DLL 13\wpf\CrystalDecisions.ReportSource.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Documents\Visual Studio 2010\Ressources\Crystal Report\DLL 13\CrystalDecisions.Shared.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DbLinq">
+      <HintPath>..\Dependance\DbLinq.dll</HintPath>
+    </Reference>
+    <Reference Include="DbLinq.MySql">
+      <HintPath>..\Dependance\DbLinq.MySql.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.5.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependance\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="ReuxablesLegacy">
+      <HintPath>..\Dependance\ReuxablesLegacy.dll</HintPath>
+    </Reference>
+    <Reference Include="SAPBusinessObjects.WPF.Viewer, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SAPBusinessObjects.WPF.ViewerShared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Configuration.Install">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data.Linq">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Management">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Input.Toolkit">
+      <HintPath>..\Dependance\System.Windows.Controls.Input.Toolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Input.Toolkit.Design">
+      <HintPath>..\Dependance\System.Windows.Controls.Input.Toolkit.Design.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Input.Toolkit.VisualStudio.Design">
+      <HintPath>..\Dependance\System.Windows.Controls.Input.Toolkit.VisualStudio.Design.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Layout.Toolkit">
+      <HintPath>..\Dependance\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Layout.Toolkit.Design">
+      <HintPath>..\Dependance\System.Windows.Controls.Layout.Toolkit.Design.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Layout.Toolkit.VisualStudio.Design">
+      <HintPath>..\Dependance\System.Windows.Controls.Layout.Toolkit.VisualStudio.Design.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="WindowsFormsIntegration">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="WPFToolkit.Design">
+      <HintPath>..\Dependance\WPFToolkit.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="WPFToolkit.VisualStudio.Design">
+      <HintPath>..\Dependance\WPFToolkit.VisualStudio.Design.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Contexts\ClientContext.cs" />
+    <Compile Include="Contexts\CommandeContext.cs" />
+    <Compile Include="Contexts\ConfigurationMultiBonReductionContext.cs" />
+    <Compile Include="Contexts\ConfigurationCatComptaContext.cs" />
+    <Compile Include="Contexts\CompositionContext.cs" />
+    <Compile Include="Contexts\GammeContext.cs" />
+    <Compile Include="Contexts\LienConditionnementContext.cs" />
+    <Compile Include="Contexts\DeplacementCatalogueContext.cs" />
+    <Compile Include="Contexts\ImportContext.cs" />
+    <Compile Include="Contexts\ReimportSageContext.cs" />
+    <Compile Include="BindingProxy.cs" />
+    <Compile Include="Core\ConnectionInfos.cs" />
+    <Compile Include="Core\Csv.cs" />
+    <Compile Include="Core\Ftp.cs" />
+    <Compile Include="Core\Img.cs" />
+    <Compile Include="Core\Parametres\FieldDocumentEntete.cs" />
+    <Compile Include="Core\Transfert\TransfertFeature.cs" />
+    <Compile Include="Core\Transfert\TransfertStatInfoLibreClient.cs" />
+    <Compile Include="Core\ImportSage\ImportStatInfoLibreArticle.cs" />
+    <Compile Include="Core\Module\AECBalanceAccounting.cs" />
+    <Compile Include="Core\Module\AECBalanceOutstanding.cs" />
+    <Compile Include="Core\Module\AECCustomerOutstanding.cs" />
+    <Compile Include="Core\Module\CustomerInfo.cs" />
+    <Compile Include="Core\Parametres\RemiseConflit.cs" />
+    <Compile Include="Core\Parametres\ImportSageFilterTargetData.cs" />
+    <Compile Include="Core\Parametres\ImportSageFilterTypeSearchValue.cs" />
+    <Compile Include="Core\Parametres\MediaRule.cs" />
+    <Compile Include="Core\Parametres\P_BaseEncours.cs" />
+    <Compile Include="Core\Parametres\RegexMail.cs" />
+    <Compile Include="Core\Parametres\SageInfoArticle.cs" />
+    <Compile Include="Core\Parametres\LocalStorageMode.cs" />
+    <Compile Include="Core\Parametres\ProductFilterActiveDefault.cs" />
+    <Compile Include="Core\Parametres\TaxSage.cs" />
+    <Compile Include="Core\Parametres\UnitWeight.cs" />
+    <Compile Include="Core\PrintCrystal.cs" />
+    <Compile Include="Core\Transfert\TransfertPack.cs" />
+    <Compile Include="Core\Transfert\TransfertAttribute.cs" />
+    <Compile Include="Core\ImportSage\ImportCatalogueInfoLibre.cs" />
+    <Compile Include="Core\Tools\FiltreImportSage.cs" />
+    <Compile Include="Core\Tools\SuppressionImage.cs" />
+    <Compile Include="Core\UpdateVersion.cs" />
+    <Compile Include="Model\Internal\ClientNumComposing.cs" />
+    <Compile Include="Core\Parametres\CounterType.cs" />
+    <Compile Include="Core\Parametres\NumberNumComponent.cs" />
+    <Compile Include="Core\Parametres\NameNumComponent.cs" />
+    <Compile Include="Core\Parametres\RedirectType.cs" />
+    <Compile Include="Core\Parametres\LigneRemiseMode.cs" />
+    <Compile Include="Core\Sync\SynchronisationArticleCatalogue.cs" />
+    <Compile Include="Core\Task.cs" />
+    <Compile Include="Core\Temp.cs" />
+    <Compile Include="Core\Tools\NettoyageImage.cs" />
+    <Compile Include="Model\Internal\AliasValue.cs" />
+    <Compile Include="Contexts\ArticleContext.cs" />
+    <Compile Include="Contexts\ArticlesContext.cs" />
+    <Compile Include="Model\Internal\AssociateCatalog.cs" />
+    <Compile Include="Contexts\CatalogueContext.cs" />
+    <Compile Include="Model\Internal\CompanyValue.cs" />
+    <Compile Include="Contexts\ConfigurationAvanceeContext.cs" />
+    <Compile Include="Contexts\ConfigurationContext.cs" />
+    <Compile Include="Model\Internal\ConfigurationGroup.cs" />
+    <Compile Include="Contexts\Context.cs" />
+    <Compile Include="Model\Internal\CrystalReportParameters.cs" />
+    <Compile Include="Model\Internal\FieldDocumentEntete.cs" />
+    <Compile Include="Model\Internal\RemiseConflit.cs" />
+    <Compile Include="Model\Internal\ImportSageFilterTargetData.cs" />
+    <Compile Include="Model\Internal\ImportSageFilterTypeSearchValue.cs" />
+    <Compile Include="Model\Internal\HierarchicalCatalog.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\Internal\MediaRule.cs" />
+    <Compile Include="Model\Internal\RegexMail.cs" />
+    <Compile Include="Model\Internal\SageInfoArticle.cs" />
+    <Compile Include="Model\Internal\InformationArticle.cs" />
+    <Compile Include="Model\Internal\LocalStorageMode.cs" />
+    <Compile Include="Model\Internal\ProductFilterActiveDefault.cs" />
+    <Compile Include="Model\Internal\StatistiqueClient.cs" />
+    <Compile Include="Model\Internal\InformationLibreClient.cs" />
+    <Compile Include="Model\Internal\CounterType.cs" />
+    <Compile Include="Model\Internal\NumberNumComponent.cs" />
+    <Compile Include="Model\Internal\NameNumComponent.cs" />
+    <Compile Include="Model\Internal\StatistiqueArticle.cs" />
+    <Compile Include="Model\Internal\RedirectType.cs" />
+    <Compile Include="Model\Internal\LigneRemiseMode.cs" />
+    <Compile Include="Model\Internal\InformationLibre.cs" />
+    <Compile Include="Model\Internal\MailAccountIdentification.cs" />
+    <Compile Include="Model\Internal\MailNotification.cs" />
+    <Compile Include="Model\Internal\RemiseMode.cs" />
+    <Compile Include="Model\Internal\InformationLibreValeursMode.cs" />
+    <Compile Include="Model\Internal\ImageStorageMode.cs" />
+    <Compile Include="Model\Internal\FirstNameValue.cs" />
+    <Compile Include="Model\Internal\LastNameValue.cs" />
+    <Compile Include="Model\Internal\LockPhoneNumber.cs" />
+    <Compile Include="Model\Internal\MailToContactService.cs" />
+    <Compile Include="Model\Internal\MailToContactType.cs" />
+    <Compile Include="Contexts\MainContext.cs" />
+    <Compile Include="Model\Internal\PriceCategory.cs" />
+    <Compile Include="Model\Internal\SageAddressSend.cs" />
+    <Compile Include="Model\Internal\SageAddressToPrestashop.cs" />
+    <Compile Include="Model\Internal\SageMailAddress.cs" />
+    <Compile Include="Model\Internal\SyncArticle.cs" />
+    <Compile Include="Converters\CanRemovePrestashopCatalogConverter.cs" />
+    <Compile Include="Converters\DateLivraisonModeToBooleanConverter.cs" />
+    <Compile Include="Converters\DateLivraisonModeToJoursEnabledConverter.cs" />
+    <Compile Include="Core\Parametres\AliasValue.cs" />
+	<Compile Include="Core\Parametres\DateLivraisonMode.cs" />
+    <Compile Include="Core\AppConfig.cs" />
+    <Compile Include="Core\Parametres\CompanyValue.cs" />
+    <Compile Include="Core\Parametres\InformationLibreValeursMode.cs" />
+    <Compile Include="Core\Parametres\DeliveryMethod.cs" />
+    <Compile Include="Core\Error.cs" />
+    <Compile Include="Core\Parametres\AppFolders.cs" />
+    <Compile Include="Core\Parametres\FirstNameValue.cs" />
+    <Compile Include="Core\Parametres\ImageStorageMode.cs" />
+    <Compile Include="Core\ImportPrestashop\ImportArticle.cs" />
+    <Compile Include="Core\ImportPrestashop\ImportArticleDocument.cs" />
+    <Compile Include="Core\ImportPrestashop\ImportArticleImage.cs" />
+    <Compile Include="Core\ImportPrestashop\ImportCatalogue.cs" />
+    <Compile Include="Core\ImportSage\ImportArticle.cs" />
+    <Compile Include="Core\ImportSage\ImportArticleDocument.cs" />
+    <Compile Include="Core\ImportSage\ImportArticleImage.cs" />
+    <Compile Include="Core\ImportSage\ImportCatalogue.cs" />
+    <Compile Include="Core\ImportSage\ImportFournisseur.cs" />
+    <Compile Include="Core\Transfert\TransfertSageClient.cs" />
+    <Compile Include="Core\Parametres\LastNameValue.cs" />
+    <Compile Include="Core\Parametres\LockPhoneNumber.cs" />
+    <Compile Include="Core\Log.cs" />
+    <Compile Include="Core\Parametres\MailAccountIdentification.cs" />
+    <Compile Include="Core\Parametres\MailNotification.cs" />
+    <Compile Include="Core\RandomString.cs" />
+    <Compile Include="Core\Parametres\RemiseMode.cs" />
+    <Compile Include="Core\Parametres\SageAddressSend.cs" />
+    <Compile Include="Core\Parametres\SageAddressType.cs" />
+    <Compile Include="Core\Sync\Centrale.cs" />
+    <Compile Include="Core\Transfert\TransfertArticleDocument.cs" />
+    <Compile Include="Core\Sync\SynchronisationCommande.cs" />
+    <Compile Include="Core\Transfert\TransfertStock.cs" />
+    <Compile Include="Core\Transfert\TransfertStockPrice.cs" />
+    <Compile Include="Installer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Installer.Designer.cs">
+      <DependentUpon>Installer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Internal\TaxSage.cs" />
+    <Compile Include="Model\Internal\UnitWeight.cs" />
+    <Compile Include="Model\Local\ArticleAdditionalFieldRepository.cs" />
+    <Compile Include="Model\Local\ArticleCatalogRepository.cs" />
+    <Compile Include="Model\Local\CompositionArticleAttributeGroupRepository.cs" />
+    <Compile Include="Model\Local\CompositionArticleAttributeRepository.cs" />
+    <Compile Include="Model\Local\CompositionArticleRepository.cs" />
+    <Compile Include="Model\Local\ConditioningGroupRepository.cs" />
+    <Compile Include="Model\Local\ConditioningRepository.cs" />
+    <Compile Include="Model\Local\ConditioningArticleRepository.cs" />
+    <Compile Include="Model\Local\CompositionArticleImageRepository.cs" />
+    <Compile Include="Model\Local\Employee_CollaborateurRepository.cs" />
+    <Compile Include="Model\Local\Group_CRisqueRepository.cs" />
+    <Compile Include="Model\Local\ImportSageFilterRepository.cs" />
+    <Compile Include="Model\Local\InformationLibreArticleRepository.cs" />
+    <Compile Include="Model\Local\MediaAssignmentRuleRepository.cs" />
+    <Compile Include="Model\Local\InformationArticleRepository.cs" />
+    <Compile Include="Model\Local\CountryRepository.cs" />
+    <Compile Include="Model\Local\InformationLibreClientRepository.cs" />
+    <Compile Include="Model\Local\OrderCartRuleRepository.cs" />
+    <Compile Include="Model\Local\OrderMacketplaceRepository.cs" />
+    <Compile Include="Model\Local\Override\OrderCartRule.cs" />
+    <Compile Include="Model\Local\Override\ArticleAdditionalField.cs" />
+    <Compile Include="Model\Local\Override\ConditioningArticle.cs" />
+    <Compile Include="Model\Local\Override\AttributeArticle.cs" />
+    <Compile Include="Model\Local\Override\CompositionArticle.cs" />
+    <Compile Include="Model\Local\Override\CompositionArticleAttributeGroup.cs" />
+    <Compile Include="Model\Local\Override\CatalogImage.cs" />
+    <Compile Include="Model\Local\Override\ImportSageFilter.cs" />
+    <Compile Include="Model\Local\Override\Country.cs" />
+    <Compile Include="Model\Local\Override\Customer.cs" />
+    <Compile Include="Model\Local\Override\MediaAssignmentRule.cs" />
+    <Compile Include="Model\Local\Override\Supply.cs" />
+    <Compile Include="Model\Local\StatistiqueClientRepository.cs" />
+    <Compile Include="Model\Local\OrderPaymentRepository.cs" />
+    <Compile Include="Model\Local\Override\Article.cs" />
+    <Compile Include="Model\Local\Override\Attachment.cs" />
+    <Compile Include="Model\Local\Override\ArticleImage.cs" />
+    <Compile Include="Model\Local\AttachmentRepository.cs" />
+    <Compile Include="Model\Local\AttributeArticleImageRepository.cs" />
+    <Compile Include="Model\Local\CarrierRepository.cs" />
+    <Compile Include="Model\Local\Override\Catalog.cs" />
+    <Compile Include="Model\Local\CatalogImageRepository.cs" />
+    <Compile Include="Model\Local\InformationLibreRepository.cs" />
+    <Compile Include="Model\Local\DataClassesLocal.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataClassesLocal.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Prestashop\DataClassesDWFProductExtraField.cs" />
+    <Compile Include="Model\Prestashop\DataClassesDWFProductGuiderates.cs" />
+    <Compile Include="Model\Prestashop\PsDWFProductExtraFieldRepository.cs" />
+    <Compile Include="Model\Prestashop\PsDWFProductExtraFieldsLangRepository.cs" />
+    <Compile Include="Model\Prestashop\PsDWFProductGuideratesRepository.cs" />
+    <Compile Include="Model\Prestashop\PsProductExtraFieldLangRepository.cs" />
+    <Compile Include="Model\Prestashop\PsProductExtraFieldRepository.cs" />
+    <Compile Include="Model\Prestashop\PsProductExtraFieldShopRepository.cs" />
+    <Compile Include="Model\Prestashop\PsProductGuideRateLangRepository.cs" />
+    <Compile Include="Model\Prestashop\PsProductGuideRateRepository.cs" />
+    <Compile Include="Model\Prestashop\PsProductGuideRateShopRepository.cs" />
+    <Compile Include="Model\Prestashop\PsSoDeliveryRepository.cs" />
+    <Compile Include="Model\Prestashop\DataClassesSoColissimo.cs" />
+    <Compile Include="Model\Prestashop\PsAECAttributeListAttributeRepository.cs" />
+    <Compile Include="Model\Prestashop\DataClassesAECAttributeList.cs" />
+    <Compile Include="Model\Prestashop\DataClassesAECBalance.cs" />
+    <Compile Include="Model\Prestashop\DataClassesAECCustomerCollaborateur.cs" />
+    <Compile Include="Model\Prestashop\DataClassesAECCustomerOutstanding.cs" />
+    <Compile Include="Model\Prestashop\DataClassesAECCustomerPayement.cs" />
+    <Compile Include="Model\Prestashop\DataClassesAECRepresentative.cs" />
+    <Compile Include="Model\Prestashop\DataClassesCustomerInfo.cs" />
+    <Compile Include="Model\Prestashop\DataClassesPortfolioCustomerEmployee.cs" />
+    <Compile Include="Model\Prestashop\Override\PsEmployee.cs" />
+    <Compile Include="Model\Prestashop\Override\PsAECInvoiceHistory.cs" />
+    <Compile Include="Model\Prestashop\Override\PsCountryLang.cs" />
+    <Compile Include="Model\Prestashop\Override\PsFeatureValueLang.cs" />
+    <Compile Include="Model\Prestashop\Override\PsAttributeLang.cs" />
+    <Compile Include="Model\Prestashop\Override\PsOrderStateLang.cs" />
+    <Compile Include="Model\Prestashop\PsAECBalanceAccountingRepository.cs" />
+    <Compile Include="Model\Prestashop\PsAECBalanceConfigRepository.cs" />
+    <Compile Include="Model\Prestashop\PsAECBalanceOutstandingRepository.cs" />
+    <Compile Include="Model\Prestashop\PsAECCustomerCollaborateurRepository.cs" />
+    <Compile Include="Model\Prestashop\PsAECCustomerOutstandingRepository.cs" />
+    <Compile Include="Model\Prestashop\PsAECCustomerPayementRepository.cs" />
+    <Compile Include="Model\Prestashop\PsAECRepresentativeConfigRepository.cs" />
+    <Compile Include="Model\Prestashop\PsAECRepresentativeCustomerRepository.cs" />
+    <Compile Include="Model\Prestashop\PsAECRepresentativeRepository.cs" />
+    <Compile Include="Model\Prestashop\Override\PsAttributeGroupLang.cs" />
+    <Compile Include="Model\Prestashop\PsCustomerInfoRepository.cs" />
+    <Compile Include="Model\Prestashop\PsEmployeeRepository.cs" />
+    <Compile Include="Model\Prestashop\PsGenderLangRepository.cs" />
+    <Compile Include="Model\Prestashop\PsMessageRepository.cs" />
+    <Compile Include="Model\Prestashop\PsPortfolioCustomerEmployeeRepository.cs" />
+    <Compile Include="Model\Sage\F_PAYSRepository.cs" />
+    <Compile Include="Model\Sage\DP_ENCOURSTIERSRepository.cs" />
+    <Compile Include="Model\Sage\DP_PORTEFEUILLEVENTERepository.cs" />
+    <Compile Include="Model\Sage\F_DOCLIGNETEXTRepository.cs" />
+    <Compile Include="Model\Sage\F_ECRITURECRepository.cs" />
+    <Compile Include="Model\Sage\F_REGLEMENTTRepository.cs" />
+    <Compile Include="Model\Sage\Override\F_COLLABORATEUR.cs" />
+    <Compile Include="Model\Sage\Override\DP_ENCOURSTIERS.cs" />
+    <Compile Include="Model\Sage\Override\DP_PORTEFEUILLEVENTE.cs" />
+    <Compile Include="Model\Sage\Override\F_CONDITION.cs" />
+    <Compile Include="Model\Sage\Override\P_CONDITIONNEMENT.cs" />
+    <Compile Include="Model\Sage\Override\P_CRISQUE.cs" />
+    <Compile Include="Model\Sage\Override\P_GAMME.cs" />
+    <Compile Include="Model\Local\Override\Group.cs" />
+    <Compile Include="Model\Local\GroupRepository.cs" />
+    <Compile Include="Model\Local\OrderMailRepository.cs" />
+    <Compile Include="Model\Local\OrderRepository.cs" />
+    <Compile Include="Model\Local\ReplacementRepository.cs" />
+    <Compile Include="Model\Local\SettlementRepository.cs" />
+    <Compile Include="Model\Local\StatistiqueArticleRepository.cs" />
+    <Compile Include="Model\Prestashop\Override\PsAddress.cs" />
+    <Compile Include="Model\Prestashop\PsAECStockRepository.cs" />
+    <Compile Include="Model\Prestashop\DataClassesAECStock.cs" />
+    <Compile Include="Model\Prestashop\Override\PsAEcStock.cs" />
+    <Compile Include="Model\Prestashop\Override\PsProductAttribute.cs" />
+    <Compile Include="Model\Prestashop\PsAECInvoiceHistoryRepository.cs" />
+    <Compile Include="Model\Prestashop\DataClassesAECInvoiceHistory.cs" />
+    <Compile Include="Model\Prestashop\DataClassesCartPreorder.cs" />
+    <Compile Include="Model\Prestashop\DataClassesOleaPromo.cs" />
+    <Compile Include="Model\Prestashop\Override\PsOrders.cs" />
+    <Compile Include="Model\Prestashop\PsCartPreOrderRepository.cs" />
+    <Compile Include="Model\Prestashop\PsCartProductRepository.cs" />
+    <Compile Include="Model\Prestashop\PsCartRepository.cs" />
+    <Compile Include="Model\Prestashop\PsCartRuleRepository.cs" />
+    <Compile Include="Model\Prestashop\PsCategoryShopRepository.cs" />
+    <Compile Include="Model\Prestashop\PsCustomerFeatureLangRepository.cs" />
+    <Compile Include="Model\Prestashop\PsCustomerFeatureCustomerRepository.cs" />
+    <Compile Include="Model\Prestashop\PsCustomerFeatureRepository.cs" />
+    <Compile Include="Model\Prestashop\PsCustomerFeatureShopRepository.cs" />
+    <Compile Include="Model\Prestashop\PsCustomerFeatureValueLangRepository.cs" />
+    <Compile Include="Model\Prestashop\PsCustomerFeatureValueRepository.cs" />
+    <Compile Include="Model\Prestashop\DataClassesCustomerFeature.cs" />
+    <Compile Include="Model\Prestashop\Override\PsFeatureValue.cs" />
+    <Compile Include="Model\Prestashop\Override\PsFeatureLang.cs" />
+    <Compile Include="Model\Prestashop\Override\PsProduct.cs" />
+    <Compile Include="Model\Prestashop\PsFeatureRepository.cs" />
+    <Compile Include="Model\Prestashop\PsCarrierTaxRulesGroupShopRepository.cs" />
+    <Compile Include="Model\Prestashop\Override\PsCustomer.cs" />
+    <Compile Include="Model\Prestashop\PsFeatureShopRepository.cs" />
+    <Compile Include="Model\Prestashop\PsManufacturerLangRepository.cs" />
+    <Compile Include="Model\Prestashop\PsManufacturerRepository.cs" />
+    <Compile Include="Model\Prestashop\PsOleaPromoRepository.cs" />
+    <Compile Include="Model\Prestashop\PsOrderCarrierRepository.cs" />
+    <Compile Include="Model\Prestashop\PsOrderCartRuleRepository.cs" />
+    <Compile Include="Model\Prestashop\PsOrderDetailTaxRepository.cs" />
+    <Compile Include="Model\Prestashop\PsOrderInvoicePaymentRepository.cs" />
+    <Compile Include="Model\Prestashop\PsOrderInvoiceRepository.cs" />
+    <Compile Include="Model\Prestashop\PsOrderInvoiceTaxRepository.cs" />
+    <Compile Include="Model\Prestashop\PsOrderPaymentRepository.cs" />
+    <Compile Include="Model\Prestashop\PsOrderStateRepository.cs" />
+    <Compile Include="Model\Prestashop\PsProductAttributeShopRepository.cs" />
+    <Compile Include="Model\Prestashop\PsImageShopRepository.cs" />
+    <Compile Include="Model\Prestashop\PsProductShopRepository.cs" />
+    <Compile Include="Model\Prestashop\PsProductSupplierRepository.cs" />
+    <Compile Include="Model\Prestashop\PsShopURLRepository.cs" />
+    <Compile Include="Model\Prestashop\PsShopGroupRepository.cs" />
+    <Compile Include="Model\Prestashop\PsAttachmentLangRepository.cs" />
+    <Compile Include="Model\Prestashop\PsAttachmentRepository.cs" />
+    <Compile Include="Model\Prestashop\PsCarrierRepository.cs" />
+    <Compile Include="Model\Prestashop\PsConfigurationRepository.cs" />
+    <Compile Include="Model\Prestashop\PsCustomerGroupRepository.cs" />
+    <Compile Include="Model\Prestashop\PsHookModuleRepository.cs" />
+    <Compile Include="Model\Prestashop\PsHookRepository.cs" />
+    <Compile Include="Model\Prestashop\PsModuleRepository.cs" />
+    <Compile Include="Model\Prestashop\PsOrderDetailRepository.cs" />
+    <Compile Include="Model\Prestashop\PsOrderHistoryRepository.cs" />
+    <Compile Include="Model\Prestashop\PsOrdersRepository.cs" />
+    <Compile Include="Model\Prestashop\PsOrderStateLangRepository.cs" />
+    <Compile Include="Model\Prestashop\PsPackRepository.cs" />
+    <Compile Include="Model\Prestashop\PsProductAttachmentRepository.cs" />
+    <Compile Include="Model\Prestashop\PsProductAttributeImageRepository.cs" />
+    <Compile Include="Model\Prestashop\PsShopRepository.cs" />
+    <Compile Include="Model\Prestashop\Override\PsSpecificPrice.cs" />
+    <Compile Include="Model\Prestashop\PsSpecificPriceRepository.cs" />
+    <Compile Include="Model\Prestashop\PsStockAvailableRepository.cs" />
+    <Compile Include="Model\Sage\cbSysLibreRepository.cs" />
+    <Compile Include="Model\Sage\F_CONDITIONRepository.cs" />
+    <Compile Include="Model\Sage\Override\F_DOCLIGNE.cs" />
+    <Compile Include="Model\Sage\Override\F_DOCENTETE.cs" />
+    <Compile Include="Model\Sage\F_TARIFCONDRepository.cs" />
+    <Compile Include="Model\Internal\CategorieComptable.cs" />
+    <Compile Include="Model\Sage\P_CONDITIONNEMENTRepository.cs" />
+    <Compile Include="Model\Sage\F_ENUMSTATRepository.cs" />
+    <Compile Include="Model\Sage\F_ENUMSTATARTRepository.cs" />
+    <Compile Include="Model\Sage\P_DOSSIERCIALRepository.cs" />
+    <Compile Include="Model\Sage\P_DOSSIERRepository.cs" />
+    <Compile Include="Model\Sage\P_ORGAVENRepository.cs" />
+    <Compile Include="Model\Sage\P_PARAMETRECIALRepository.cs" />
+    <Compile Include="Model\Sage\P_STATISTIQUERepository.cs" />
+    <Compile Include="Model\Sage\P_INTSTATARTRepository.cs" />
+    <Compile Include="Model\Sage\F_ARTENUMREFRepository.cs" />
+    <Compile Include="Model\Sage\F_ARTICLEMEDIARepository.cs" />
+    <Compile Include="Model\Sage\SAGE_VERSION_18\DataClassesSage.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataClassesSage.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Sage\F_CREGLEMENTRepository.cs" />
+    <Compile Include="Model\Sage\F_DOCLIGNERepository.cs" />
+    <Compile Include="Model\Sage\F_DOCREGLRepository.cs" />
+    <Compile Include="Model\Sage\F_REGLECHRepository.cs" />
+    <Compile Include="Model\Sage\Override\cbSysLibre.cs" />
+    <Compile Include="Model\Sage\Override\F_ARTGAMME.cs" />
+    <Compile Include="Model\Sage\Override\P_REGLEMENT.cs" />
+    <Compile Include="Model\Sage\Override\F_ARTICLE.cs" />
+    <Compile Include="Model\Sage\Override\F_CATALOGUE.cs" />
+    <Compile Include="Model\Sage\Override\F_COMPTET.cs" />
+    <Compile Include="Model\Sage\F_CONTACTTRepository.cs" />
+    <Compile Include="Model\Sage\F_DOCCURRENTPIECERepository.cs" />
+    <Compile Include="Model\Sage\F_DOCENTETERepository.cs" />
+    <Compile Include="Model\Sage\F_FAMCLIENTRepository.cs" />
+    <Compile Include="Model\Sage\F_FAMILLERepository.cs" />
+    <Compile Include="Model\Sage\F_FAMTARIFQTERepository.cs" />
+    <Compile Include="Model\Sage\F_FAMTARIFRepository.cs" />
+    <Compile Include="Model\Sage\F_JOURNAUXRepository.cs" />
+    <Compile Include="Model\Sage\F_NOMENCLATRepository.cs" />
+    <Compile Include="Model\Sage\F_TARIFQTERepository.cs" />
+    <Compile Include="Model\Sage\InformationLibre.cs" />
+    <Compile Include="Model\Sage\P_CONTACTRepository.cs" />
+    <Compile Include="Model\Sage\P_REGLEMENTRepository.cs" />
+    <Compile Include="Model\Sage\P_SERVICECPTARepository.cs" />
+    <Compile Include="Model\Sage\P_SOUCHEVENTERepository.cs" />
+    <Compile Include="Model\Sage\P_UNITERepository.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\WSKEY\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\WSKEYRESCUE\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\WSVERSION\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="View\Annexes\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Annexes\License.xaml.cs">
+      <DependentUpon>License.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Annexes\PrestaMessage.xaml.cs">
+      <DependentUpon>PrestaMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Annexes\UpdatesDialog.xaml.cs">
+      <DependentUpon>UpdatesDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Articles.xaml.cs">
+      <DependentUpon>Articles.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Annexes\ColorPicker.xaml.cs">
+      <DependentUpon>ColorPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Global.cs" />
+    <Compile Include="Core\Sync\SynchronisationArticle.cs" />
+    <Compile Include="Core\Transfert\TransfertArticleImage.cs" />
+    <Compile Include="Core\Sync\SynchronisationCatalogue.cs" />
+    <Compile Include="Core\Sync\SynchronisationClient.cs" />
+    <Compile Include="Core\Sync\SynchronisationFournisseur.cs" />
+    <Compile Include="Core\Sync\SynchronisationLivraison.cs" />
+    <Compile Include="Model\Local\AddressRepository.cs" />
+    <Compile Include="Model\Local\ArticleImageRepository.cs" />
+    <Compile Include="Model\Local\ArticleRepository.cs" />
+    <Compile Include="Model\Local\AttributeArticleRepository.cs" />
+    <Compile Include="Model\Local\AttributeRepository.cs" />
+    <Compile Include="Model\Local\CatalogRepository.cs" />
+    <Compile Include="Model\Local\CharacteristicRepository.cs" />
+    <Compile Include="Model\Local\AttributeGroupRepository.cs" />
+    <Compile Include="Model\Local\ConfigRepository.cs" />
+    <Compile Include="Model\Local\CustomerRepository.cs" />
+    <Compile Include="Model\Local\SupplierRepository.cs" />
+    <Compile Include="Model\Local\SupplyRepository.cs" />
+    <Compile Include="Model\Local\TaxRepository.cs" />
+    <Compile Include="Model\Prestashop\PRESTASHOP_VERSION_15\DataClassesPrestashop.cs" />
+    <Compile Include="Model\Prestashop\PsAddressRepository.cs" />
+    <Compile Include="Model\Prestashop\PsAttributeGroupLangRepository.cs" />
+    <Compile Include="Model\Prestashop\PsAttributeGroupRepository.cs" />
+    <Compile Include="Model\Prestashop\PsAttributeLangRepository.cs" />
+    <Compile Include="Model\Prestashop\PsAttributeRepository.cs" />
+    <Compile Include="Model\Prestashop\PsCategoryProductRepository.cs" />
+    <Compile Include="Model\Prestashop\PsCategoryRepository.cs" />
+    <Compile Include="Model\Prestashop\PsCategoryGroupRepository.cs" />
+    <Compile Include="Model\Prestashop\PsCategoryLangRepository.cs" />
+    <Compile Include="Model\Prestashop\PsCountryLangRepository.cs" />
+    <Compile Include="Model\Prestashop\PsCountryRepository.cs" />
+    <Compile Include="Model\Prestashop\PsCustomerRepository.cs" />
+    <Compile Include="Model\Prestashop\PsFeatureLangRepository.cs" />
+    <Compile Include="Model\Prestashop\PsFeatureProductRepository.cs" />
+    <Compile Include="Model\Prestashop\PsFeatureValueLangRepository.cs" />
+    <Compile Include="Model\Prestashop\PsFeatureValueRepository.cs" />
+    <Compile Include="Model\Prestashop\PsGroupRepository.cs" />
+    <Compile Include="Model\Prestashop\PsGroupLangRepository.cs" />
+    <Compile Include="Model\Prestashop\PsImageLangRepository.cs" />
+    <Compile Include="Model\Prestashop\PsImageRepository.cs" />
+    <Compile Include="Model\Prestashop\PsImageTypeRepository.cs" />
+    <Compile Include="Model\Prestashop\PsLangRepository.cs" />
+    <Compile Include="Model\Prestashop\PsProductAttributeCombinationRepository.cs" />
+    <Compile Include="Model\Prestashop\PsProductAttributeRepository.cs" />
+    <Compile Include="Model\Prestashop\PsProductRepository.cs" />
+    <Compile Include="Model\Prestashop\PsProductLangRepository.cs" />
+    <Compile Include="Model\Prestashop\PsSupplierLangRepository.cs" />
+    <Compile Include="Model\Prestashop\PsSupplierRepository.cs" />
+    <Compile Include="Model\Prestashop\PsTaxRepository.cs" />
+    <Compile Include="Model\Prestashop\PsTaxRuleRepository.cs" />
+    <Compile Include="Model\Prestashop\PsTaxRulesGroupRepository.cs" />
+    <Compile Include="Model\Sage\F_ARTCLIENTRepository.cs" />
+    <Compile Include="Model\Sage\F_ARTCOMPTARepository.cs" />
+    <Compile Include="Model\Sage\F_ARTFOURNISSRepository.cs" />
+    <Compile Include="Model\Sage\F_ARTGAMMERepository.cs" />
+    <Compile Include="Model\Sage\F_ARTICLERepository.cs" />
+    <Compile Include="Model\Sage\F_ARTSTOCKRepository.cs" />
+    <Compile Include="Model\Sage\F_CATALOGUERepository.cs" />
+    <Compile Include="Model\Sage\F_COLLABORATEURRepository.cs" />
+    <Compile Include="Model\Sage\F_COMPTEARepository.cs" />
+    <Compile Include="Model\Sage\F_COMPTEGRepository.cs" />
+    <Compile Include="Model\Sage\F_COMPTETRepository.cs" />
+    <Compile Include="Model\Sage\F_DEPOTRepository.cs" />
+    <Compile Include="Model\Sage\F_FAMCOMPTARepository.cs" />
+    <Compile Include="Model\Sage\F_GAMSTOCKRepository.cs" />
+    <Compile Include="Model\Sage\F_LIVRAISONRepository.cs" />
+    <Compile Include="Model\Sage\F_TARIFGAMRepository.cs" />
+    <Compile Include="Model\Sage\F_TAXERepository.cs" />
+    <Compile Include="Model\Sage\P_CATCOMPTARepository.cs" />
+    <Compile Include="Model\Sage\P_CATTARIFRepository.cs" />
+    <Compile Include="Model\Sage\P_CONDLIVRRepository.cs" />
+    <Compile Include="Model\Sage\P_DEVISERepository.cs" />
+    <Compile Include="Model\Sage\P_EXPEDITIONRepository.cs" />
+    <Compile Include="Model\Sage\P_GAMMERepository.cs" />
+    <Compile Include="Model\Sage\P_PERIODRepository.cs" />
+    <Compile Include="Model\Sage\P_CRISQUERepository.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="View\Annexes\TinyMce.xaml.cs">
+      <DependentUpon>TinyMce.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Article.xaml.cs">
+      <DependentUpon>Article.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Catalogue.xaml.cs">
+      <DependentUpon>Catalogue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Client.xaml.cs">
+      <DependentUpon>Client.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Annexes\ColorDialog.xaml.cs">
+      <DependentUpon>ColorDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Commande.xaml.cs">
+      <DependentUpon>Commande.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Composition.xaml.cs">
+      <DependentUpon>Composition.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Config\ChangeStorageMode.xaml.cs">
+      <DependentUpon>ChangeStorageMode.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Config\ConfigurationMultiBonReduction.xaml.cs">
+      <DependentUpon>ConfigurationMultiBonReduction.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Config\ConfigurationCatCompta.xaml.cs">
+      <DependentUpon>ConfigurationCatCompta.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Config\ConfigurationMailExtranet.xaml.cs">
+      <DependentUpon>ConfigurationMailExtranet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Config\RegexMailExample.xaml.cs">
+      <DependentUpon>RegexMailExample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Annexes\CrystalViewer.xaml.cs">
+      <DependentUpon>CrystalViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Gamme.xaml.cs">
+      <DependentUpon>Gamme.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\ImportPrestashop\ImportPrestashopArticleManuel.xaml.cs">
+      <DependentUpon>ImportPrestashopArticleManuel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\ImportSage\ImportCompositionGammes.xaml.cs">
+      <DependentUpon>ImportCompositionGammes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\LienConditionnement.xaml.cs">
+      <DependentUpon>LienConditionnement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Edition\DeplacementCatalogue.xaml.cs">
+      <DependentUpon>DeplacementCatalogue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\Import.xaml.cs">
+      <DependentUpon>Import.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Config\Configuration.xaml.cs">
+      <DependentUpon>Configuration.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Config\ConfigurationAvancee.xaml.cs">
+      <DependentUpon>ConfigurationAvancee.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Config\ConfigurationMail.xaml.cs">
+      <DependentUpon>ConfigurationMail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Config\ConfigurationMailTransfert.xaml.cs">
+      <DependentUpon>ConfigurationMailTransfert.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\ImportSage\ImportSageArticleConditionnement.xaml.cs">
+      <DependentUpon>ImportSageArticleConditionnement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\ImportSage\ImportSageArticleMedia.xaml.cs">
+      <DependentUpon>ImportSageArticleMedia.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\ImportSage\ImportSageConditionnement.xaml.cs">
+      <DependentUpon>ImportSageConditionnement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\ImportSage\ImportSageConditionnementEnumere.xaml.cs">
+      <DependentUpon>ImportSageConditionnementEnumere.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\ImportSage\ImportSageGamme.xaml.cs">
+      <DependentUpon>ImportSageGamme.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\ImportSage\ImportSageGammeEnumere.xaml.cs">
+      <DependentUpon>ImportSageGammeEnumere.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\ImportSage\ImportSageStatInfoLibre.xaml.cs">
+      <DependentUpon>ImportSageStatInfoLibre.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Fournisseur.xaml.cs">
+      <DependentUpon>Fournisseur.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Annexes\Loading.xaml.cs">
+      <DependentUpon>Loading.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\ImportSage\ReimportArticle.xaml.cs">
+      <DependentUpon>ReimportArticle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\Tools\ControlArticle.xaml.cs">
+      <DependentUpon>ControlArticle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\Tools\ControlURLRewrite.xaml.cs">
+      <DependentUpon>ControlURLRewrite.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\Tools\NettoyageImage.xaml.cs">
+      <DependentUpon>NettoyageImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Annexes\NumericUpDown.xaml.cs">
+      <DependentUpon>NumericUpDown.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\Tools\SuppressionImage.xaml.cs">
+      <DependentUpon>SuppressionImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Module\AECBalanceAccounting.xaml.cs">
+      <DependentUpon>AECBalanceAccounting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Module\AECBalanceOutstanding.xaml.cs">
+      <DependentUpon>AECBalanceOutstanding.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Module\AECCustomerCollaborateur.xaml.cs">
+      <DependentUpon>AECCustomerCollaborateur.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Module\AECCustomerOutstanding.xaml.cs">
+      <DependentUpon>AECCustomerOutstanding.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Module\AECCustomerPayement.xaml.cs">
+      <DependentUpon>AECCustomerPayement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Module\AECRepresentative.xaml.cs">
+      <DependentUpon>AECRepresentative.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Module\AECRepresentativeCustomer.xaml.cs">
+      <DependentUpon>AECRepresentativeCustomer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Module\CartPreorder.xaml.cs">
+      <DependentUpon>CartPreorder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Module\AECInvoiceHistory.xaml.cs">
+      <DependentUpon>AECInvoiceHistory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Module\SynchroPortfolioCustomerEmployee.xaml.cs">
+      <DependentUpon>SynchroPortfolioCustomerEmployee.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Module\SynchroGroupCRisque.xaml.cs">
+      <DependentUpon>SynchroGroupCRisque.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Module\CustomerInfo.xaml.cs">
+      <DependentUpon>CustomerInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Module\GestionStatutArticle.xaml.cs">
+      <DependentUpon>GestionStatutArticle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Module\ReimportSage.xaml.cs">
+      <DependentUpon>ReimportSage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Module\SynchroGroupCatTarif.xaml.cs">
+      <DependentUpon>SynchroGroupCatTarif.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sync\SynchronisationPaiement.xaml.cs">
+      <DependentUpon>SynchronisationPaiement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Transfert\TransfertFeature.xaml.cs">
+      <DependentUpon>TransfertFeature.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Transfert\TransfertPack.xaml.cs">
+      <DependentUpon>TransfertPack.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sync\SynchronisationStatutCommande.xaml.cs">
+      <DependentUpon>SynchronisationStatutCommande.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Transfert\TransfertAttribute.xaml.cs">
+      <DependentUpon>TransfertAttribute.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sync\SynchronisationArticleCatalogue.xaml.cs">
+      <DependentUpon>SynchronisationArticleCatalogue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sync\SynchronisationArticle.xaml.cs">
+      <DependentUpon>SynchronisationArticle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Transfert\TransfertArticleDocument.xaml.cs">
+      <DependentUpon>TransfertArticleDocument.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Transfert\TransfertArticleImage.xaml.cs">
+      <DependentUpon>TransfertArticleImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sync\SynchronisationCatalogue.xaml.cs">
+      <DependentUpon>SynchronisationCatalogue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\ImportSage\ImportCatalogueInfoLibre.xaml.cs">
+      <DependentUpon>ImportCatalogueInfoLibre.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sync\SynchronisationClient.xaml.cs">
+      <DependentUpon>SynchronisationClient.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sync\SynchronisationCommande.xaml.cs">
+      <DependentUpon>SynchronisationCommande.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sync\SynchronisationFournisseur.xaml.cs">
+      <DependentUpon>SynchronisationFournisseur.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sync\SynchronisationLivraison.xaml.cs">
+      <DependentUpon>SynchronisationLivraison.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\ImportPrestashop\ImportPrestashopArticle.xaml.cs">
+      <DependentUpon>ImportPrestashopArticle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\ImportPrestashop\ImportPrestashopArticleDocument.xaml.cs">
+      <DependentUpon>ImportPrestashopArticleDocument.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\ImportPrestashop\ImportPrestashopArticleImage.xaml.cs">
+      <DependentUpon>ImportPrestashopArticleImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\ImportPrestashop\ImportPrestashopCatalogue.xaml.cs">
+      <DependentUpon>ImportPrestashopCatalogue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\ImportSage\ImportSageArticle.xaml.cs">
+      <DependentUpon>ImportSageArticle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\ImportSage\ImportSageArticleDocument.xaml.cs">
+      <DependentUpon>ImportSageArticleDocument.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\ImportSage\ImportSageArticleImage.xaml.cs">
+      <DependentUpon>ImportSageArticleImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\ImportSage\ImportSageCatalogue.xaml.cs">
+      <DependentUpon>ImportSageCatalogue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Import\ImportSage\ImportSageFournisseur.xaml.cs">
+      <DependentUpon>ImportSageFournisseur.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Transfert\TransfertStock.xaml.cs">
+      <DependentUpon>TransfertStock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Transfert\TransfertStockPrice.xaml.cs">
+      <DependentUpon>TransfertStockPrice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Transfert\TransfertSageClient.xaml.cs">
+      <DependentUpon>TransfertSageClient.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Annexes\Updates.xaml.cs">
+      <DependentUpon>Updates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WSOverride\Key.cs" />
+    <Page Include="View\Annexes\About.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Annexes\License.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Annexes\PrestaMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Annexes\UpdatesDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Articles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Annexes\ColorPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Theme\BureauBlack.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Theme\BureauBlue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Theme\ExpressionDark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Theme\ExpressionLight.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Theme\ShinyBlue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Theme\ShinyRed.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Theme\WhistlerBlue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Annexes\TinyMce.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Article.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Catalogue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Client.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Annexes\ColorDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Commande.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Composition.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Config\ChangeStorageMode.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Config\ConfigurationMultiBonReduction.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Config\ConfigurationCatCompta.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Config\ConfigurationMailExtranet.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Config\RegexMailExample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Annexes\CrystalViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Gamme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Import\ImportPrestashop\ImportPrestashopArticleManuel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Import\ImportSage\ImportCompositionGammes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LienConditionnement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Edition\DeplacementCatalogue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Import\Import.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Config\Configuration.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Config\ConfigurationAvancee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Config\ConfigurationMail.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Config\ConfigurationMailTransfert.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Import\ImportSage\ImportSageArticleConditionnement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Import\ImportSage\ImportSageArticleMedia.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Import\ImportSage\ImportSageConditionnement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Import\ImportSage\ImportSageConditionnementEnumere.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Import\ImportSage\ImportSageGamme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Import\ImportSage\ImportSageGammeEnumere.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Import\ImportSage\ImportSageStatInfoLibre.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Fournisseur.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Annexes\Loading.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Import\ImportSage\ReimportArticle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Import\Tools\ControlArticle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Import\Tools\ControlURLRewrite.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Import\Tools\NettoyageImage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Annexes\NumericUpDown.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Import\Tools\SuppressionImage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Module\AECBalanceAccounting.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Module\AECBalanceOutstanding.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Module\AECCustomerCollaborateur.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Module\AECCustomerOutstanding.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Module\AECCustomerPayement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Module\AECRepresentative.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Module\AECRepresentativeCustomer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Module\CartPreorder.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Module\AECInvoiceHistory.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Module\SynchroPortfolioCustomerEmployee.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Module\SynchroGroupCRisque.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Module\CustomerInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Module\GestionStatutArticle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Module\ReimportSage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Module\SynchroGroupCatTarif.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Sync\SynchronisationPaiement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Transfert\TransfertFeature.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Transfert\TransfertPack.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Sync\SynchronisationStatutCommande.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Transfert\TransfertAttribute.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Sync\SynchronisationArticleCatalogue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Sync\SynchronisationArticle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Transfert\TransfertArticleDocument.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Transfert\TransfertArticleImage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Sync\SynchronisationCatalogue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Import\ImportSage\ImportCatalogueInfoLibre.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Sync\SynchronisationClient.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Sync\SynchronisationCommande.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Sync\SynchronisationFournisseur.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Sync\SynchronisationLivraison.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Import\ImportPrestashop\ImportPrestashopArticle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Import\ImportPrestashop\ImportPrestashopArticleDocument.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Import\ImportPrestashop\ImportPrestashopArticleImage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Import\ImportPrestashop\ImportPrestashopCatalogue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Import\ImportSage\ImportSageArticle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Import\ImportSage\ImportSageArticleDocument.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Import\ImportSage\ImportSageArticleImage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Import\ImportSage\ImportSageCatalogue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Import\ImportSage\ImportSageFournisseur.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Transfert\TransfertStock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Transfert\TransfertStockPrice.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Transfert\TransfertSageClient.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Annexes\Updates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <AppDesigner Include="Properties\" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Application.ico">
+      <Visible>false</Visible>
+    </None>
+    <None Include="Model\Local\DataClassesLocal.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>DataClassesLocal.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Model\Sage\SAGE_VERSION_18\DataClassesSage.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>DataClassesSage.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\WSKEYRESCUE\PRESTACONNECT.WSKEYRESCUE.Key.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSKEYRESCUE\WSKEY1.wsdl" />
+    <None Include="Service References\WSKEY\PRESTACONNECT.WSKEY.Key.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSKEY\wskey.wsdl" />
+    <None Include="Service References\WSVERSION\PRESTACONNECT.WSVERSION.Version.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSVERSION\wsversion.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Espace\Article\small\" />
+    <Folder Include="Espace\Article\tmp\" />
+    <Folder Include="Espace\Attachment\" />
+    <Folder Include="Espace\Catalog\small\" />
+    <Folder Include="Espace\Catalog\tmp\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 et x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\info.png" />
+    <Resource Include="Img\picture.png" />
+    <Resource Include="Img\setting.png" />
+    <Resource Include="Img\supplier.png" />
+    <Resource Include="Img\sync.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\catalog.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\combination.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\img.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\loader.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\ColorSwatchCircle.png" />
+    <Resource Include="Img\ColorSwatchSquare.png" />
+    <Resource Include="Img\ColorSwatchSquare2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\customer.png" />
+    <Resource Include="Img\order.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\article.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\about.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Model\Local\DataClassesLocal.dbml.layout">
+      <DependentUpon>DataClassesLocal.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Model\Sage\SAGE_VERSION_18\DataClassesSage.dbml.layout">
+      <DependentUpon>DataClassesSage.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\WSKEY\" />
+    <WCFMetadataStorage Include="Service References\WSKEYRESCUE\" />
+    <WCFMetadataStorage Include="Service References\WSVERSION\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WSKEY\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WSKEY\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WSKEY\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\disabled.gif" />
+    <Resource Include="Img\enabled.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WSVERSION\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WSVERSION\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WSVERSION\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assemblies\Alternetis.Windows.dll" />
+    <Content Include="Assemblies\CrystalDecisions.CrystalReports.Engine.dll" />
+    <Content Include="Assemblies\CrystalDecisions.CrystalReports.TemplateEngine.dll" />
+    <Content Include="Assemblies\CrystalDecisions.ReportSource.dll" />
+    <Content Include="Assemblies\CrystalDecisions.Shared.dll" />
+    <Resource Include="Resources\reload.png" />
+    <Resource Include="Resources\logo-alternetis-mini.png" />
+    <Resource Include="Resources\pack_assortment.png" />
+    <SplashScreen Include="Img\PrestaConnect_band.png" />
+    <Resource Include="Resources\file_broken_small.png" />
+    <Resource Include="Resources\product.png" />
+    <Resource Include="Resources\components.png" />
+    <Resource Include="Resources\bottles.png" />
+    <Resource Include="Resources\pantone.png" />
+    <Resource Include="Resources\color-swatch.png" />
+    <None Include="Service References\WSKEYRESCUE\WSKEY1.disco" />
+    <Resource Include="Images\error.png" />
+    <Resource Include="Images\valid.png" />
+    <Resource Include="Resources\delete.png" />
+    <Resource Include="Resources\valid.png" />
+    <Resource Include="Resources\prestaconnect-name-mini.png" />
+    <Resource Include="updates_prestaconnect.html" />
+    <Resource Include="Resources\copy.png" />
+    <Resource Include="Resources\sync.png" />
+    <Resource Include="Resources\info.png" />
+    <Resource Include="Resources\question.png" />
+    <Resource Include="prestaconnect.ico" />
+    <Resource Include="Resources\remove.png" />
+    <Resource Include="Resources\gada.png" />
+    <None Include="Service References\WSKEYRESCUE\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\WSKEYRESCUE\configuration.svcinfo" />
+    <None Include="Service References\WSKEYRESCUE\configuration91.svcinfo" />
+    <None Include="Service References\WSVERSION\wsversion.disco" />
+    <None Include="Service References\WSKEY\wskey.disco" />
+    <Resource Include="Resources\error.png" />
+    <Resource Include="Resources\alert.png" />
+    <Resource Include="Img\import.png" />
+    <Resource Include="Img\recherche.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath32)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	     Other similar extension points exist, see Microsoft.Common.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+</Project>

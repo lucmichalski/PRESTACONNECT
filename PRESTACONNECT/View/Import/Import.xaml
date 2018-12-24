@@ -1,0 +1,484 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+    xmlns:converters="clr-namespace:Alternetis.Windows.Converters;assembly=Alternetis.Windows"
+	x:Class="PRESTACONNECT.Import"
+	xmlns:local="clr-namespace:PRESTACONNECT"
+	x:Name="Window"
+    xmlns:dg="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit"
+	Title="Import"
+	MinWidth="1024" MinHeight="768" 
+	Width="1024" Height="768"
+	WindowStyle="ThreeDBorderWindow" Icon="/PRESTACONNECT;component/prestaconnect.ico" WindowStartupLocation="CenterScreen"
+    ShowInTaskbar="True"
+    Background="{DynamicResource ResourceKey=WindowBackgroundBrush}" Loaded="Window_Loaded" xmlns:my="clr-namespace:PRESTACONNECT.View">
+    <Window.Resources>
+        <converters:HasCountConverter x:Key="HasCount"/>
+        <converters:IsNullConverter x:Key="IsNull"/>
+        <converters:IsNullOrEmptyConverter x:Key="IsNullOrEmpty"/>
+    </Window.Resources>
+    <Grid x:Name="LayoutRoot">
+        <Image Source="/PRESTACONNECT;component/img/import.png" Width="48" Height="48" HorizontalAlignment="Right" Margin="0,12,12,0" VerticalAlignment="Top" d:LayoutOverrides="HorizontalAlignment, Height, GridBox" />
+        <TabControl Margin="8,66,8,12">
+            <TabItem Header="Import depuis Sage" x:Name="TabItemImportSage">
+                <Grid>
+                    <TabControl>
+                        <TabItem Header="Catalogues et articles">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.30*" MinWidth="200" MaxWidth="500" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TreeView SelectedItemChanged="Catalogs_SelectedItemChanged" Margin="2,2,4,194" x:Name="treeViewCatalogs" IsEnabled="{Binding Path=NotBusy}" >
+                                    <TreeViewItem x:Name="TreeItemWithoutCatalog" Header="Hors catalogue" IsSelected="{Binding Path=SearchWithoutCatalogs, Mode=TwoWay}"/>
+                                    <TreeViewItem Header="Tous les catalogues" IsExpanded="True"
+                                                  ItemsSource="{Binding Path=Catalogs}">
+                                        <TreeViewItem.ItemContainerStyle>
+                                            <Style TargetType="TreeViewItem">
+                                                <Setter Property="IsExpanded" Value="False"/>
+                                            </Style>
+                                        </TreeViewItem.ItemContainerStyle>
+                                        <TreeViewItem.ItemTemplate>
+                                            <HierarchicalDataTemplate ItemsSource="{Binding Path=SortChildren}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <CheckBox IsChecked="{Binding Path=ToImport}" Focusable="False"
+                                                              Checked="CatalogSync_Checked" Unchecked="CatalogSync_Unchecked">
+                                                        <CheckBox.Style>
+                                                            <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
+                                                                <Setter Property="CheckBox.IsEnabled" Value="False"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Path=ExistLocal}" Value="False">
+                                                                        <Setter Property="CheckBox.IsEnabled" Value="True"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </CheckBox.Style>
+                                                    </CheckBox>
+                                                    <TextBlock Text="{Binding Path=CL_Intitule}">
+                                                        <TextBlock.Style>
+                                                        <Style>
+                                                            <Setter Property="TextBlock.FontWeight" Value="Bold"/> 
+                                                            <Style.Triggers>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding Path=ExistLocal}" Value="True"/>
+                                                                        <Condition Binding="{Binding Path=ToActive}" Value="False"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="TextBlock.FontStyle" Value="Italic"/> 
+                                                                    <Setter Property="TextBlock.Foreground" Value="Gray"/> 
+                                                                </MultiDataTrigger>
+                                                                <DataTrigger Binding="{Binding Path=ExistLocal}" Value="True">
+                                                                    <Setter Property="TextBlock.FontWeight" Value="Normal"/> 
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </HierarchicalDataTemplate>
+                                        </TreeViewItem.ItemTemplate>
+                                    </TreeViewItem>
+                                </TreeView>
+                                <GroupBox Header="Options d'importation" Height="72" Margin="2,0,4,116" VerticalAlignment="Bottom">
+                                    <StackPanel Orientation="Vertical">
+                                        <CheckBox IsChecked="{Binding AutoSelectCatalogParent}" Content="Sélection auto parents" Margin="2,4,2,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                        <CheckBox IsChecked="{Binding AutoSelectCatalogEnfant}" Content="Sélection auto catalogues enfants" Margin="2,4,2,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                    </StackPanel>
+                                </GroupBox>
+                                <GroupBox Header="Légende" Height="72" Margin="2,0,4,2" VerticalAlignment="Bottom">
+                                    <Grid>
+                                        <CheckBox Content="Déjà importé" Margin="2,4,0,0" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                        <CheckBox Content="À importer" Margin="112,4,0,0" IsEnabled="True" IsChecked="True" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                        <CheckBox Content="Non importé" Margin="112,24,0,0" IsEnabled="True" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                        <!--<CheckBox Margin="2">
+                                            <CheckBox.Style>
+                                                <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
+                                                    <Setter Property="CheckBox.IsChecked" Value="False"/>
+                                                    <Setter Property="CheckBox.Content" Value="Non importé"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="CheckBox.IsChecked" Value="True">
+                                                            <Setter Property="CheckBox.Content" Value="A importer"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </CheckBox.Style>
+                                        </CheckBox>-->
+                                    </Grid>
+                                </GroupBox>
+                                <Button Content="Importer les catalogues" Height="33" Margin="2,0,4,78" Click="ButtonImportSageCatalog_Click" VerticalAlignment="Bottom" IsEnabled="{Binding Path=NotBusy}" />
+
+                                <Label Grid.Column="1" Content="Aucun article n'a été trouvé dans ce catalogue." Grid.RowSpan="2" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic">
+                                    <Label.Style>
+                                        <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                                            <Setter Property="Label.Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Path=IsBusy}" Value="False"/>
+                                                        <Condition Binding="{Binding Path=SelectedCatalogItems.Count, Converter={StaticResource HasCount}}" Value="False"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Label.Visibility" Value="Visible"/>
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Label.Style>
+                                </Label>
+                                <TextBox Text="{Binding Path=Filter, UpdateSourceTrigger=PropertyChanged}" Height="24" Margin="2,2,196,0" Name="textBoxImportFilter"
+                                         VerticalAlignment="Top" Grid.Column="1" ToolTip="Filtre de type OU sur les champs désignation, référence, code barre" IsReadOnly="{Binding IsBusy}" GotFocus="textBoxImportFilter_GotFocus"/>
+                                <Button x:Name="buttonSearch" IsDefault="True" Margin="0,3,168,0"  Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="24" Height="22" Click="buttonSearch_Click">
+                                    <Button.Style>
+                                        <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Path=Filter, Converter={StaticResource IsNullOrEmpty}}" Value="False" />
+                                                        <Condition Binding="{Binding Path=IsBusy}" Value="False" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="UIElement.IsEnabled" Value="True" />
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                    <Image HorizontalAlignment="Center" Margin="2" Source="/PRESTACONNECT;component/img/recherche.png" Width="16" />
+                                </Button>
+                                <ToggleButton IsEnabled="{Binding NotBusy}" IsChecked="{Binding Path=MaskImportedProducts}" Height="24" HorizontalAlignment="Right" Margin="0,2,2,0" Name="toggleButtonMaskImportedProducts" VerticalAlignment="Top" Width="160" Grid.Column="1">
+                                    <ToggleButton.Style>
+                                        <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource {x:Type ToggleButton}}">
+                                            <Setter Property="ToggleButton.Content" Value="Masquer articles importés"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="ToggleButton.IsChecked" Value="True">
+                                                    <Setter Property="ToggleButton.Content" Value="Afficher articles importés"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ToggleButton.Style>
+                                </ToggleButton>
+                                <DataGrid ItemsSource="{Binding SelectedCatalogItems}" Margin="2,28,2,197" Grid.Column="1" Background="{x:Null}" IsEnabled="{Binding Path=NotBusy}" 
+                                          CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" GridLinesVisibility="None" 
+                                          HeadersVisibility="Column" IsReadOnly="True" SelectionMode="Extended" x:Name="DataGridArticles">
+                                    <DataGrid.Style>
+                                        <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=SelectedCatalogItems.Count}" Value="0">
+                                                    <Setter Property="DataGrid.Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                                <!--<DataTrigger Binding="{Binding Path=SelectedCatalog.ExistToLocal}" Value="False">
+                                                    <Setter Property="DataGrid.IsEnabled" Value="False"/>
+                                                </DataTrigger>-->
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGrid.Style>
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Désignation" Binding="{Binding AR_Design}" Width="*" />
+                                        <DataGridTextColumn Header="Référence" Binding="{Binding AR_Ref}" Width="125" />
+                                        <DataGridTextColumn Header="Réf Fournisseur" Binding="{Binding AF_Ref}" Width="125" />
+                                        <DataGridTextColumn Header="Ean13" Binding="{Binding AR_CodeBarre}" Width="125" />
+                                        <DataGridTemplateColumn Header="Importer" Width="60" CanUserResize="False">
+                                            <DataGridTemplateColumn.HeaderTemplate>
+                                                <DataTemplate>
+                                                    <Button Content="Importer" Width="60" Margin="-5,-11,-5,-11" Click="ToImportSelectedCatalogItems_Click"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.HeaderTemplate>
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox IsChecked="{Binding AR_IsCheckedImport, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                        <CheckBox.Style>
+                                                            <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
+                                                                <Setter Property="CheckBox.IsEnabled" Value="True"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Path=Exist}" Value="True">
+                                                                        <Setter Property="CheckBox.IsEnabled" Value="False"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </CheckBox.Style>
+                                                    </CheckBox>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                <StatusBar Grid.Column="1" BorderBrush="#FF688CAF" BorderThickness="1" Margin="2,0,2,174" Height="24" VerticalAlignment="Bottom" >
+                                    <StatusBar.Style>
+                                        <Style TargetType="{x:Type StatusBar}" BasedOn="{StaticResource {x:Type StatusBar}}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=SelectedCatalogItems.Count}" Value="0">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </StatusBar.Style>
+                                    <TextBlock MinWidth="80" Margin="6,0,4,0" >
+			                            <TextBlock.Text>
+				                            <MultiBinding StringFormat=" {0} {1}">
+					                            <Binding ElementName="DataGridArticles" Path="Items.Count" />
+					                            <Binding Path="strNbArticle" /> 
+				                            </MultiBinding>
+			                            </TextBlock.Text>
+                                    </TextBlock>
+                                    <Separator />
+                                    <!--<TextBlock MinWidth="80" Margin="4,0,6,0" >
+			                            <TextBlock.Text>
+				                            <MultiBinding StringFormat=" {0} {1}">
+					                            <Binding ElementName="DataGridArticles" Path="SelectedItems.Count" />
+					                            <Binding Path="strNbArticleSelec" /> 
+				                            </MultiBinding>
+			                            </TextBlock.Text>
+                                    </TextBlock>
+                                    <Separator />-->
+                                    <TextBlock MinWidth="200" Margin="4,0,6,0" >
+			                            <TextBlock.Text>
+				                            <MultiBinding StringFormat=" {0} {1}">
+					                            <Binding Path="strCurrentCatalog" /> 
+					                            <Binding Path="SelectedCatalog.ComboText" />
+				                            </MultiBinding>
+			                            </TextBlock.Text>
+                                    </TextBlock>
+                                    <Separator />
+                                    <TextBlock MinWidth="100" Margin="4,0,4,0" Text="{Binding StrFilteredProducts}" />
+                                </StatusBar>
+                                <GroupBox Header="Options d'importation" Grid.Column="1" Margin="2,0,2,2" Height="166" VerticalAlignment="Bottom" IsEnabled="{Binding Path=NotBusy}">
+                                    <Grid>
+                                        <CheckBox IsChecked="{Binding ImportArticleStatut}" Name="CheckBoxImportArticleEtatActivation" Margin="12,8,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="300">
+                                            <CheckBox.Style>
+                                                <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
+                                                    <Setter Property="CheckBox.IsChecked" Value="True"/>
+                                                    <Setter Property="CheckBox.Content" Value="Les articles seront importés à l'état &quot;Inactif&quot;"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="CheckBox.IsChecked" Value="True">
+                                                            <Setter Property="CheckBox.Content" Value="Les articles seront importés à l'état &quot;Actif&quot;"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </CheckBox.Style>
+                                        </CheckBox>
+                                        <RadioButton Content="Les articles seront importés dans le(s) catalogue(s) lié(s) à leur catalogue Sage" Height="16" IsEnabled="{Binding WithCatalogSelected, Mode=OneWay}"
+                                                     HorizontalAlignment="Left" Margin="12,60,0,0" Name="radioButtonImportSageCatalogueAuto" VerticalAlignment="Top" IsChecked="True" Width="430" />
+                                        <RadioButton Content="Les articles seront importés dans le catalogue suivant : " HorizontalAlignment="Left" Margin="12,82,0,0" 
+                                                     Name="radioButtonImportSageCatalogueManuel" Height="16" VerticalAlignment="Top" IsChecked="{Binding SelectionLocalCatalog}" />
+                                        <ComboBox Name="ComboBoxImportSageChoixCatalogue" ItemsSource="{Binding Path=LocalCatalogs}" 
+                                                  SelectedItem="{Binding Path=SelectedLocalCatalog}" DisplayMemberPath="ComboText" 
+                                                  Margin="12,102,6,0" Height="23" VerticalAlignment="Top" IsEnabled="{Binding SelectionLocalCatalog}" MaxDropDownHeight="500">
+                                        </ComboBox>
+                                        <CheckBox IsChecked="{Binding ImportArticleRattachement}" Content="Rattachement aux catalogues parents" Name="CheckBoxImportArticleLienCataloguesParent" Margin="492,71,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+
+                                        <CheckBox IsChecked="{Binding OnlyStandardProducts}" Content="Permettre l'import des articles standards uniquement" Name="CheckBoxImportArticleOnlyStandardProducts" Margin="12,32,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+
+                                        <Button Content="Importer les articles" Height="33" Margin="0,9,6,0" Click="ButtonImportSageArticle_Click" 
+                                                HorizontalAlignment="Right" Width="175" VerticalAlignment="Top" />
+
+                                    </Grid>
+                                </GroupBox>
+
+                                <GridSplitter HorizontalAlignment="Right" VerticalAlignment="Stretch" 
+                                              AutomationProperties.Name="Délimiteur amovible"
+                                    Grid.RowSpan="1" Grid.Column="0" Margin="0,4,1,198"  ResizeBehavior="CurrentAndNext"
+                                    Width="3" Background="{DynamicResource ResourceKey=NormalBrush}" />
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Compositions">
+                            <Grid>
+                                <Button Content="Import compositions mono-gamme" Cursor="Hand" Height="38" HorizontalAlignment="Left" Margin="36,23,0,0" Name="buttonImportCompositionsGammes" VerticalAlignment="Top" Width="200" Click="buttonImportCompositionsGammes_Click" />
+                                <TextBlock FontStyle="Italic" Foreground="Black" HorizontalAlignment="Left" Margin="272,26,0,0" Text="Fonction d'ajout automatique des déclinaisons pour les articles de composition existants, gère uniquement les compositions dont toutes les déclinaisons sont liées à une unique référence Sage mono-gamme."  TextWrapping="Wrap" VerticalAlignment="Top" Width="650" />
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Filtres d'exclusion">
+                            <Grid>
+                                <GroupBox Header="Ajout d'un filtre d'exclusion" Height="200" Margin="10,10,292,0" VerticalAlignment="Top">
+                                    <StackPanel Orientation="Vertical">
+                                        <Grid>
+                                            <Label Content="Valeur filtrante" HorizontalAlignment="Left" Margin="19,11,0,0" VerticalAlignment="Top" />
+                                            <TextBox Margin="188,7,6,0" MaxLength="69" Text="{Binding ImportSageFilterValue}" VerticalAlignment="Top" />
+                                        </Grid>
+                                        <Grid>
+                                            <Label Content="Données cibles" HorizontalAlignment="Left" Margin="19,11,0,0" VerticalAlignment="Top" />
+                                            <ComboBox ItemsSource="{Binding ListTargetData}" Margin="188,7,6,0" SelectedItem="{Binding SelectedTargetData}" VerticalAlignment="Top" />
+                                        </Grid>
+                                        <Grid Visibility="{Binding SelectedTargetData.VisibilityInfolibre}">
+                                            <Label Content="Information libre article" HorizontalAlignment="Left" Margin="19,11,0,0" VerticalAlignment="Top" Visibility="{Binding SelectedTargetData.VisibilityInfolibre}" />
+                                            <ComboBox ItemsSource="{Binding ListSageInfolibreArticleTextTable}" Margin="188,7,6,0" SelectedItem="{Binding SelectedSageInfolibreArticleTextTable}" VerticalAlignment="Top" />
+                                        </Grid>
+                                        <Grid>
+                                            <Label Content="Condition de filtrage" HorizontalAlignment="Left" Margin="19,11,0,0" VerticalAlignment="Top" />
+                                            <ComboBox ItemsSource="{Binding ListTypeSearchValue}" Margin="188,7,6,0" SelectedItem="{Binding SelectedTypeSearchValue}" VerticalAlignment="Top" />
+                                        </Grid>
+                                        <Grid>
+                                            <Button Click="ButtonAddImportSageFilter_Click" Content="Ajouter filtre" Height="30" HorizontalAlignment="Right" Margin="0,8,6,0" Name="ButtonAddImportSageFilter" VerticalAlignment="Top" Width="150" />
+                                        </Grid>
+                                    </StackPanel>
+                                </GroupBox>
+                                <GroupBox Header="Liste des filtres d'exclusion enregistrés" Margin="10,220,10,10" >
+                                    <Grid>
+                                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" GridLinesVisibility="None" HeadersVisibility="Column" ItemsSource="{Binding ListImportSageFilter}" Margin="0" Name="DataGridImportSageFilter" SelectedItem="{Binding SelectedImportSageFilter}" SelectionMode="Single">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Binding="{Binding Path=Imp_Value}" Header="Valeur filtrante" IsReadOnly="True" Width="20*" />
+                                                <DataGridTextColumn Binding="{Binding Path=GetTargetDataText}" Header="Données cibles" IsReadOnly="True" Width="40*" />
+                                                <DataGridTextColumn Binding="{Binding Path=GetTypeSearchText}" Header="Condition de filtrage" IsReadOnly="True" Width="40*" />
+                                                <DataGridTextColumn Binding="{Binding Path=Sag_Infolibre}" Header="Information libre" IsReadOnly="True" Width="20*" />
+                                                <DataGridTemplateColumn Header="Supprimer" Width="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Button Click="ButtonDeleteImportFilter_Click" Content="Supprimer" Name="ButtonDeleteImportFilter" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </Grid>
+                                </GroupBox>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Images et documents" x:Name="TabItemImportMedia">
+                            <Grid>
+                                <TabControl VerticalAlignment="Top" Margin="10,10,10,0" Height="223">
+                                    <TabItem Header="Images">
+                                        <Grid>
+                                            <Label Content="Répertoire des images :" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="24,10,0,0" />
+                                            <TextBox x:Name="TextBoxImportSageImageDir" Margin="20,30,56,0" Text="{Binding Path=AutomaticImportFolderPicture, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" />
+                                            <Button x:Name="ButtonImportSageImageRepertoire" Margin="0,30,20,0" Content="..." ToolTip="Sélectionner un répertoire" Width="30" Click="ButtonImportSageImageRepertoire_Click"  VerticalAlignment="Top" HorizontalAlignment="Right" Height="24" />
+                                            <Button Content="Importer les images" x:Name="ButtonImportSageImage" Click="ButtonImportSageImage_Click" Margin="20,60,0,0" HorizontalAlignment="Left" Width="200" Height="30" VerticalAlignment="Top"/>
+                                            <Button Content="Enregistrer répertoire" x:Name="ButtonSavePictureFolder" Height="30" HorizontalAlignment="Left" Margin="237,60,0,0" Width="200" Click="ButtonSavePictureFolder_Click" VerticalAlignment="Top"/>
+                                            <CheckBox IsChecked="{Binding ImportImageReplaceFiles}" Content="Activer le remplacement des fichiers images lorsque la date de modification est supérieure à la date d'import ou que la taille du fichier est différente" HorizontalAlignment="Left" Margin="24,100,0,0" Name="checkBoxImportImageReplaceFiles" VerticalAlignment="Top" />
+                                            <CheckBox IsChecked="{Binding ImportImageRemoveDeletedFiles}" Content="Activer la suppression des images dont le fichier source ne se trouve plus dans le répertoire d'import sauvegardé  (la suppression s'effectue avant l'import)" HorizontalAlignment="Left" Margin="24,120,0,0" Name="ImportImageRemoveDeletedFiles" VerticalAlignment="Top" />
+                                            <CheckBox IsChecked="{Binding ImportImageUseSageDatas}" Content="Activer l'utilisation des données Sage pour importer les images " HorizontalAlignment="Left" Margin="24,140,0,0" Name="ImportImageBaseSage" VerticalAlignment="Top" />
+                                            <CheckBox IsChecked="{Binding ImportImageIncludeReferenceClient}" Content="Activer l'identification des articles en fonction des références article-client" HorizontalAlignment="Left" Margin="24,160,0,0" Name="ImportImageIncludeReferenceClient" VerticalAlignment="Top" />
+                                        </Grid>
+                                    </TabItem>
+                                    <TabItem Header="Documents" >
+                                        <Grid>
+                                            <Label Content="Répertoire des documents joints :" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="24,10,0,0" />
+                                            <TextBox x:Name="TextBoxImportSageDocumentJointDir" Margin="20,30,56,0" VerticalAlignment="Top" Text="{Binding Path=AutomaticImportFolderDocument, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                            <Button x:Name="ButtonImportSageDocumentRepertoire" Margin="0,30,20,0" VerticalAlignment="Top" Content="..." ToolTip="Sélectionner un répertoire" Width="30" Click="ButtonImportSageDocumentRepertoire_Click" HorizontalAlignment="Right" Height="24" />
+                                            <Button Content="Importer les documents joints" x:Name="ButtonImportSageDocumentJoint" VerticalAlignment="Top" Click="ButtonImportSageDocumentJoint_Click" Margin="20,60,0,0" HorizontalAlignment="Left" Width="200" Height="30" />
+                                            <Button Content="Enregistrer répertoire" x:Name="ButtonSaveDocumentFolder" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="237,60,0,0" Width="200" Click="ButtonSaveDocumentFolder_Click" />
+                                        </Grid>
+                                    </TabItem>
+                                    <TabItem Header="Fichiers multimédias de Sage">
+                                        <Grid>
+                                            <Label Content="Répertoire &quot;Multimedia&quot; de Sage :" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="24,10,0,0" />
+                                            <TextBox x:Name="TextBoxImportSageMediaDir" Margin="20,30,56,0" VerticalAlignment="Top" Text="{Binding Path=AutomaticImportFolderMedia, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                            <Button x:Name="ButtonImportSageMediaRepertoire" Margin="0,30,20,0" VerticalAlignment="Top" Content="..." ToolTip="Sélectionner un répertoire" Width="30" Click="ButtonImportSageMediaRepertoire_Click" Height="24" HorizontalAlignment="Right" />
+                                            <Button Content="Importer les médias de Sage" x:Name="ButtonImportSageMedia" VerticalAlignment="Top" Height="30" HorizontalAlignment="Left" Margin="20,60,0,0" Width="200" Click="ButtonImportSageMedia_Click" />
+                                            <Button Content="Enregistrer répertoire" x:Name="ButtonSaveMediaFolder" VerticalAlignment="Top" Height="30" HorizontalAlignment="Left" Margin="237,60,0,0" Width="200" Click="ButtonSaveMediaFolder_Click" />
+                                            <CheckBox IsChecked="{Binding ImportMediaIncludePictures}" Content="Importer les fichiers dont l'extension est .jpg, .png ou .gif en tant qu'images (par défaut ces fichiers sont ignorés)" HorizontalAlignment="Left" Margin="24,100,0,0" Name="checkBoxImportMediaIncludePictures" VerticalAlignment="Top" />
+                                            <CheckBox IsChecked="{Binding ImportMediaAutoDeleteAttachment}" Content="Supprimer les documents joints présents dans PrestaConnect lorsqu'ils n'existent plus dans Sage" HorizontalAlignment="Left" Margin="24,120,0,0" Name="checkBoxImportMediaAutoDeleteAttachment" VerticalAlignment="Top"/>
+                                        </Grid>
+                                    </TabItem>
+                                </TabControl>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Règles d'import des documents" x:Name="TabItemImportDocumentsRules">
+                            <Grid>
+                                <GroupBox Header="Ajout règle d'assignation" Height="170" Margin="10,10,292,0" VerticalAlignment="Top">
+                                    <Grid>
+                                        <Label Content="Suffixe du nom du fichier" HorizontalAlignment="Left" Margin="19,14,0,0" VerticalAlignment="Top" />
+                                        <TextBox Margin="188,10,6,0" MaxLength="500" Text="{Binding MediaRuleSuffixText}" VerticalAlignment="Top" />
+                                        <Label Content="Nom à attribuer au fichier" HorizontalAlignment="Left" Margin="19,44,0,0" VerticalAlignment="Top" />
+                                        <TextBox Margin="188,40,6,0" MaxLength="1000" Text="{Binding MediaRuleAssignName}" VerticalAlignment="Top" />
+                                        <Label Content="Règle d'attribution" HorizontalAlignment="Left" Margin="19,74,0,0" VerticalAlignment="Top" />
+                                        <ComboBox ItemsSource="{Binding ListMediaRule}" Margin="188,70,6,0" SelectedItem="{Binding SelectedMediaRule}" VerticalAlignment="Top" />
+                                        <Button Click="ButtonAddMediaRule_Click" Content="Ajouter règle" Height="30" HorizontalAlignment="Right" Margin="0,103,25,0" Name="buttonAddMediaRule" VerticalAlignment="Top" Width="150" />
+                                    </Grid>
+                                </GroupBox>
+                                <GroupBox Header="Liste des règles d'assignation existantes" Margin="10,190,10,10" >
+                                    <Grid>
+                                        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" GridLinesVisibility="None" HeadersVisibility="Column" ItemsSource="{Binding ListMediaAssignmentRule}" Margin="0" Name="DataGridTextReplace" SelectedItem="{Binding SelectedMediaAssignmentRule}" SelectionMode="Single">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Binding="{Binding Path=SuffixText}" Header="Suffixe" IsReadOnly="True" Width="20*" />
+                                                <DataGridTextColumn Binding="{Binding Path=AssignName}" Header="Nom attribué au fichier" IsReadOnly="True" Width="50*" />
+                                                <DataGridTextColumn Binding="{Binding Path=GetRuleText}" Header="Règle appliquée" IsReadOnly="True" Width="40*" />
+                                                <DataGridTemplateColumn Header="Supprimer" Width="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Button Click="ButtonDeleteRule_Click" Content="Supprimer" Name="ButtonDeleteRule" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </Grid>
+                                </GroupBox>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Autres" Visibility="Hidden">
+                            <Grid>
+                                <GroupBox Header="Fournisseurs" VerticalAlignment="Top" Margin="10,100,10,0" Height="70" Visibility="Collapsed">
+                                    <Grid>
+                                        <Button Content="Importer les fournisseurs" x:Name="ButtonImportSageSupplier" 
+                                            Height="33" Click="ButtonImportSageSupplier_Click" Margin="2" HorizontalAlignment="Left" Width="200"  />
+                                    </Grid>
+                                </GroupBox>
+                                <GroupBox Header="Gammes" VerticalAlignment="Top" Margin="10,20,10,0" Height="70">
+                                    <Grid>
+                                        <Button IsEnabled="False" Content="Importer les gammes" x:Name="ButtonImportSageCombination" Margin="2,6,0,0" HorizontalAlignment="Left"
+                                            Click="ButtonImportSageCombination_Click" Width="200" Height="33" />
+                                    </Grid>
+                                </GroupBox>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Import depuis Prestashop" x:Name="TabItemImportPrestashop" >
+                <Grid>
+                    <Label Content="Importer depuis Prestashop vers PrestaConnect" Margin="27,49.04,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="264"/>
+                    <Button Content="Importer les catalogues" x:Name="ButtonImportPrestashopCatalog" VerticalAlignment="Top" Height="38" Cursor="Hand" Click="ButtonImportPrestashopCatalog_Click" Margin="27,105,0,0" HorizontalAlignment="Left" Width="200"  />
+                    <TextBlock FontStyle="Italic" Foreground="Black" HorizontalAlignment="Left" Margin="267,116,0,0" Text="Permet de récupérer les catégories PrestaShop absentes dans PrestaConnect" TextWrapping="Wrap" VerticalAlignment="Top" Width="650" />
+
+                    <Button Content="Importer les articles" x:Name="ButtonImportPrestashopArticle" Cursor="Hand" Click="ButtonImportPrestashopArticle_Click" Margin="27,187,0,0" HorizontalAlignment="Left" Width="200" Height="38" VerticalAlignment="Top" />
+                    <TextBlock FontStyle="Italic" Foreground="Black" Height="35" HorizontalAlignment="Left" Margin="267,190,0,0" Text="Permet d'effectuer le lien entre le produit PrestaShop et l'article Sage à partir de la référence, ce traitement ne permet pas de lier les déclinaisons." TextWrapping="Wrap" VerticalAlignment="Top" Width="650" />
+                    <CheckBox Content="Pour les produits déjà liés : forcer la récupération des données descriptions, metas, associations et caractéristiques." IsChecked="{Binding ForceImportProduct}" Height="16" HorizontalAlignment="Left" Margin="267,231,0,0" Name="checkBox1" VerticalAlignment="Top" />
+
+                    <Button Content="Importer les images" x:Name="ButtonImportPrestashopImage" Cursor="Hand" Click="ButtonImportPrestashopImage_Click" Margin="27,267,0,0" HorizontalAlignment="Left" Width="200" Height="38" VerticalAlignment="Top" />
+                    <TextBlock FontStyle="Italic" Foreground="Black" HorizontalAlignment="Left" Margin="267,278,0,0" Text="Permet de récupérer les images absentes dans PrestaConnect." TextWrapping="Wrap" VerticalAlignment="Top" Width="650" />
+                    <CheckBox Content="Pour les images déjà liées : forcer la récupération des liens avec les déclinaisons." IsChecked="{Binding ForceImportImage}" Height="16" HorizontalAlignment="Left" Margin="267,311,0,0" Name="checkBox2" VerticalAlignment="Top" />
+
+                    <Button Content="Importer les documents joints" x:Name="ButtonImportPrestashopDocumentJoin" Cursor="Hand" Click="ButtonImportPrestashopDocumentJoint_Click" Margin="27,347,0,0" Height="38" VerticalAlignment="Top" HorizontalAlignment="Left" Width="200" />
+                    <TextBlock FontStyle="Italic" Foreground="Black" HorizontalAlignment="Left" Margin="267,358,0,0" Text="Permet de récupérer les documents joints absents dans PrestaConnect." TextWrapping="Wrap" VerticalAlignment="Top" Width="650" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Outils de contrôle" Name="TabItemOutilsControle">
+                <Grid>
+                    <Button x:Name="ButtonClearIdPsProduct" Content="Contrôle de mappage des articles" Height="35" Margin="26,25,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="246" Click="ButtonClearIdPsProduct_Click" />
+                    <CheckBox x:Name="CheckBoxControleArticleActivation" Height="18" HorizontalAlignment="Left" Margin="298,35,0,0" VerticalAlignment="Top" Width="430">
+                        <CheckBox.Style>
+                            <Style BasedOn="{StaticResource {x:Type CheckBox}}" TargetType="{x:Type CheckBox}">
+                                <Style.Triggers>
+                                    <Trigger Property="ToggleButton.IsChecked" Value="True">
+                                        <Setter Property="ContentControl.Content" Value="Les articles n'existant plus dans PrestaShop seront réinitialisés à l'état &quot;Actif&quot;" />
+                                    </Trigger>
+                                </Style.Triggers>
+                                <Setter Property="ToggleButton.IsChecked" Value="True" />
+                                <Setter Property="ContentControl.Content" Value="Les articles n'existant plus dans PrestaShop seront réinitialisés à l'état &quot;Inactif&quot;" />
+                            </Style>
+                        </CheckBox.Style>
+                    </CheckBox>
+
+                    <Button Content="Afficher les produits Prestashop non mappés" Height="35" HorizontalAlignment="Left" Margin="26,78,0,0" Name="buttonListPrestashop" VerticalAlignment="Top" Width="246" Click="buttonListPrestashop_Click" />
+
+                    <Button x:Name="ButtonClearPsImage" Height="35" HorizontalAlignment="Left" Margin="26,135,0,0" VerticalAlignment="Top" Width="246" Content="Nettoyage des images Prestashop" Click="ButtonClearPsImage_Click" />
+                    <TextBlock Foreground="Black" FontStyle="Italic" Height="18" Margin="298,145,0,0" Text="Le nettoyage consiste à supprimer les images produits dont les fichiers ne sont plus présents sur le serveur." TextWrapping="Wrap" VerticalAlignment="Top" Width="552" HorizontalAlignment="Left" />
+
+                    <Button Content="Vider le cache de Smarty" Height="35" HorizontalAlignment="Left" Margin="26,190,0,0" Name="buttonClearSmartyCache" VerticalAlignment="Top" Width="246" Click="buttonClearSmartyCache_Click" />
+                    <TextBlock FontStyle="Italic" Foreground="Black" Height="18" HorizontalAlignment="Left" Margin="298,200,0,0" Text="À n'utiliser qu'en cas de problème d'actualisation sur le front-office (nécessite le fichier &quot;AEC_ClearCache.php&quot;)." TextWrapping="Wrap" VerticalAlignment="Top" />
+
+                    <Button Content="Vérification des URL simplifiées" Height="35" HorizontalAlignment="Left" Margin="26,245,0,0" Name="buttonControlURLRewrite" VerticalAlignment="Top" Width="246" Click="buttonControlURLRewrite_Click" />
+                    <TextBlock FontStyle="Italic" Foreground="Black" Height="35" HorizontalAlignment="Left" Margin="298,245,0,0" Text="Permet de modifier les URL simplifiées des catalogues et articles avec les dernières options apportées à PrestaConnect (nécessite une synchronisation postérieure)." TextWrapping="Wrap" VerticalAlignment="Top" Width="650" />
+                    <Button Content="Contrôle liens conditionnements" Height="35" HorizontalAlignment="Left" Margin="26,354,0,0" Name="buttonLienConditionnement" VerticalAlignment="Top" Width="246" Click="buttonLienConditionnement_Click" />
+                    <TextBlock FontStyle="Italic" Foreground="Black" Height="35" HorizontalAlignment="Left" Margin="298,354,0,0" Text="Donne accès au formulaire permettant de contrôler les liens entre les déclinaisons PrestaShop et les énumérés de conditionnements de Sage." TextWrapping="Wrap" VerticalAlignment="Top" Width="650" />
+                    <CheckBox HorizontalAlignment="Left" Margin="298,286,0,0" Name="Ck_RewritePrestashop" VerticalAlignment="Top" Width="672">
+                        <Grid>
+                            <TextBlock TextWrapping="Wrap">
+                                Modifier simultanément les URL dans la base de données PrestaShop, cette option implique :
+                                <LineBreak/>- la non modification de la date de mise-à-jour article
+                                <LineBreak/>- l'absence du besoin de synchronisation article postérieure au traitement
+                            </TextBlock>
+                        </Grid>
+                    </CheckBox>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

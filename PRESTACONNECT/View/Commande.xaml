@@ -1,0 +1,174 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+	x:Class="PRESTACONNECT.Commande"
+	x:Name="Window"
+    xmlns:dg="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit"
+	Title="Commande"
+	Width="1024" Height="768"
+	MinWidth="1024" MinHeight="768"
+	WindowStyle="ThreeDBorderWindow" Icon="/PRESTACONNECT;component/prestaconnect.ico" WindowStartupLocation="CenterScreen"
+	ShowInTaskbar="True"
+    Background="{DynamicResource ResourceKey=WindowBackgroundBrush}" xmlns:my="clr-namespace:PRESTACONNECT.View">
+
+    <Window.Resources>
+        <ContextMenu  x:Key="RowMenu" DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+            <MenuItem Header="{Binding id_order}" HeaderStringFormat="Supprimer commande n° {0} pour la recréer dans Sage" Click="MenuItem_Click" />
+            <ContextMenu.Style>
+                <Style TargetType="{x:Type ContextMenu}">
+                    <Setter Property="SnapsToDevicePixels" Value="True" />
+                    <Setter Property="OverridesDefaultStyle" Value="True" />
+                    <Setter Property="Grid.IsSharedSizeScope" Value="True" />
+                    <Setter Property="HasDropShadow" Value="True" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ContextMenu}">
+                                <Border x:Name="Border" Background="{StaticResource WindowBackgroundBrush}" BorderBrush="{DynamicResource ResourceKey=SelectedBackgroundBrush}" BorderThickness="2">
+                                    <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="HasDropShadow" Value="True">
+                                        <Setter TargetName="Border" Property="Padding" Value="0,3,0,3" />
+                                        <Setter TargetName="Border" Property="CornerRadius" Value="4" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ContextMenu.Style>
+        </ContextMenu>
+        <Style x:Key="DefaultRowStyle" TargetType="{x:Type DataGridRow}">
+            <Setter Property="ContextMenu" Value="{StaticResource RowMenu}" />
+        </Style>
+    </Window.Resources>
+
+    <Grid x:Name="LayoutRoot" >
+        <Image Source="/PRESTACONNECT;component/img/order.png" Width="48" Height="48" HorizontalAlignment="Right" Margin="0,12,8,0" VerticalAlignment="Top" d:LayoutOverrides="HorizontalAlignment, Width, Height" Grid.Column="1" />
+        <TabControl Margin="20,64,20,82">
+            <TabItem Header="Commande" x:Name="TabItemCommande" Visibility="{Binding ExtranetOnly}">
+                <Grid>
+                    <Label Content="Liste des dernières commandes :" HorizontalAlignment="Left" Margin="60,15,0,0" VerticalAlignment="Top"/>
+                    <DataGrid Margin="20,45,20,65" x:Name="DataGridCommande" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" GridLinesVisibility="None" HeadersVisibility="Column" IsReadOnly="True" SelectionMode="Extended"
+                              SelectedItem="{Binding ElementName=Window, Path=CommandeSelectionne, Mode=TwoWay}" SelectionChanged="DataGridCommande_SelectionChanged">
+                        <!--RowStyle="{StaticResource DefaultRowStyle}">-->
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id" x:Name="DataGridTexBoxColumnId" Binding="{Binding id_order}" Width="auto" />
+							<DataGridTextColumn Header="Id Sage" Binding="{Binding DOPiece, Mode=OneWay}" Width="auto" />
+							<DataGridTextColumn Header="Référence" Binding="{Binding reference, Mode=OneWay}" Width="auto" />
+							<DataGridTextColumn Header="Client" x:Name="DataGridTexBoxColumnClient" Binding="{Binding Client, Mode=OneWay}" Width=".20*" />
+                            <DataGridTextColumn Header="Compte Sage" x:Name="DataGridTexBoxColumnCompteSage" Binding="{Binding CompteSage}" Width=".10*" />
+                            <DataGridTextColumn Header="Total HT" x:Name="DataGridTexBoxColumnTotalHT" Binding="{Binding total_paid_tax_excl, StringFormat=0.00#}" Width="auto">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="0,0,2,0" />
+                                        <Setter Property="TextAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Total TTC" x:Name="DataGridTexBoxColumnTotalTTC" Binding="{Binding total_paid_tax_incl, StringFormat=0.00#}" Width="auto">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="0,0,2,0" />
+                                        <Setter Property="TextAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Paiement" x:Name="DataGridTexBoxColumnPaiement" Binding="{Binding payment}" Width=".05*" />
+                            <DataGridTextColumn Header="Statut" x:Name="DataGridTexBoxColumnStatut" Binding="{Binding order_state_name}" Width=".15*" />
+                            <DataGridTextColumn Header="Date" x:Name="DataGridTexBoxColumnDate" Binding="{Binding date_add, ConverterCulture=fr}"  Width="auto" MinWidth="124"/>
+                            <DataGridCheckBoxColumn Header="Synchronisée" x:Name="DataGridTexBoxColumnSync" Binding="{Binding Sync, Mode=OneWay}" Width="auto" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Height="33" Width="100" HorizontalAlignment="Right" Content="Actualiser" Click="ActualiserDernieresCommandes_Click" Margin="0,0,33,15" VerticalAlignment="Bottom" />
+                    <Button Height="33" Width="200" HorizontalAlignment="Right" Content="Passage en paiment accepté" Click="PaiementAccepte_Click" Margin="0,0,139,15" VerticalAlignment="Bottom">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                <Setter Property="Button.IsEnabled" Value="False"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=Window, Path=CanAccept, Mode=TwoWay}" Value="True">
+                                        <Setter Property="Button.IsEnabled" Value="True"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                    <Label Content="Nombre de commandes affichées :" HorizontalAlignment="Right" Margin="0,21,104,0" VerticalAlignment="Top"/>
+                    <my:NumericUpDown HorizontalAlignment="Right" Margin="0,17,20,0" x:Name="numericUpDownTopOrder" VerticalAlignment="Top" Width="78" Minimum="1" Maximum="9999" Value="60" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Précommande" x:Name="TabItemPrecommande" Visibility="{Binding ExtranetOnly}">
+                <Grid>
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" TextAlignment="Justify" Margin="36,40,0,0" VerticalAlignment="Top" Foreground="Black" Width="700">
+                        Ce module vous permet de créer de nouveaux paniers pour les clients ayant commandé des articles en précommande afin qu'ils complètent leur paiement via Prestashop. 
+                        Le règlement saisi sera ensuite synchroniser sur la commande originale dans Sage.
+                        <LineBreak/><LineBreak/>
+                        <TextBlock FontStyle="Italic" Text="Attention cette fonctionnalité nécessite :" /><LineBreak/>
+                        <TextBlock FontStyle="Italic" Margin="10,0,0,0">
+                        - la clé cookie de votre Prestashop<LineBreak/>
+                        - le modèle de mail "Complèment règlement précommande"<LineBreak/>
+                        - la sélection d'un produit Prestashop à utiliser dans les paniers
+                        </TextBlock>
+                    </TextBlock>
+                    <Button Name="ButtonSendCartPreorder" Height="48" Width="250" HorizontalAlignment="Left" Margin="36,172,0,0" VerticalAlignment="Top" Click="ButtonSendCartPreorder_Click">
+                        <TextBlock TextWrapping="Wrap" TextAlignment="Center" Text="Créer les paniers permettant de solder les précommandes "/>
+                    </Button>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Historique factures" x:Name="TabItemInvoiceHistory">
+                <Grid>
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" TextAlignment="Justify" Margin="36,40,0,0" VerticalAlignment="Top" Foreground="Black" Width="700">
+                        Ce module vous permet de générer au format PDF les factures comptabilisées de votre gestion commerciale puis de les transférer sur votre boutique afin que vos clients puissent y accéder.
+                        <LineBreak/><LineBreak/>
+                        <TextBlock FontStyle="Italic" Text="Attention cette fonctionnalité nécessite :" /><LineBreak/>
+                        <TextBlock FontStyle="Italic" Margin="10,0,0,0">
+                        - le paramétrage du compte FTP <LineBreak/>
+                        - que vos comptes clients soient gérés individuellement (non centralisés)<LineBreak/>
+                        - un modèle d'impression Crystal Report pour "imprimer" les documents
+                        </TextBlock>
+                    </TextBlock>
+
+                    <Button Content="Tester le modèle d'impression" Height="46" HorizontalAlignment="Left" Margin="62,174,0,0" Name="ButtonTestInvoiceCrystal" VerticalAlignment="Top" Width="198" Click="buttonTestInvoiceCrystal_Click" />
+
+                    <Label Content="Prendre en compte les documents uniquement pour la période suivante :" HorizontalAlignment="Left" Margin="36,249,0,0" VerticalAlignment="Top" />
+                    <Label Content="Début :" HorizontalAlignment="Left" Margin="36,275,0,0" VerticalAlignment="Top" />
+                    <DatePicker Height="25" HorizontalAlignment="Left" Margin="88,271,0,0" Name="datePickerStart" VerticalAlignment="Top" Width="198" />
+                    <Label Content="Fin :" HorizontalAlignment="Left" Margin="36,305,0,0" VerticalAlignment="Top" />
+                    <DatePicker Height="25" HorizontalAlignment="Left" Margin="88,301,0,0" Name="datePickerEnd" VerticalAlignment="Top" Width="198" />
+
+                    <Label Content="Prendre en compte les documents uniquement pour les clients dont :" HorizontalAlignment="Left" Margin="36,352,0,0" VerticalAlignment="Top" />
+                    <Label Content="Numéro commençant par :" HorizontalAlignment="Left" Margin="36,377,0,0" VerticalAlignment="Top" />
+                    <TextBox Height="25" HorizontalAlignment="Left" Margin="204,374,0,0" Name="TextBoxCTNum" VerticalAlignment="Top" Width="198" Text="{Binding ModuleInvoiceNumero}" CharacterCasing="Upper" />
+                    <Label Content="Intitulé contenant :" HorizontalAlignment="Left" Margin="36,407,0,0" VerticalAlignment="Top" />
+                    <TextBox Height="25" HorizontalAlignment="Left" Margin="204,404,0,0" Name="TextBoxCTIntitule" VerticalAlignment="Top" Width="198" Text="{Binding ModuleInvoiceIntitule}"/>
+
+                    <Button Name="ButtonSendInvoiceHistory" Height="46" Margin="36,458,0,0" VerticalAlignment="Top" Click="ButtonSendInvoiceHistory_Click" HorizontalAlignment="Left" Width="198">
+                        <TextBlock TextWrapping="Wrap" TextAlignment="Center" Text="Générer et envoyer les PDF "/>
+                    </Button>
+                    <Button Name="ButtonClearInvoiceHistory" Height="46" Margin="312,458,0,0" VerticalAlignment="Top" Click="ButtonClearInvoiceHistory_Click" HorizontalAlignment="Left" Width="198">
+                        <TextBlock TextWrapping="Wrap" TextAlignment="Center" Text="Réinitilisation des données du module AEC_InvoiceHistory"/>
+                    </Button>
+                    <CheckBox Visibility="{Binding VisibilityProcessorCoreOverride}" IsChecked="{Binding UnlockProcessorCore}" Content="Ne pas limiter l'utilisation des ressources processeur (nombre de coeurs utilisés en parallèle)" Height="16" HorizontalAlignment="Left" Margin="36,520,0,0" VerticalAlignment="Top" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Button Visibility="{Binding ExtranetOnly}" x:Name="ButtonSync" Cursor="Hand" Click="ButtonSync_Click" AutomationProperties.Name="Création des documents dans Sage + Mise-à-jour des statuts PrestaShop" Height="43" Margin="25,0,0,25" Width="221" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+            <TextBlock Margin="6,0,6,0" Text="Création des documents dans Sage + Mise-à-jour des statuts PrestaShop" TextAlignment="Center" TextWrapping="Wrap" />
+        </Button>
+        <Button Visibility="{Binding ExtranetOnly}" AutomationProperties.Name="Création des documents dans Sage uniquement" Cursor="Hand" Height="43" HorizontalAlignment="Left" Margin="270,0,0,25" Name="buttonSyncSageOnly" VerticalAlignment="Bottom" Width="170" Click="buttonSyncSageOnly_Click">
+            <TextBlock Margin="6,0,6,0" Text="Création des documents dans Sage uniquement" TextAlignment="Center" TextWrapping="Wrap" />
+        </Button>
+        <Button Visibility="{Binding ExtranetOnly}" AutomationProperties.Name="Mise-à-jour des statuts PrestaShop uniquement" Cursor="Hand" Height="43" HorizontalAlignment="Left" Margin="465,0,0,25" Name="buttonSyncPrestaShopOnly" VerticalAlignment="Bottom" Width="170" Click="buttonSyncPrestaShopOnly_Click">
+            <TextBlock Margin="6,0,6,0" Text="Mise-à-jour des statuts PrestaShop uniquement" TextAlignment="Center" TextWrapping="Wrap" />
+        </Button>
+        <Button Visibility="{Binding ExtranetOnly}" AutomationProperties.Name="Récupération des paiements" Cursor="Hand" Height="43" HorizontalAlignment="Left" Margin="660,0,0,25" Name="buttonSyncPayment" VerticalAlignment="Bottom" Width="170" Click="buttonSyncPayment_Click">
+            <TextBlock Margin="6,0,6,0" Text="Récupération des paiements" TextAlignment="Center" TextWrapping="Wrap" />
+        </Button>
+        <RadioButton Content="Tout" IsChecked="{Binding SyncFull}" Height="16" HorizontalAlignment="Right" Margin="0,0,106,46" VerticalAlignment="Bottom" />
+        <RadioButton Content="Jour" IsChecked="{Binding SyncDay}" Height="16" HorizontalAlignment="Right" Margin="0,0,107,25" VerticalAlignment="Bottom" />
+        <RadioButton Content="Semaine" IsChecked="{Binding SyncWeek}" Height="16" HorizontalAlignment="Right" Margin="0,0,24,46" VerticalAlignment="Bottom" />
+        <RadioButton Content="Mois" IsChecked="{Binding SyncMonth}" Height="16" HorizontalAlignment="Right" Margin="0,0,43,25" VerticalAlignment="Bottom" />
+    </Grid>
+</Window>

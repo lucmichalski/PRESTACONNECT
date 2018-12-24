@@ -1,0 +1,102 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+    xmlns:local="clr-namespace:PRESTACONNECT"
+	x:Class="PRESTACONNECT.Gamme"
+	x:Name="Window"
+    xmlns:dg="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit"
+	Title="Gamme"
+	Width="1024" Height="768"
+	MinWidth="1024" MinHeight="768"
+	WindowStyle="ThreeDBorderWindow" Icon="/PRESTACONNECT;component/prestaconnect.ico" WindowStartupLocation="CenterScreen"
+    ShowInTaskbar="True"
+    Background="{DynamicResource ResourceKey=WindowBackgroundBrush}"
+    >
+    <Grid x:Name="LayoutRoot">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="0.006*"/>
+			<ColumnDefinition Width="0.984*"/>
+			<ColumnDefinition Width="0.01*"/>
+		</Grid.ColumnDefinitions>
+		<Image Source="/PRESTACONNECT;component/img/combination.png" Width="48" Height="48" HorizontalAlignment="Right" Margin="0,16,8,0" VerticalAlignment="Top" d:LayoutOverrides="HorizontalAlignment, Height" Grid.Column="1" />
+		<TabControl Grid.Column="1" Margin="8,64,8,12">
+			<TabItem Header="Gamme" x:Name="TabItemGamme" >
+				<Grid>
+                    <Label Content="Groupe d'attributs existants :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" />
+                    <ListBox DisplayMemberPath="Name" HorizontalAlignment="Left" ItemsSource="{Binding ListPsAttributeGroupLang}" Margin="10,34,0,6" Name="listBoxPsAttributeGroup" SelectedItem="{Binding SelectedPsAttributeGroupLang}" Width="289" />
+                    <GroupBox Header="Créer un nouveau groupe d'attribut" Height="126" HorizontalAlignment="Right" Margin="0,34,19,0" Name="groupBoxCreateAttributeGroup" VerticalAlignment="Top" Width="220">
+                        <Grid>
+                            <Label Content="Nom" HorizontalAlignment="Left" Margin="6,7,0,0" VerticalAlignment="Top" />
+                            <TextBox Height="23" Margin="6,29,6,0" MaxLength="64" Name="TextboxNewAttributeGroup" Text="{Binding NewAttributeGroupName}" VerticalAlignment="Top" />
+                            <Button Click="buttonCreatePsAttributeGroup_Click" Content="Créer dans PrestaShop" Height="23" HorizontalAlignment="Right" Margin="0,0,6,6" Name="buttonCreatePsAttributeGroup" VerticalAlignment="Bottom" Width="196">
+                                <Button.Style>
+                                    <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}">
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding ElementName=TextboxNewAttributeGroup, Path=IsFocused}" Value="True" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Button.IsDefault" Value="True" />
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Header="Liste des attributs" HorizontalAlignment="Left" Margin="305,34,0,6" Name="groupBoxListAttribute" Width="327">
+                        <Grid>
+                            <TextBox Name="TextboxFilterPsAttributeLang" Text="{Binding SelectedPsAttributeGroupLang.FilterPsAttributeLang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Margin="4,4,36,0" />
+                            <Button Name="ButtonFilterPsAttributeLang" AutomationProperties.Name="Filtrer" Click="ButtonFilterPsAttributeLang_Click" Height="24" Margin="0,4,4,0" Width="28" VerticalAlignment="Top" HorizontalAlignment="Right">
+                                <Button.Content>
+                                    <Image Source="/PRESTACONNECT;component/img/recherche.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+                                </Button.Content>
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding ElementName=TextboxFilterPsAttributeLang, Path=IsFocused}" Value="True" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Button.IsDefault" Value="True"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                            <ListBox Margin="4,30,4,4" Name="ListboxSelectedCompositionArticleListPsAttributeLang"
+                                                         ItemsSource="{Binding SelectedPsAttributeGroupLang.ListPsAttributeLang, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                         SelectedItem="{Binding SelectedPsAttributeGroupLang.PsAttributeLang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                         SelectionMode="Single" />
+                        </Grid>
+                    </GroupBox>
+
+                    <GroupBox Header="Ajout attribut" IsEnabled="{Binding SelectedCompositionArticle.CanEditAttribute}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,180,19,0" Height="180" Width="220">
+                        <Grid>
+                            <Label Content="Groupe d'attribut :" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="8,8,0,0" />
+                            <Label Content="{Binding SelectedPsAttributeGroupLang.Name}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="16,28,0,0" />
+
+                            <Label Content="Valeur :" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="8,58,0,0" />
+                            <TextBox Margin="8,80,6,0" Text="{Binding NewAttributeValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Name="TextboxNewAttributeValue" VerticalAlignment="Top" />
+                            <Button Content="Créer dans PrestaShop" Height="23" Margin="8,0,6,17" Name="ButtonAddNewAttribute" VerticalAlignment="Bottom" Click="ButtonAddNewAttribute_Click">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding ElementName=TextboxNewAttributeValue, Path=IsFocused}" Value="True" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Button.IsDefault" Value="True"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+			</TabItem>
+		</TabControl>
+    </Grid>
+</Window>

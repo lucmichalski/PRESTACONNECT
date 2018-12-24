@@ -1,0 +1,152 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+	x:Class="PRESTACONNECT.Client"
+	x:Name="Window"
+    xmlns:dg="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit"
+	Title="Client"
+	Width="1024" Height="768"
+	MinWidth="1024" MinHeight="768"
+	WindowStyle="ThreeDBorderWindow" Icon="/PRESTACONNECT;component/prestaconnect.ico" WindowStartupLocation="CenterScreen"
+	ShowInTaskbar="True"
+    Background="{DynamicResource ResourceKey=WindowBackgroundBrush}"    >
+    <Grid x:Name="LayoutRoot">
+        <Image Source="/PRESTACONNECT;component/img/customer.png" Width="48" Height="48" HorizontalAlignment="Right" Margin="0,12,8,0" VerticalAlignment="Top" d:LayoutOverrides="HorizontalAlignment, Width, Height" Grid.Column="1" />
+        <TabControl Margin="20,64,20,72">
+            <TabItem Header="Client BtoC" x:Name="TabItemClientBToC" Visibility="{Binding ExtranetOnly}">
+                <Grid>
+                    <Label Content="Liste des derniers clients inscrits :" HorizontalAlignment="Left" Margin="60,15,0,0" VerticalAlignment="Top"/>
+                    <DataGrid Margin="20,45,20,45" x:Name="DataGridClient" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" GridLinesVisibility="None" HeadersVisibility="Column" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id" x:Name="DataGridTexBoxColumnId" Binding="{Binding id_customer}" Width="auto" />
+                            <DataGridTextColumn Header="Nom" x:Name="DataGridTexBoxColumnNom" Binding="{Binding lastname}" Width=".20*" />
+                            <DataGridTextColumn Header="Prénom" x:Name="DataGridTexBoxColumnPrenom" Binding="{Binding firstname}" Width=".20*" />
+                            <DataGridTextColumn Header="Adresse e-mail" x:Name="DataGridTexBoxColumnEmail" Binding="{Binding email}" Width=".20*" />
+                            <DataGridTextColumn Header="Inscription" x:Name="DataGridTexBoxColumnInscription" Binding="{Binding date_add, ConverterCulture=fr}"  Width=".20*" />
+                            <DataGridTextColumn Header="Compte Sage" x:Name="DataGridTexBoxColumnCompteSage" Binding="{Binding CompteSage}" Width=".20*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Label x:Name="LabelClientCentralisateur" Content="" HorizontalAlignment="Left" MinWidth="50" MinHeight="20" Margin="60,0,0,15" VerticalAlignment="Bottom"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Client BtoB" x:Name="TabItemClientBToB" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40.*" MinHeight="120" />
+                        <RowDefinition Height="60.*" MinHeight="240"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="400" MinWidth="400" MaxWidth="600" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <GroupBox Header="Client(s) Prestashop non mappé(s)" Margin="4,4,8,6" >
+                        <Grid>
+                            <ListBox Margin="0,30,0,0" SelectionMode="Single" Name="listBoxBTOBCustomerPrestashop" SelectionChanged="ComboBoxBTOBCustomerPrestashop_SelectionChanged" />
+                            <TextBox HorizontalAlignment="Stretch" Name="textBoxFiltrePrestashopCustomer" VerticalAlignment="Top" Margin="0,4,84,0" />
+                            <Button Content="Rechercher" Cursor="Hand" HorizontalAlignment="Right" Name="ButtonSearchPrestashopCustomer" VerticalAlignment="Top" Width="80" Height="24" Margin="0,4,0,0" Click="ButtonSearchPrestashopCustomer_Click" />
+                        </Grid>
+                    </GroupBox>
+
+                    <GroupBox Header="Client(s) Sage" Name="GroupBoxSageCustomer" Margin="4,6,8,0" Grid.Row="1">
+                        <Grid>
+                            <Label Content="Numéro commençant par :" HorizontalAlignment="Left" Margin="8,4,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="TextBoxBTOBCustomerBegin" Margin="32,20,64,0" TextWrapping="Wrap" VerticalAlignment="Top" MaxLength="17" />
+                            <Label Content="Intitulé compte tiers contenant :" HorizontalAlignment="Left" Margin="8,44,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="TextBoxBTOBCustomerIntitule" Margin="32,60,64,0" TextWrapping="Wrap" VerticalAlignment="Top" MaxLength="35" />
+                            <Label Content="E-mail client ou adresse livraison contenant :" HorizontalAlignment="Left" Margin="8,84,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="TextBoxBTOBCustomerEmail" Margin="32,100,64,0" TextWrapping="Wrap" VerticalAlignment="Top" MaxLength="69" />
+
+                            <Button Content="Rechercher" x:Name="ButtonSearchSageCustomer" HorizontalAlignment="Left" Margin="32,126,0,0" VerticalAlignment="Top" Width="91" Height="22" Cursor="Hand" Click="ButtonSearchCustomer_Click" d:LayoutOverrides="VerticalAlignment" />
+
+                            <ListBox SelectionMode="Single" Margin="0,150,0,0" Name="listBoxBTOBCustomerSage" SelectionChanged="listBoxBTOBCustomerSage_SelectionChanged" />
+                            
+                            <Button Content="Associer" x:Name="ButtonLinkAccount" HorizontalAlignment="Right" Margin="0,126,6,0" VerticalAlignment="Top" Width="91" Height="22" Cursor="Hand" Click="ButtonButtonLinkAccount_Click" d:LayoutOverrides="VerticalAlignment" />
+                        </Grid>
+                    </GroupBox>
+
+                    <DataGrid Margin="4,33,4,4" Grid.RowSpan="2" VerticalAlignment="Stretch" x:Name="DataGridCustomerBTOB" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" GridLinesVisibility="None" HeadersVisibility="Column" Grid.Column="1" Height="auto">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="N° Prestashop" x:Name="DataGridTexBoxColumnPrestashopCustomerId" Binding="{Binding Pre_Numero}" Width="23.*" />
+                            <DataGridTextColumn Header="Client Prestashop" x:Name="DataGridTexBoxColumnPrestashopCustomer" Binding="{Binding Pre_Name}" Width="37.*" />
+                            <DataGridTextColumn Header="N° Sage" x:Name="DataGridTexBoxColumnSageCT_Num" Binding="{Binding Sag_Numero}" Width="25.*" />
+                            <DataGridTextColumn Header="Client Sage" x:Name="DataGridTexBoxColumnSageCT_Intitule" Binding="{Binding Sag_Name}" Width="35.*" />
+                            <DataGridTemplateColumn Header="Supprimer" Width="80">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button x:Name="DataGridBTOBCustomerButtonDelete" Click="DataGridBTOBCustomerButtonDelete_Click">Supprimer</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+
+                    <GridSplitter 
+                        ResizeDirection="Rows" Grid.Column="0" Grid.ColumnSpan="1" 
+                        Grid.Row="1" Width="Auto" Margin="4,-2,8,0" Height="4" 
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Top" 
+                        Background="{DynamicResource ResourceKey=NormalBrush}"
+                        />
+
+                    <GridSplitter HorizontalAlignment="Right" VerticalAlignment="Stretch" 
+                                  AutomationProperties.Name="Délimiteur amovible" 
+                                  Grid.RowSpan="2" Grid.Column="0" Margin="0,4,1,4" ResizeBehavior="CurrentAndNext" 
+                                  Width="3" Background="{DynamicResource ResourceKey=NormalBrush}" />
+
+                    <TextBox HorizontalAlignment="Stretch" Margin="4,6,90,0" Name="textBoxFiltreBtoBList" VerticalAlignment="Top" Grid.Column="1" />
+                    <Button Content="Filtrer" Cursor="Hand" Height="24" HorizontalAlignment="Right" Margin="0,6,4,0" Name="ButtonFiltrerBtoBList" VerticalAlignment="Top" Width="80" Grid.Column="1" Click="ButtonFiltrerBtoBList_Click" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Transfert de Sage vers Prestashop">
+                <Grid>
+                    <Label Content="Numéro client commençant par :" HorizontalAlignment="Left" Margin="50,20,0,0" Name="labelNumClient" VerticalAlignment="Top" Width="187" />
+                    <TextBox HorizontalAlignment="Left" Margin="248,16,0,0" Name="TextBoxSageToPrestashopNumero" VerticalAlignment="Top" Width="231" />
+
+                    <Label Content="Intitulé compte client contenant :" HorizontalAlignment="Left" Margin="50,52,0,0" Name="labelIntituleClient" VerticalAlignment="Top" Width="187" />
+                    <TextBox HorizontalAlignment="Left" Margin="248,48,0,0" Name="TextBoxSageToPrestashopIntitule" VerticalAlignment="Top" Width="231" />
+
+                    <Label Content="Groupe de client" HorizontalAlignment="Left" Margin="50,83,0,0" Name="LabGroupeClient" VerticalAlignment="Top" />
+                    <ListBox HorizontalAlignment="Left" Margin="248,78,0,0" Name="CbGroupeClient" DisplayMemberPath="ComboText" VerticalAlignment="Top" Width="370" SelectionChanged="CbGroupeClient_SelectionChanged" Height="111" />
+
+                    <Button Content="Rechercher" x:Name="ButtonSearchSageToPrestashop" HorizontalAlignment="Left" Margin="641,103,0,0" VerticalAlignment="Top" Width="134" Height="38" Cursor="Hand" Click="ButtonSearchSageToPrestashop_Click" d:LayoutOverrides="VerticalAlignment" />
+
+                    <Label Content="Client Sage :" HorizontalAlignment="Left" Margin="50,201,0,0" VerticalAlignment="Top" />
+                    <ListBox HorizontalAlignment="Left" Margin="248,195,0,14" Name="CBClientSage" Width="370" />
+                    <Button Content="Transférer" Cursor="Hand" Height="38" HorizontalAlignment="Left" Margin="641,195,0,0" Name="BtTransfert" VerticalAlignment="Top" Width="134" Click="BtTransfert_Click" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Modules">
+                <Grid>
+                    <Button Height="44" HorizontalAlignment="Left" Margin="64,32,0,0" Name="buttonAECRepresentative" VerticalAlignment="Top" Width="241" Click="buttonAECRepresentative_Click">
+                        <Grid>
+                            <TextBlock Text="Envoyer les informations des représentants et les affectations clients" TextAlignment="Center" TextWrapping="Wrap"/>
+                        </Grid>
+                    </Button>
+                    <Button Height="44" HorizontalAlignment="Left" Margin="64,106,0,0" Name="buttonAECBalance" VerticalAlignment="Top" Width="241" Click="buttonAECBalance_Click">
+                        <Grid>
+                            <TextBlock Text="Envoyer le suivi comptable" TextAlignment="Center" TextWrapping="Wrap" />
+                        </Grid>
+                    </Button>
+
+                    <Button Visibility="{Binding ExtranetOnly}" Height="44" HorizontalAlignment="Left" Margin="64,180,0,0" Name="ButtonPortfolioCustomerEmployee" VerticalAlignment="Top" Width="241" Click="ButtonPortfolioCustomerEmployee_Click">
+                        <TextBlock Text="Mettre-à-jour les affectations clients employés" TextAlignment="Center" TextWrapping="Wrap" />
+                    </Button>
+                    <Button Visibility="{Binding ExtranetOnly}" Content="Transférer encours clients" AutomationProperties.Name="Envoyer les encours client Sage vers PrestaShop" Cursor="Hand" Height="44" HorizontalAlignment="Left" Margin="325,106,0,0" Name="ButtonOustanding" VerticalAlignment="Top" Width="241" Click="ButtonOustanding_Click" />
+                    <Button Visibility="{Binding ExtranetOnly}" Margin="64,254,0,0" Width="241" HorizontalAlignment="Left" Click="ButtonSynchroGroupCRisque_Click" Height="44" VerticalAlignment="Top">
+                        <TextBlock Text="Mettre-à-jour les groupes en fonction des codes risques" TextAlignment="Center" TextWrapping="Wrap" />
+                    </Button>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Button Visibility="{Binding ExtranetOnly}" AutomationProperties.Name="Synchroniser les clients et adresses vers Sage" x:Name="ButtonSync" Margin="20,0,0,16" VerticalAlignment="Bottom" Height="44" Cursor="Hand" Click="ButtonSync_Click" HorizontalAlignment="Left" Width="241">
+            <TextBlock Text="Création des clients et adresses dans Sage" TextAlignment="Center" TextWrapping="Wrap" />
+        </Button>
+        <RadioButton Content="Tout" Height="16" HorizontalAlignment="Right" IsChecked="{Binding SyncFull}" Margin="0,0,166,42" VerticalAlignment="Bottom" />
+        <RadioButton Content="Jour" Height="16" HorizontalAlignment="Right" IsChecked="{Binding SyncDay}" Margin="0,0,167,21" VerticalAlignment="Bottom" />
+        <RadioButton Content="Semaine" Height="16" HorizontalAlignment="Right" IsChecked="{Binding SyncWeek}" Margin="0,0,50,42" VerticalAlignment="Bottom" />
+        <RadioButton Content="Mois" Height="16" HorizontalAlignment="Right" IsChecked="{Binding SyncMonth}" Margin="0,0,69,21" VerticalAlignment="Bottom" />
+    </Grid>
+</Window>

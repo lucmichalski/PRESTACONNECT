@@ -1,0 +1,971 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+    xmlns:local="clr-namespace:PRESTACONNECT"
+    xmlns:converter="clr-namespace:Alternetis.Windows.Converters;assembly=Alternetis.Windows"
+	x:Class="PRESTACONNECT.Article"
+	x:Name="Window"
+    xmlns:toolkit="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit"
+	Title="Article"
+	Width="1024" Height="768"
+	MinWidth="1024" MinHeight="768"
+	WindowStyle="ThreeDBorderWindow" Icon="/PRESTACONNECT;component/prestaconnect.ico" WindowStartupLocation="CenterScreen"
+    ShowInTaskbar="True"
+    Background="{DynamicResource ResourceKey=WindowBackgroundBrush}" Loaded="Window_Loaded" xmlns:my="clr-namespace:PRESTACONNECT.View" Closing="Window_Closing">
+    <Window.Resources>
+        <converter:IsNullConverter x:Key="IsNull"/>
+    </Window.Resources>
+    <Grid x:Name="LayoutRoot" >
+        <Image Margin="18,18,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="32" Height="32" Source="{Binding Item.Local.ImageTypeArticle}" ToolTip="{Binding Item.Local.TypeArticleString}"/>
+        <Label VerticalAlignment="Top" HorizontalAlignment="Left" Margin="64,24,100,0" FontSize="14" Content="{Binding Item.Name}" />
+        <!--<Label VerticalAlignment="Top" HorizontalAlignment="Left" Margin="48,42,0,0" FontSize="14" Content="{Binding Item.Reference}" />-->
+        <TabControl Margin="20,64,20,66" Name="TabControlArticle" SelectionChanged="TabControl_SelectionChanged">
+            <TabItem Header="Article" x:Name="TabItemArticle">
+                <Grid>
+                    <CheckBox Content="À synchroniser" IsChecked="{Binding Path=Item.ToSync}" IsEnabled="{Binding Item.Local.CanSync}" Margin="19,30,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <CheckBox Content="Mise-à-jour des tarifs" IsChecked="{Binding Path=Item.ToSyncPrice}" IsEnabled="{Binding Item.Local.CanSyncPrice}" Margin="200,30,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+
+                    <Label Content="Référence :" HorizontalAlignment="Left" Margin="18,69,0,0" VerticalAlignment="Top" d:LayoutOverrides="GridBox" />
+                    <TextBox Text="{Binding Path=Item.Reference}" Margin="200,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" MaxLength="19" d:LayoutOverrides="GridBox" IsReadOnly="True" HorizontalAlignment="Left" Width="200" />
+                    <Label Content="Nom sur Prestashop :" HorizontalAlignment="Left" Margin="18,101,0,0" VerticalAlignment="Top" d:LayoutOverrides="GridBox" />
+                    <TextBox Text="{Binding Path=Item.Name, UpdateSourceTrigger=PropertyChanged}" Margin="200,97,44,0" TextWrapping="Wrap" VerticalAlignment="Top" MaxLength="128" d:LayoutOverrides="GridBox" />
+                    <Label Content="Code barre EAN :" HorizontalAlignment="Left" Margin="18,134,0,0" VerticalAlignment="Top" d:LayoutOverrides="GridBox" />
+                    <TextBox Text="{Binding Path=Item.EAN, UpdateSourceTrigger=PropertyChanged}" Margin="200,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" MaxLength="13" d:LayoutOverrides="GridBox" HorizontalAlignment="Left" Width="200" />
+
+                    <Label Content="Balise title :" HorizontalAlignment="Left" Margin="19,179,0,0" d:LayoutOverrides="GridBox" RenderTransformOrigin="0.118,-0.925" VerticalAlignment="Top" />
+                    <TextBox Text="{Binding Path=Item.MetaTitle, UpdateSourceTrigger=PropertyChanged}" Margin="200,175,44,0" TextWrapping="Wrap" MaxLength="70" d:LayoutOverrides="GridBox" VerticalAlignment="Top" />
+                    <Label Content="Meta Description :" HorizontalAlignment="Left" Margin="19,208,0,0" VerticalAlignment="Top" d:LayoutOverrides="GridBox" />
+                    <TextBox Text="{Binding Path=Item.MetaDescription, UpdateSourceTrigger=PropertyChanged}" Margin="200,204,44,0" TextWrapping="Wrap" MaxLength="160" d:LayoutOverrides="GridBox" Height="64" VerticalAlignment="Top"/>
+                    <Label Content="Meta mots clefs :" HorizontalAlignment="Left" Margin="19,278,0,0" d:LayoutOverrides="GridBox" VerticalAlignment="Top"/>
+                    <TextBox Text="{Binding Path=Item.MetaKeyword, UpdateSourceTrigger=PropertyChanged}" Margin="200,274,44,0" TextWrapping="Wrap" MaxLength="255" d:LayoutOverrides="GridBox" Height="64" VerticalAlignment="Top" />
+                    <Label Content="Url simplifiée :" HorizontalAlignment="Left" Margin="19,348,0,0" VerticalAlignment="Top" TabIndex="15" d:LayoutOverrides="GridBox"/>
+                    <TextBox Text="{Binding Path=Item.LinkRewrite, UpdateSourceTrigger=PropertyChanged}" Margin="200,344,44,0" TextWrapping="Wrap" MaxLength="128" VerticalAlignment="Top" d:LayoutOverrides="GridBox" />
+
+                    <CheckBox IsChecked="{Binding Path=Item.IsOnSale}" Content="En solde" HorizontalAlignment="Left" Margin="19,384,0,0" VerticalAlignment="Top" Cursor="Hand"/>
+                    <CheckBox IsChecked="{Binding Path=Item.ToActive}" Content="Actif" HorizontalAlignment="Left" Margin="139,384,0,0" VerticalAlignment="Top" Cursor="Hand"/>
+
+                    <GroupBox Visibility="{Binding Path=Item.CanDefineRedirection}" Header="Gestion de la redirection" Height="100" HorizontalAlignment="Left" Margin="19,428,0,0" Name="GroupBoxRedirection" VerticalAlignment="Top" Width="550">
+                        <Grid>
+                            <Label Content="Type de redirection : " Margin="6,10,0,0" HorizontalAlignment="Left" Width="115" Height="20" VerticalAlignment="Top" />
+                            <ComboBox ItemsSource="{Binding Path=Item.ListRedirectType}" SelectedItem="{Binding Path=Item.SelectedRedirectType}" DisplayMemberPath="Intitule" 
+                                      Height="23" Margin="142,7,26,0" Name="comboBoxListRedirectType" VerticalAlignment="Top" />
+                            <Label Content="Produit associé : " Margin="6,38,0,0" HorizontalAlignment="Left" Width="115" Height="20" VerticalAlignment="Top" />
+                            <ComboBox ItemsSource="{Binding Path=Item.ListRedirectProduct}" SelectedItem="{Binding Path=Item.SelectedRedirectProduct}" DisplayMemberPath="ComboText" 
+                                      Height="23" Margin="142,35,26,0" Name="comboBoxListRedirectedProduct" VerticalAlignment="Top" IsEnabled="{Binding Path=Item.SelectedRedirectType.CanDefineRedirectProduct}" />
+                        </Grid>
+                    </GroupBox>
+
+                    <CheckBox Content="Est un pack" IsChecked="{Binding Path=Item.IsPack}" Margin="373,384,0,0" Height="19" VerticalAlignment="Top" HorizontalAlignment="Left" Width="80" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Description" x:Name="TabItemDescription">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition MinHeight="200" />
+                        <RowDefinition MinHeight="200" />
+                    </Grid.RowDefinitions>
+                    <Label Content="Résumé :" HorizontalAlignment="Left" Margin="7,24,0,0" VerticalAlignment="Top" d:LayoutOverrides="GridBox" />
+                    <TabControl Margin="90,4,4,4" TabStripPlacement="Left">
+                        <TabItem Header="WYSIWYG" Name="TabItemWYSIWYGResume">
+                            <local:TinyMce x:Name="TinyMceResume" />
+                        </TabItem>
+                        <TabItem Header="HTML" Name="TabItemHTMLEditResume">
+                            <Grid>
+                                <TextBox Margin="0,0,0,30" Name="TextBoxInsertHTMLResume" ToolTip="Intégration directe du html faire un copier-coller" TextChanged="TextBoxInsertHTMLResume_TextChanged" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" AutoWordSelection="True" />
+                                <Button Content="Insérer dans le WYSIWYG" Height="23" HorizontalAlignment="Left" Margin="201,0,0,6" Name="buttonInsertHTMLResume" VerticalAlignment="Bottom" Width="240" Click="buttonInsertHTMLResume_Click" />
+                                <Button Content="Charger depuis le WYSIWYG" Height="23" HorizontalAlignment="Left" Margin="15,0,0,6" Name="buttonLoadHTMLResume" VerticalAlignment="Bottom" Width="180" Click="buttonLoadHTMLResume_Click" />
+
+                                <Button Content="Charger depuis la BDD" Height="23" HorizontalAlignment="Left" Margin="457,0,0,6" Name="buttonLoadDbHTMLResume" VerticalAlignment="Bottom" Width="143" Click="buttonLoadDbHTMLResume_Click" />
+                                <Button Content="Insérer dans la BDD" Height="23" HorizontalAlignment="Left" Margin="606,0,0,6" Name="buttonInsertDbHTMLResume" VerticalAlignment="Bottom" Width="141" Click="buttonInsertDbHTMLResume_Click" Visibility="Hidden" />
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Vue navigateur">
+                            <WebBrowser Name="ViewWebBrowserResume" />
+                        </TabItem>
+                    </TabControl>
+                    <!--<local:TinyMce HorizontalAlignment="Left" Margin="150,0,0,0" x:Name="TinyMcetest" VerticalAlignment="Top" HtmlContent="{Binding Path=Item.Description}" />-->
+                    <Label Content="Description :" Grid.Row="1" HorizontalAlignment="Left" Margin="7,24,0,0" d:LayoutOverrides="GridBox" VerticalAlignment="Top" />
+                    <TabControl Margin="90,4,4,4"  Grid.Row="1" TabStripPlacement="Left">
+                        <TabItem Header="WYSIWYG" Name="TabItemWYSIWYGDescription">
+                            <local:TinyMce x:Name="TinyMceDescription" />
+                        </TabItem>
+                        <TabItem Header="HTML" Name="TabItemHTMLEditDescription">
+                            <Grid>
+                                <TextBox Margin="0,0,0,30" Name="TextBoxInsertHTMLDescription" ToolTip="Intégration directe du html faire un copier-coller" TextChanged="TextBoxInsertHTMLDescription_TextChanged" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" AutoWordSelection="True" />
+                                <Button Content="Insérer dans le WYSIWYG" Height="23" HorizontalAlignment="Left" Margin="201,0,0,6" Name="buttonInsertHTMLDescription" VerticalAlignment="Bottom" Width="240" Click="buttonInsertHTMLDescription_Click" />
+                                <Button Content="Charger depuis le WYSIWYG" Height="23" HorizontalAlignment="Left" Margin="15,0,0,6" Name="buttonLoadHTMLDescription" VerticalAlignment="Bottom" Width="180" Click="buttonLoadHTMLDescription_Click" />
+
+                                <Button Content="Charger depuis la BDD" Height="23" HorizontalAlignment="Left" Margin="457,0,0,6" Name="buttonLoadDbHTMLDescription" VerticalAlignment="Bottom" Width="143" Click="buttonLoadDbHTMLDescription_Click" />
+                                <Button Content="Insérer dans la BDD" Height="23" HorizontalAlignment="Left" Margin="606,0,0,6" Name="buttonInsertDbHTMLDescription" VerticalAlignment="Bottom" Width="141" Click="buttonInsertDbHTMLDescription_Click" Visibility="Hidden" />
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Vue navigateur">
+                            <WebBrowser Name="ViewWebBrowserDescription" />
+                        </TabItem>
+                    </TabControl>
+
+                    <Button x:Name="ButtonReloadDescription" Grid.Row="1" Width="87" Height="42" Margin="5,0,0,5" VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="ButtonReloadDescription_Click" >
+                        <Grid>
+                            <TextBlock Text="Recharger descriptions" TextAlignment="Center" TextWrapping="Wrap" />
+                        </Grid>
+                    </Button>
+
+                    <GridSplitter HorizontalAlignment="Stretch" VerticalAlignment="Bottom" 
+                                  AutomationProperties.Name="Délimiteur amovible" Grid.Row="0" Margin="4,0,4,-2" Height="4"
+                                  ResizeBehavior="CurrentAndNext" Background="{DynamicResource ResourceKey=NormalBrush}" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Catégories" x:Name="TabItemCategories">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Label Content="Associer votre article à plusieurs catégories PrestaShop :" HorizontalAlignment="Left" Margin="10"  VerticalAlignment="Top"/>
+                    <TreeView Margin="2" ItemsSource="{Binding Path=Catalogs}" Grid.Row="1" SelectedItemChanged="Catalogs_SelectedItemChanged">
+                        <TreeView.ItemContainerStyle>
+                            <Style TargetType="TreeViewItem">
+                                <Setter Property="IsExpanded" Value="{Binding Path=IsDeployed, UpdateSourceTrigger=PropertyChanged}"/>
+                                <!--<Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=IsDeployed}" Value="True">
+                                        <Setter Property="IsExpanded" Value="True"/>
+                                    </DataTrigger>
+                                </Style.Triggers>-->
+                            </Style>
+                        </TreeView.ItemContainerStyle>
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Path=Children}" >
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox IsChecked="{Binding Path=ToAssociate}" Checked="CatalogAssociate_Checked" Unchecked="CatalogAssociate_Unchecked" Focusable="False" IsEnabled="{Binding Path=CanUnselect}" />
+                                    <TextBlock Text="{Binding Path=Name}">
+                                        <TextBlock.Style>
+                                            <Style>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=IsDefault}" Value="True">
+                                                        <Setter Property="TextBlock.FontWeight" Value="Bold"/>
+                                                        <Setter Property="TextBlock.FontSize" Value="14"/>
+                                                    </DataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding Path=ToActive}" Value="False"/>
+                                                        </MultiDataTrigger.Conditions>
+                                                        <Setter Property="TextBlock.FontStyle" Value="Italic"/>
+                                                        <Setter Property="TextBlock.Foreground" Value="Gray"/>
+                                                    </MultiDataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Caractéristiques" x:Name="TabItemCaracteristique">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition MinWidth="670" Width="70*" MaxWidth="1800" />
+                        <ColumnDefinition MinWidth="280" Width="30*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock FontStyle="Italic" TextWrapping="Wrap" Foreground="Black" TextAlignment="Justify" Height="66" Width="664" HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top">
+		    			Note :
+                        <LineBreak />
+                        - Prestashop ne gérant pas les dates de modifications sur les caractéristiques, celles-ci seront écrasées lors de la synchronisation.
+                        <LineBreak />
+                        - L'import réaffectera toutes les caractéristiques pour lesquelles Sage possède une valeur et qui sont mappées.
+                    </TextBlock>
+                    <Button Height="38" HorizontalAlignment="Left" Margin="6,18,0,0" Grid.Column="1"
+                                    Name="ButtonImportSageInformationLibre" VerticalAlignment="Top" Width="270" 
+                                    Click="ButtonImportSageInformationLibre_Click" AutomationProperties.Name="Importer les valeurs des statistiques et informations libres" >
+                        <Button.Content>
+                            <TextBlock Text="Importer les valeurs des statistiques et informations libres" TextWrapping="Wrap" TextAlignment="Center" />
+                        </Button.Content>
+                    </Button>
+                    <toolkit:DataGrid  x:Name="DataGridFeature" CanUserAddRows="False" ItemsSource="{Binding ListFeature}" 
+                                CanUserDeleteRows="False" AutoGenerateColumns="False" SelectedItem="{Binding SelectedFeature}" 
+                                SelectionMode="Single" GridLinesVisibility="None" HeadersVisibility="Column" 
+                                AlternatingRowBackground="Gainsboro" Margin="0,78,0,0" SelectionChanged="DataGridFeature_SelectionChanged">
+                        <toolkit:DataGrid.Columns>
+                            <toolkit:DataGridTextColumn Header="Caractéristique" Binding="{Binding Name}" IsReadOnly="True" x:Name="DataGridTexBoxColumnFeatureName" Width="20*" />
+                            <!--<toolkit:DataGridTextColumn Header="Updated ?" Binding="{Binding HasUpdated, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="10.*" />-->
+                            <toolkit:DataGridTextColumn Header="Valeur prédéfinie" Binding="{Binding PsFeatureValueLang}" IsReadOnly="True" x:Name="DataGridTexBoxColumnFeatureValueLang" Width="20*" />
+                            <!--<toolkit:DataGridTemplateColumn Header="Valeur prédéfinie" Width="20*">
+                                <toolkit:DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=PsFeatureValueLang, UpdateSourceTrigger=PropertyChanged}" Margin="2"/>
+                                    </DataTemplate>
+                                </toolkit:DataGridTemplateColumn.CellTemplate>
+                                <toolkit:DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <ComboBox ItemsSource="{Binding ListPsFeatureValueLang, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" 
+                                                  DisplayMemberPath="Value" SelectedItem="{Binding Path=PsFeatureValueLang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                  />
+                                    </DataTemplate>
+                                </toolkit:DataGridTemplateColumn.CellEditingTemplate>
+                            </toolkit:DataGridTemplateColumn>-->
+                            <toolkit:DataGridTextColumn Header="Valeur personnalisée" Width="20*" Binding="{Binding Path=CustomValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <toolkit:DataGridTextColumn.EditingElementStyle>
+                                    <Style TargetType="TextBox">
+                                        <Setter Property="MaxLength" Value="255"/>
+                                    </Style>
+                                </toolkit:DataGridTextColumn.EditingElementStyle>
+                            </toolkit:DataGridTextColumn>
+                            <toolkit:DataGridTemplateColumn Header="Supprimer" Width="100" >
+                                <toolkit:DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button x:Name="DataGridButtonFeatureDelete" Click="DataGridFeatureButtonDelete_Click" >Supprimer</Button>
+                                    </DataTemplate>
+                                </toolkit:DataGridTemplateColumn.CellTemplate>
+                            </toolkit:DataGridTemplateColumn>
+                        </toolkit:DataGrid.Columns>
+                    </toolkit:DataGrid>
+
+                    <TextBox Height="23" Text="{Binding SelectedFeature.FilterPsFeatureValueLang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="6,78,40,0" Name="TextBoxFilterPsFeatureValueLang" VerticalAlignment="Top" Grid.Column="1" />
+                    <Button Name="ButtonFilterPsFeatureValueLang" AutomationProperties.Name="Filtrer" Click="ButtonFilterPsFeatureValueLang_Click" Height="24" Margin="0,77,6,0" Width="28" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="1">
+                        <Button.Content>
+                            <Image Source="/PRESTACONNECT;component/img/recherche.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+                        </Button.Content>
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding ElementName=TextBoxFilterPsFeatureValueLang, Path=IsFocused}" Value="True" />
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Button.IsDefault" Value="True"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <!--<toolkit:DataGrid x:Name="DataGridFeatureValue" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" 
+                                      ItemsSource="{Binding SelectedFeature.ListPsFeatureValueLang, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                                      SelectedItem="{Binding SelectedFeature.PsFeatureValueLang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      SelectionMode="Single" GridLinesVisibility="None" IsReadOnly="True" HeadersVisibility="None"
+                                      Margin="6,108,6,6"  Grid.Column="1" >
+                        <toolkit:DataGrid.Columns>
+                            <toolkit:DataGridTextColumn Header="Valeur prédéfinie" Binding="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="DataGridTexBoxColumnFeatureValue" />
+                        </toolkit:DataGrid.Columns>
+                    </toolkit:DataGrid>-->
+
+                    <ListBox x:Name="ListBoxFeatureValue"
+                            ItemsSource="{Binding SelectedFeature.ListPsFeatureValueLang, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                            SelectedItem="{Binding SelectedFeature.PsFeatureValueLang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            SelectionMode="Single" Margin="6,108,6,6"  Grid.Column="1" />
+
+                    <GridSplitter HorizontalAlignment="Left" VerticalAlignment="Stretch" 
+                          AutomationProperties.Name="Délimiteur amovible"
+                      Grid.Column="1" Margin="1,78,0,2"  ResizeBehavior="PreviousAndCurrent"
+                      Width="3" Background="#6F6FB5E5" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Images" x:Name="TabItemImage">
+                <Grid>
+                    <DataGrid Margin="326,28,18,36" x:Name="DataGridImage" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" GridLinesVisibility="None" HeadersVisibility="Column" d:LayoutOverrides="Height" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Position" x:Name="DataGridTexBoxColumnImagePosition" Binding="{Binding ImaArt_Position}" Width="60">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTemplateColumn Header="Image" IsReadOnly="True" x:Name="DataGridTexBoxColumnImageImage">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Source="{Binding SmallImageTempPath}" Width="45" ToolTip="{Binding ImaArt_Id}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Défaut" IsReadOnly="True" x:Name="DataGridTexBoxColumnImageDefault">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Source="{Binding isDefaultImage}" Width="24" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Légende" IsReadOnly="True" x:Name="DataGridTexBoxColumnImageLegend" Binding="{Binding ImaArt_Name}" Width="150.*" >
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <!--<DataGridTextColumn Header="Source" IsReadOnly="True" x:Name="DataGridTexBoxColumnImageSource" Binding="{Binding ImaArt_SourceFile}" MinWidth="120"  Width="20.*" >
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>-->
+                            <DataGridTemplateColumn Header="Supprimer" Width="100" MinWidth="80" >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button x:Name="DataGridButtonDelete" Click="DataGridImageButtonDelete_Click" >Supprimer</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <GroupBox Header="Ajouter une image" Height="380" HorizontalAlignment="Left" Margin="18,28,0,0" VerticalAlignment="Top" Width="290">
+                        <Grid>
+                            <Button Content="Parcourir" x:Name="ButtonArticleImage" HorizontalAlignment="Left" Margin="19,17,0,0" VerticalAlignment="Top" Width="75" Height="24" Click="ButtonArticleImage_Click" />
+                            <Label Content="Fichier sélectionné :" HorizontalAlignment="Left" Margin="19,65,0,0" VerticalAlignment="Top" />
+                            <Image x:Name="ImageArticleImage" Source="..\Img\img.jpg" Width="48" Height="48" Margin="174,33,0,0" HorizontalAlignment="Left" d:LayoutOverrides="Width, Height" VerticalAlignment="Top" />
+                            <Label Content="Légende :" HorizontalAlignment="Left" Margin="19,95,0,0" VerticalAlignment="Top" />
+                            <TextBox HorizontalAlignment="Left" Margin="19,117,0,122" TextWrapping="Wrap" x:Name="TextBoxArticleImageLegend" Width="240" MaxLength="128" />
+                            <Label Content="Position (si disponible) :" HorizontalAlignment="Left" Margin="19,0,0,92" VerticalAlignment="Bottom" />
+                            <my:NumericUpDown HorizontalAlignment="Left" Margin="174,0,0,88" x:Name="numericUpDownImagePosition" VerticalAlignment="Bottom" Maximum="9999" Width="56" Minimum="1" Value="1" />
+                            <CheckBox Content="Définir comme image par défaut" HorizontalAlignment="Left" Margin="19,0,0,58" Name="checkBoxImageDefaut" VerticalAlignment="Bottom" />
+                            <Button Content="Ajouter cette image" Height="24" HorizontalAlignment="Left" Margin="19,0,0,14" Name="buttonAjoutImage" VerticalAlignment="Bottom" Width="240" Click="buttonAjoutImage_Click" />
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Documents" x:Name="TabItemDocument">
+                <Grid>
+                    <Label Content="Fichier" HorizontalAlignment="Left" Margin="24,26,0,0" VerticalAlignment="Top"/>
+                    <TextBox HorizontalAlignment="Left" Margin="142,18,0,0" IsReadOnly="True" x:Name="TextBoxArticleAttachmentFileName" Width="290" Height="24" VerticalAlignment="Top" />
+                    <Button Content="Parcourir" x:Name="ButtonArticleAttachment" HorizontalAlignment="Left" Margin="357,48,0,0" VerticalAlignment="Top" Width="75" Height="24" Click="ButtonArticleAttachment_Click" d:LayoutOverrides="HorizontalAlignment" />
+                    <Label Content="Nom :" HorizontalAlignment="Left" Margin="24,86,0,0" VerticalAlignment="Top"/>
+                    <TextBox HorizontalAlignment="Left" Margin="142,78,0,0" TextWrapping="Wrap" x:Name="TextBoxArticleAttachmentName" VerticalAlignment="Top" Width="290" MaxLength="128" />
+                    <Label Content="Description :" HorizontalAlignment="Left" Margin="24,127,0,0" VerticalAlignment="Top"/>
+                    <TextBox HorizontalAlignment="Left" Margin="142,119,0,0" TextWrapping="Wrap" x:Name="TextBoxArticleAttachmentDescription" Width="290" Height="91" VerticalAlignment="Top" />
+                    <DataGrid Margin="24,229,24,24" x:Name="DataGridAttachment" CanUserAddRows="False" 
+                              CanUserDeleteRows="False" AutoGenerateColumns="False" IsReadOnly="True"
+                              SelectionMode="Single" GridLinesVisibility="None" HeadersVisibility="Column">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Nom" IsReadOnly="True" x:Name="DataGridTexBoxColumnAttachmentName" Binding="{Binding Att_Name}" Width="20*" />
+                            <DataGridTextColumn Header="Type MIME" IsReadOnly="True" x:Name="DataGridTexBoxColumnAttachmentMime" Binding="{Binding Att_Mime}" Width="20*" />
+                            <DataGridTextColumn Header="Description" IsReadOnly="True" x:Name="DataGridTexBoxColumnAttachmentDescription" Binding="{Binding Att_Description}" Width="40*" />
+                            <DataGridTextColumn Header="Fichier source" IsReadOnly="True" x:Name="DataGridTexBoxColumnAttachmentFileName" Binding="{Binding Att_FileName}" Width="20*" />
+                            <DataGridTemplateColumn Header="Supprimer" Width="100" >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button x:Name="DataGridButtonAttachementDelete" Click="DataGridAttachmentButtonDelete_Click" >Supprimer</Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Gamme" x:Name="TabItemGamme">
+                <Grid>
+                    <Label Content="Gamme 1 :" HorizontalAlignment="Left" Margin="20,24,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="LabelAttributeGroup1" Content="Gamme non importée" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="83,24,0,0" />
+
+                    <Label Content="Gamme 2 :" HorizontalAlignment="Left" Margin="384,24,0,0" VerticalAlignment="Top" />
+                    <Label x:Name="LabelAttributeGroup2" Content="Gamme non importée" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="447,24,0,0" />
+
+                    <DataGrid Margin="20,60,20,220" ItemsSource="{Binding ListAttributeArticle}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedAttributeArticle}"
+                              CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" GridLinesVisibility="None" HeadersVisibility="Column" SelectionMode="Single" >
+                        <DataGrid.Resources>
+                            <local:BindingProxy x:Key="proxy" Data="{Binding}" />
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Réf gamme" Width="20*" Binding="{Binding EnumereF_ARTENUMREF.AE_Ref}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Énuméré gamme 1" Width="30*" Binding="{Binding EnumereGamme1.EG_Enumere}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Valeur liée PrestaShop" Width="30*" Binding="{Binding AttributeLang1.Name}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Énuméré gamme 2" Width="30*" Binding="{Binding EnumereGamme2.EG_Enumere}" IsReadOnly="True" Visibility="{Binding Data.ShowGamme2Column, Source={StaticResource proxy}}" />
+                            <DataGridTextColumn Header="Valeur liée PrestaShop" Width="30*" Binding="{Binding AttributeLang2.Name}" IsReadOnly="True" Visibility="{Binding Data.ShowGamme2Column, Source={StaticResource proxy}}" />
+                            <DataGridTemplateColumn Header="Déclinaison par défaut" Width="10*" MinWidth="130">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <RadioButton HorizontalAlignment="Center" GroupName="Attribute_Default" IsChecked="{Binding AttArt_Default, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Actif/Inactif" Width="5*" MinWidth="72">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Name="CheckAttributeArticleActive" HorizontalAlignment="Center" IsChecked="{Binding Path=AttArt_Active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Data.EnableGammeActiveColumn, Source={StaticResource proxy}}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="À Synchroniser" Width="5*" MinWidth="90">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Name="CheckArticleSync" HorizontalAlignment="Center" IsChecked="{Binding Path=AttArt_Sync, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Supprimer" Width="64" CanUserResize="False">
+                                <DataGridTemplateColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <Button Content=" Supprimer " ToolTip="Supprimer tous les éléments" MinWidth="62" Margin="-5,-11,-5,-11" HorizontalContentAlignment="Center" Click="DeleteAllAttributeArticle_Click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.HeaderTemplate>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Name="DeleteAttributeArticle" Content=" Supprimer " HorizontalAlignment="Center" Click="DeleteAttributeArticle_Click" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Content="Importer les gammes manquantes" Name="ButtonImportAttributeArticle" Height="38" HorizontalAlignment="Left" Margin="20,0,0,20" VerticalAlignment="Bottom" Width="261" Click="ButtonImportAttributeArticle_Click"/>
+
+                    <Label Content="{Binding LabelAttachAttributeArticleImage}" Margin="23,0,0,192" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                    <ListBox Name="ListBoxArticleImageGamme" Margin="20,0,20,66" Height="120" VerticalAlignment="Bottom" Style="{x:Null}" 
+                          ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                          ItemsSource="{Binding Path=ListArticleImageGamme}" SelectedItem="{Binding SelectedArticleImageGamme}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Width="64" MaxWidth="64" Height="auto" Background="{Binding color}" ToolTip="Veuillez sélectionner l'image avant de pouvoir gérer son affectation." >
+                                    <Image Source="{Binding SmallImageTempPath}" MaxWidth="60" Margin="2,2,2,0" VerticalAlignment="Top" IsHitTestVisible="False" Focusable="False" />
+                                    <CheckBox IsChecked="{Binding AttachedToAttributeArticle}" IsHitTestVisible="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}" Padding="-20" Margin="0,64,0,4" HorizontalAlignment="Center" Checked="CheckBoxAttachToAttributeArticle_Checked" Unchecked="CheckBoxAttachToAttributeArticle_Checked" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <Border Name="_Border"
+                                                CornerRadius="4"
+                                                Padding="2"
+                                                SnapsToDevicePixels="true">
+                                                <ContentPresenter />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsSelected" Value="true">
+                                                    <Setter TargetName="_Border" Property="Background" Value="DodgerBlue"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Conditionnement" x:Name="TabItemConditionnement">
+                <Grid>
+                    <Label Content="Conditionnement :" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,24,0,0" />
+                    <Label x:Name="LabelConditioningGroup" Content="Type de conditionnement non importé" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="130,24,0,0" />
+                    <DataGrid Margin="20,60,20,85" ItemsSource="{Binding ListConditioningArticle}" SelectedItem="{Binding SelectedConditioningArticle}" AutoGenerateColumns="False" 
+                              CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" GridLinesVisibility="None" HeadersVisibility="Column" SelectionMode="Single" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Énuméré de conditionnement" Width="30*" Binding="{Binding EnumereF_CONDITION.EC_Enumere}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Valeur liée PrestaShop" Width="30*" Binding="{Binding AttributeLang.Name}" IsReadOnly="True"/>
+                            <!--<DataGridTextColumn Header="Valeur PrestaShop" Width="30*" Binding="{Binding EnumerePsAttributeLang.Name}" IsReadOnly="True"/>-->
+                            <DataGridTemplateColumn Header="Déclinaison par défaut" Width="130">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <RadioButton HorizontalAlignment="Center" GroupName="Conditioning_Default" IsChecked="{Binding ConArt_Default, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="À Synchroniser" Width="90">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Name="CheckArticleSync" HorizontalAlignment="Center" IsChecked="{Binding Path=ConArt_Sync, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Supprimer" Width="64" CanUserResize="False">
+                                <DataGridTemplateColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <Button Content=" Supprimer " ToolTip="Supprimer tous les éléments" MinWidth="62" Margin="-5,-11,-5,-11" HorizontalContentAlignment="Center" Click="DeleteAllConditioningArticle_Click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.HeaderTemplate>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Name="DeleteConditioningArticle" Content=" Supprimer " HorizontalAlignment="Center" Click="DeleteConditioningArticle_Click" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Content="Importer les conditionnements" Name="ButtonImportConditioningArticle" Height="38" HorizontalAlignment="Left" Margin="20,0,0,20" VerticalAlignment="Bottom" Width="200" Click="ButtonImportConditioningArticle_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Composition" x:Name="TabItemComposition">
+                <Grid>
+                    <TabControl Margin="12" Name="tabControlComposition">
+                        <TabItem Header="Groupes d'attributs" Name="TabItemCompositionAttributeGroup">
+                            <Grid IsEnabled="{Binding Path=CanDefineCompositionArticleAttributeGroup}">
+                                <Label Content="Groupe d'attributs existants :" HorizontalAlignment="Left" Margin="32,24,0,0" VerticalAlignment="Top" />
+                                <ListBox ItemsSource="{Binding ListFreePsAttributeGroupLang}" SelectedItem="{Binding SelectedFreePsAttributeGroupLang}" DisplayMemberPath="Name" HorizontalAlignment="Left" Margin="32,48,0,32" Name="listBoxPsAttributeGroup" Width="250" MouseDoubleClick="listBoxPsAttributeGroup_MouseDoubleClick" />
+
+                                <Button Content="Ajouter" Height="60" HorizontalAlignment="Left" Margin="288,48,0,0" Name="buttonAddCompositionAttributeGroup" VerticalAlignment="Top" Width="75" Click="buttonAddCompositionAttributeGroup_Click" />
+                                <Button Content="Retirer" Height="60" HorizontalAlignment="Left" Margin="288,114,0,0" Name="buttonRemoveCompositionAttributeGroup" VerticalAlignment="Top" Width="75" Click="buttonRemoveCompositionAttributeGroup_Click" />
+
+                                <Label Content="Groupe d'attributs pour la composition :" HorizontalAlignment="Left" Margin="369,24,0,0" VerticalAlignment="Top" />
+                                <ListBox ItemsSource="{Binding ListAttachPsAttributeGroupLang}" SelectedItem="{Binding SelectedAttachPsAttributeGroupLang}" DisplayMemberPath="Name" HorizontalAlignment="Left" Margin="369,48,0,32" Name="listBoxCompositionAttributeGroup" Width="250" MouseDoubleClick="listBoxCompositionAttributeGroup_MouseDoubleClick" />
+
+                                <GroupBox Header="Créer un nouveau groupe d'attribut" Height="126" HorizontalAlignment="Right" Margin="0,48,32,0" Name="groupBoxCreateAttributeGroup" VerticalAlignment="Top" Width="220">
+                                    <Grid>
+                                        <Label Content="Nom" HorizontalAlignment="Left" Margin="6,7,0,0" VerticalAlignment="Top" />
+                                        <TextBox Text="{Binding NewAttributeGroupName}" Name="TextboxNewAttributeGroup" Height="23" Margin="6,29,6,0" VerticalAlignment="Top" MaxLength="64" />
+                                        <Button Content="Créer dans PrestaShop" Height="23" HorizontalAlignment="Right" Margin="0,0,6,6" Name="buttonCreatePsAttributeGroup" VerticalAlignment="Bottom" Width="196" Click="buttonCreatePsAttributeGroup_Click">
+                                            <Button.Style>
+                                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                                    <Style.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding ElementName=TextboxNewAttributeGroup, Path=IsFocused}" Value="True" />
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Button.IsDefault" Value="True"/>
+                                                        </MultiDataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                        </Button>
+                                    </Grid>
+                                </GroupBox>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Détail de la composition" Name="TabItemCompositionArticle" IsEnabled="{Binding Path=Item.CanDefineCompositionArticle}">
+                            <Grid>
+                                <TabControl>
+                                    <TabItem Header="Déclinaisons de la composition">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition MinHeight="200" Height="55.*" />
+                                                <RowDefinition MinHeight="200" Height="45.*" />
+                                            </Grid.RowDefinitions>
+
+                                            <Grid Margin="4,4,4,0" VerticalAlignment="Top">
+                                                <Label Content="Référence Sage :" HorizontalAlignment="Left" Margin="6,4,0,0" VerticalAlignment="Top" />
+                                                <TextBox HorizontalAlignment="Left" Margin="100,0,0,0" Text="{Binding FastSelectionReferenceComposition, Mode=TwoWay}" Name="TextBoxFastSelectionReferenceComposition" VerticalAlignment="Top" Width="120" />
+
+                                                <Label Content="Désignation Sage :" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="240,4,0,0" />
+                                                <TextBox HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding FastSelectionDesignationComposition, Mode=TwoWay}" Name="TextBoxFastSelectionDesignationComposition" Width="150" Margin="344,0,0,0" />
+
+                                                <Label Content="Gamme/Conditionnement :" HorizontalAlignment="Left" Margin="514,4,0,0" VerticalAlignment="Top" />
+                                                <TextBox HorizontalAlignment="Left" Margin="664,0,0,0" Text="{Binding FastSelectionAttributeComposition, Mode=TwoWay}" Name="TextBoxFastSelectionAttributeComposition" VerticalAlignment="Top" Width="120" />
+
+                                                <Button Content="Sélection rapide" x:Name="FastSelectionComposition" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100" Margin="798,0,0,0" Click="FastSelectionComposition_Click" />
+                                            </Grid>
+                                            <toolkit:DataGrid Margin="4,30,4,4" AutoGenerateColumns="False" EnableRowVirtualization="False" Name="dataGridCompositionArticle" ItemsSource="{Binding ListCompositionArticle}" SelectedItem="{Binding SelectedCompositionArticle}"
+                                                      CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" GridLinesVisibility="None" HeadersVisibility="Column" SelectionMode="{Binding CompositionSelectionMode}" AlternatingRowBackground="Gainsboro">
+                                                <toolkit:DataGrid.RowStyle>
+                                                    <Style TargetType="toolkit:DataGridRow">
+                                                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                                        <Setter Property="Background" Value="{Binding Background, Mode=TwoWay}" />
+                                                    </Style>
+                                                </toolkit:DataGrid.RowStyle>
+                                                <toolkit:DataGrid.Resources>
+                                                    <local:BindingProxy x:Key="proxy" Data="{Binding}" />
+                                                </toolkit:DataGrid.Resources>
+                                                <toolkit:DataGrid.Columns>
+                                                    <toolkit:DataGridTextColumn Header="Référence" IsReadOnly="True" Width="10*" Binding="{Binding Path=F_ARTICLE_Composition.AR_Ref}"/>
+                                                    <toolkit:DataGridTextColumn Header="Désignation" IsReadOnly="True" Width="20*" Binding="{Binding Path=F_ARTICLE_Composition.AR_Design}"/>
+                                                    <toolkit:DataGridTextColumn Visibility="{Binding Data.ShowAttributeColumn, Source={StaticResource proxy}}" Header="Gamme" IsReadOnly="True" Width="15*" Binding="{Binding Path=F_ARTICLE_Composition.Gamme}"/>
+                                                    <toolkit:DataGridTextColumn Visibility="{Binding Data.ShowConditioningColumn, Source={StaticResource proxy}}" Header="Conditionnement" IsReadOnly="True" Width="15*" Binding="{Binding Path=F_ARTICLE_Composition.Conditionnement}"/>
+                                                    <!--<toolkit:DataGridTextColumn Header="Qté Sage" Width="60" Binding="{Binding ComArt_Quantity, StringFormat=F2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserResize="False" />-->
+                                                    <toolkit:DataGridTextColumn Header="Déclinaison PrestaShop" IsReadOnly="True" Width="25*" Binding="{Binding Path=Declinaison}"/>
+                                                    <toolkit:DataGridTemplateColumn Header="Par défaut" Width="72" CanUserResize="False">
+                                                        <toolkit:DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <RadioButton HorizontalAlignment="Center" GroupName="Composition_Default" IsChecked="{Binding Path=ComArt_Default, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                            </DataTemplate>
+                                                        </toolkit:DataGridTemplateColumn.CellTemplate>
+                                                    </toolkit:DataGridTemplateColumn>
+                                                    <toolkit:DataGridTemplateColumn Header="Actif/Inactif" Width="5*" MinWidth="80">
+                                                        <toolkit:DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <CheckBox Name="CheckCompositionArticleActive" HorizontalAlignment="Center" IsChecked="{Binding Path=ComArt_Active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Data.EnableCompositionActiveColumn, Source={StaticResource proxy}}" />
+                                                            </DataTemplate>
+                                                        </toolkit:DataGridTemplateColumn.CellTemplate>
+                                                    </toolkit:DataGridTemplateColumn>
+                                                    <!--<toolkit:DataGridTemplateColumn Header="À Synchroniser" Width="90" CanUserResize="False">
+                                                        <toolkit:DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <CheckBox Name="CheckArticleSync" HorizontalAlignment="Center" IsChecked="{Binding Path=ComArt_Sync, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                          IsEnabled="{Binding Path=CanSyncCompositionArticle}"/>
+                                                            </DataTemplate>
+                                                        </toolkit:DataGridTemplateColumn.CellTemplate>
+                                                    </toolkit:DataGridTemplateColumn>-->
+                                                    <toolkit:DataGridTemplateColumn Header="Supprimer" Width="72" CanUserResize="False">
+                                                        <toolkit:DataGridTemplateColumn.HeaderTemplate>
+                                                            <DataTemplate>
+                                                                <Button Content=" Supprimer " ToolTip="Supprimer tous les éléments" MinWidth="62" Margin="-5,-11,-5,-11" HorizontalContentAlignment="Center" Click="DeleteAllCompositionArticle_Click"/>
+                                                            </DataTemplate>
+                                                        </toolkit:DataGridTemplateColumn.HeaderTemplate>
+                                                        <toolkit:DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <Button Name="DeleteCompositionArticle" Content=" Supprimer " HorizontalAlignment="Center" Click="DeleteCompositionArticle_Click" />
+                                                            </DataTemplate>
+                                                        </toolkit:DataGridTemplateColumn.CellTemplate>
+                                                    </toolkit:DataGridTemplateColumn>
+                                                </toolkit:DataGrid.Columns>
+                                            </toolkit:DataGrid>
+
+                                            <Grid Grid.Row="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition MinWidth="300" Width="50.*" />
+                                                    <ColumnDefinition MinWidth="200" Width="25.*"/>
+                                                    <ColumnDefinition MinWidth="200" Width="25.*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <toolkit:DataGrid Margin="4" AutoGenerateColumns="False" Name="dataGridCompositionArticleAttribute"  AlternatingRowBackground="Gainsboro"
+                                                          ItemsSource="{Binding SelectedCompositionArticle.ListPsAttributeGroupLang}" SelectedItem="{Binding SelectedCompositionArticle.SelectedPsAttributeGroupLang}"
+                                                          CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" GridLinesVisibility="None" HeadersVisibility="Column" SelectionMode="Single" SelectionChanged="dataGridCompositionArticleAttribute_SelectionChanged">
+                                                    <toolkit:DataGrid.Columns>
+                                                        <toolkit:DataGridTextColumn Header="Groupe d'attribut" Binding="{Binding Name}" Width="50.*" IsReadOnly="True" />
+                                                        <toolkit:DataGridTextColumn Header="Valeur sélectionnée" Binding="{Binding PsAttributeLang.Name}" Width="50.*" IsReadOnly="True"/>
+                                                        <toolkit:DataGridTemplateColumn Header="G1" Width="25">
+                                                            <toolkit:DataGridTemplateColumn.CellTemplate>
+                                                                <DataTemplate>
+                                                                    <Button Content="G1" ToolTip="Créer et affecter les énumérés à partir de la gamme 1" Name="CreateAttributeByGamme1" Click="CreateAttributeByGamme1_Click"/>
+                                                                </DataTemplate>
+                                                            </toolkit:DataGridTemplateColumn.CellTemplate>
+                                                        </toolkit:DataGridTemplateColumn>
+                                                        <!--<toolkit:DataGridTemplateColumn Header="G2" Width="25">
+                                                            <toolkit:DataGridTemplateColumn.CellTemplate>
+                                                                <DataTemplate>
+                                                                    <Button Content="G2" ToolTip="Créer et affecter les énumérés à partir de la gamme 2" Name="CreateAttributeByGamme2" Click="CreateAttributeByGamme2_Click"/>
+                                                                </DataTemplate>
+                                                            </toolkit:DataGridTemplateColumn.CellTemplate>
+                                                        </toolkit:DataGridTemplateColumn>
+                                                        <toolkit:DataGridTemplateColumn Header="CD" Width="25">
+                                                            <toolkit:DataGridTemplateColumn.CellTemplate>
+                                                                <DataTemplate>
+                                                                    <Button Content="CD" ToolTip="Créer et affecter les énumérés à partir du condionnement" Name="CreateAttributeByConditioning" Click="CreateAttributeByConditioning_Click"/>
+                                                                </DataTemplate>
+                                                            </toolkit:DataGridTemplateColumn.CellTemplate>
+                                                        </toolkit:DataGridTemplateColumn>-->
+                                                    </toolkit:DataGrid.Columns>
+                                                    <toolkit:DataGrid.RowStyle>
+                                                        <Style TargetType="toolkit:DataGridRow">
+                                                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                                            <Setter Property="Background" Value="{Binding Background, Mode=TwoWay}" />
+                                                        </Style>
+                                                    </toolkit:DataGrid.RowStyle>
+                                                </toolkit:DataGrid>
+                                                <Grid Grid.Column="1" IsEnabled="{Binding SelectedCompositionArticle.CanEditAttribute}">
+                                                    <TextBox Name="TextboxFilterPsAttributeLang" Text="{Binding SelectedCompositionArticle.SelectedPsAttributeGroupLang.FilterPsAttributeLang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Margin="4,4,36,0" />
+                                                    <Button Name="ButtonFilterPsAttributeLang" AutomationProperties.Name="Filtrer" Click="ButtonFilterPsAttributeLang_Click" Height="24" Margin="0,4,4,0" Width="28" VerticalAlignment="Top" HorizontalAlignment="Right">
+                                                        <Button.Content>
+                                                            <Image Source="/PRESTACONNECT;component/img/recherche.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+                                                        </Button.Content>
+                                                        <Button.Style>
+                                                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                                                <Style.Triggers>
+                                                                    <MultiDataTrigger>
+                                                                        <MultiDataTrigger.Conditions>
+                                                                            <Condition Binding="{Binding ElementName=TextboxFilterPsAttributeLang, Path=IsFocused}" Value="True" />
+                                                                        </MultiDataTrigger.Conditions>
+                                                                        <Setter Property="Button.IsDefault" Value="True"/>
+                                                                    </MultiDataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Button.Style>
+                                                    </Button>
+                                                    <ListBox Margin="4,30,4,4" Name="ListboxSelectedCompositionArticleListPsAttributeLang"
+                                                         ItemsSource="{Binding SelectedCompositionArticle.SelectedPsAttributeGroupLang.ListPsAttributeLang, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                         SelectedItem="{Binding SelectedCompositionArticle.SelectedPsAttributeGroupLang.PsAttributeLang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                         SelectionMode="Single" SelectionChanged="ListboxSelectedCompositionArticleListPsAttributeLang_SelectionChanged" />
+                                                </Grid>
+                                                <GroupBox Header="Ajout attribut" IsEnabled="{Binding SelectedCompositionArticle.CanEditAttribute}" Grid.Column="2" Margin="4">
+                                                    <Grid>
+                                                        <Label Content="Groupe d'attribut :" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="8,8,0,0" />
+                                                        <Label Content="{Binding SelectedCompositionArticle.SelectedPsAttributeGroupLang.Name}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="16,28,0,0" />
+
+                                                        <Label Content="Valeur :" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="8,58,0,0" />
+                                                        <TextBox Margin="8,80,6,0" Text="{Binding NewAttributeValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Name="TextboxNewAttributeValue" VerticalAlignment="Top" />
+                                                        <Button Content="Créer dans PrestaShop" Height="23" Margin="8,0,6,17" Name="ButtonAddNewAttribute" VerticalAlignment="Bottom" Click="ButtonAddNewAttribute_Click">
+                                                            <Button.Style>
+                                                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                                                    <Style.Triggers>
+                                                                        <MultiDataTrigger>
+                                                                            <MultiDataTrigger.Conditions>
+                                                                                <Condition Binding="{Binding ElementName=TextboxNewAttributeValue, Path=IsFocused}" Value="True" />
+                                                                            </MultiDataTrigger.Conditions>
+                                                                            <Setter Property="Button.IsDefault" Value="True"/>
+                                                                        </MultiDataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Button.Style>
+                                                        </Button>
+                                                    </Grid>
+                                                </GroupBox>
+                                            </Grid>
+
+                                            <GridSplitter HorizontalAlignment="Stretch" VerticalAlignment="Bottom" 
+                                                          AutomationProperties.Name="Délimiteur amovible" Grid.Row="0" Margin="4,0,4,-2" Height="4"
+                                                          ResizeBehavior="CurrentAndNext" Background="{DynamicResource ResourceKey=NormalBrush}" />
+                                        </Grid>
+                                    </TabItem>
+                                    <TabItem Header="Ajouter une déclinaison" >
+                                        <Grid>
+                                            <GroupBox Header="Filtres" Height="160" Margin="6,6,6,0" Name="groupBox1" VerticalAlignment="Top">
+                                                <Grid>
+                                                    <Label Content="Famille" HorizontalAlignment="Left" Margin="199,4,0,0" VerticalAlignment="Top" />
+                                                    <ComboBox ItemsSource="{Binding ListF_FAMILLE}" DisplayMemberPath="FA_Intitule" SelectedItem="{Binding SelectedF_FAMILLE}" Height="23" HorizontalAlignment="Left" Margin="199,22,0,0" Name="comboBoxFamille" VerticalAlignment="Top" Width="180" />
+
+                                                    <Label Content="Référence" HorizontalAlignment="Left" Margin="6,55,0,0" VerticalAlignment="Top" />
+                                                    <RadioButton IsChecked="{Binding FilterReferenceContains}" Content="Contient" Height="16" HorizontalAlignment="Left" Margin="65,55,0,0" GroupName="Reference" Name="radioButtonReferenceContains" VerticalAlignment="Top" />
+                                                    <RadioButton IsChecked="{Binding FilterReferenceStartWith}" Content="Commence par" Height="16" HorizontalAlignment="Left" Margin="134,55,0,0" GroupName="Reference" Name="radioButtonReferenceStart" VerticalAlignment="Top" />
+                                                    <TextBox Text="{Binding FilterReferenceValue}" HorizontalAlignment="Left" Margin="6,73,0,0" Name="textBoxReferenceFilter" VerticalAlignment="Top" Width="227" CharacterCasing="Upper" />
+
+                                                    <Label Content="Désignation" HorizontalAlignment="Left" Margin="251,55,0,0" VerticalAlignment="Top" />
+                                                    <RadioButton IsChecked="{Binding FilterDesignationContains}" Content="Contient" Height="16" HorizontalAlignment="Left" Margin="331,55,0,0" GroupName="Designation" Name="radioButtonDesignationContains" VerticalAlignment="Top" />
+                                                    <RadioButton IsChecked="{Binding FilterDesignationStartWith}" Content="Commence par" Height="16" HorizontalAlignment="Left" Margin="411,55,0,0" GroupName="Designation" Name="radioButtonDesignationStart" VerticalAlignment="Top" />
+                                                    <TextBox Text="{Binding FilterDesignationValue}" HorizontalAlignment="Left" Margin="251,73,0,0" Name="textBoxDesignationFilter" VerticalAlignment="Top" Width="323" />
+                                                    <Button Height="28" HorizontalAlignment="Left" Margin="778,70,0,0" Name="ButtonSearchCompositionArticle" VerticalAlignment="Top" Width="100" Click="ButtonSearchCompositionArticle_Click">
+                                                        <Button.Content>
+                                                            <Grid>
+                                                                <Image Source="/PRESTACONNECT;component/Img/recherche.png" Width="16" HorizontalAlignment="Left" Margin="0"/>
+                                                                <TextBlock Text="Rechercher" Margin="22,0,0,0"/>
+                                                            </Grid>
+                                                        </Button.Content>
+                                                    </Button>
+
+                                                    <Label Content="Exclure si déjà présents :" HorizontalAlignment="Left" Margin="6,107,0,0" VerticalAlignment="Top" />
+                                                    <CheckBox IsChecked="{Binding FilterArticle}" Content="En tant qu'article" Height="16" HorizontalAlignment="Left" Margin="154,107,0,0" VerticalAlignment="Top" />
+                                                    <RadioButton IsChecked="{Binding FilterCompositionCurrent}" Content="Dans cette composition" GroupName="Exist" Height="16" HorizontalAlignment="Left" Margin="293,107,0,0" Name="radioButton2" VerticalAlignment="Top" />
+                                                    <RadioButton IsChecked="{Binding FilterCompositionAll}" Content="Dans au moins une composition" GroupName="Exist" Height="16" HorizontalAlignment="Left" Margin="448,107,0,0" Name="radioButton3" VerticalAlignment="Top" />
+                                                    <Label Content="Taxe *" FontWeight="Bold" HorizontalAlignment="Left" Margin="6,4,0,0" VerticalAlignment="Top" />
+                                                    <ComboBox DisplayMemberPath="TA_Intitule" Height="23" HorizontalAlignment="Left" ItemsSource="{Binding ListF_TAXE}" Margin="6,22,0,0" SelectedItem="{Binding SelectedF_TAXE}" VerticalAlignment="Top" Width="180" />
+                                                    <Label Content="Gamme 1" HorizontalAlignment="Left" Margin="394,4,0,0" VerticalAlignment="Top" />
+                                                    <ComboBox ItemsSource="{Binding ListP_GAMME}" SelectedItem="{Binding SelectedP_GAMME1}" Height="23" HorizontalAlignment="Left" Margin="394,22,0,0" Name="comboBoxGamme1" VerticalAlignment="Top" Width="180" />
+                                                    <Label Content="Gamme 2" HorizontalAlignment="Left" Margin="585,4,0,0" VerticalAlignment="Top" />
+                                                    <ComboBox ItemsSource="{Binding ListP_GAMME}" SelectedItem="{Binding SelectedP_GAMME2}" Height="23" HorizontalAlignment="Left" Margin="585,22,0,0" Name="comboBoxGamme2" VerticalAlignment="Top" Width="180" />
+                                                    <Label Content="Conditionnement" HorizontalAlignment="Left" Margin="585,55,0,0" VerticalAlignment="Top" />
+                                                    <ComboBox ItemsSource="{Binding ListP_CONDITIONNEMENT}" SelectedItem="{Binding SelectedP_CONDITIONNEMENT}" Height="23" HorizontalAlignment="Left" Margin="585,73,0,0" Name="comboBoxConditionnement" VerticalAlignment="Top" Width="180" />
+
+                                                    <Button Height="28" HorizontalAlignment="Left" Margin="778,19,0,0" Name="buttonInitSearch" VerticalAlignment="Top" Width="100" Click="buttonInitSearch_Click">
+                                                        <Button.Content>
+                                                            <Grid>
+                                                                <Image Source="/PRESTACONNECT;component/Resources/remove.png" Width="16" HorizontalAlignment="Left" Margin="0"/>
+                                                                <TextBlock Text="Réinitialiser" Margin="22,0,0,0"/>
+                                                            </Grid>
+                                                        </Button.Content>
+                                                    </Button>
+                                                </Grid>
+                                            </GroupBox>
+
+                                            <DataGrid AutoGenerateColumns="False" Name="dataGridSearchCompositionArticle" Margin="6,172,6,28"
+                                                      ItemsSource="{Binding ListResultSearchCompositionArticle}" SelectedItem="{Binding SelectedResultSearchCompositionArticle}"
+                                                      CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" GridLinesVisibility="None" HeadersVisibility="Column" SelectionMode="Single" >
+                                                <DataGrid.Resources>
+                                                    <local:BindingProxy x:Key="proxy" Data="{Binding}" />
+                                                </DataGrid.Resources>
+                                                <DataGrid.Columns>
+                                                    <DataGridTextColumn Header="Référence" Binding="{Binding AR_Ref}" IsReadOnly="True" Width="15*" />
+                                                    <DataGridTextColumn Header="Désignation" Binding="{Binding AR_Design}" IsReadOnly="True" Width="35*" />
+                                                    <DataGridTextColumn Header="Gamme" Binding="{Binding Gamme}" Visibility="{Binding Data.ShowResultAttributeColumn, Source={StaticResource proxy}}" IsReadOnly="True" Width="25*" />
+                                                    <DataGridTextColumn Header="Conditionnement" Binding="{Binding Conditionnement}" Visibility="{Binding Data.ShowResultConditioningColumn, Source={StaticResource proxy}}" IsReadOnly="True" Width="20*" />
+                                                    <DataGridTemplateColumn Header="À ajouter" Width="60" MaxWidth="60" CanUserResize="False">
+                                                        <DataGridTemplateColumn.HeaderTemplate>
+                                                            <DataTemplate>
+                                                                <Button Content="À ajouter" ToolTip="Cocher tous les éléments" MinWidth="60" Margin="-5,-10,-5,-10" HorizontalContentAlignment="Center" Click="ToAddResultCompositionArticle_Click"/>
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.HeaderTemplate>
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <CheckBox Name="CheckArticleCompositionToAdd" HorizontalAlignment="Center" IsChecked="{Binding Path=AR_IsCheckedToAdd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
+                                                    </DataGridTemplateColumn>
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                            <Button Name="ButtonAddResultComposition" HorizontalAlignment="Right" Margin="0,0,4,4" Content="Ajouter à la composition" Height="24" Width="150" VerticalAlignment="Bottom" Click="ButtonAddResultComposition_Click" />
+
+                                            <StatusBar Grid.Column="1" Grid.Row="1" BorderBrush="#FF688CAF" BorderThickness="1" Margin="6,0,300,5" Height="24" VerticalAlignment="Bottom" >
+                                                <TextBlock MinWidth="80" Margin="4,0,4,0" >
+			                                        <TextBlock.Text>
+				                                        <MultiBinding StringFormat=" {0} Résultats">
+					                                        <Binding ElementName="dataGridSearchCompositionArticle" Path="Items.Count" />
+				                                        </MultiBinding>
+			                                        </TextBlock.Text>
+                                                </TextBlock>
+                                                <Separator />
+                                                <TextBlock MinWidth="140" Margin="4,0,4,0" Text="{Binding StrCompositionFilteredProducts}" />
+                                                <!--<CheckBox Content="les afficher" IsChecked="{Binding ShowResultInImportSageFilter}" />-->
+                                            </StatusBar>
+
+                                            <CheckBox Content="Rediriger vers" IsChecked="{Binding RedirectComposition, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="16" HorizontalAlignment="Right" Margin="0,0,174,8" Name="checkBoxRedirect" VerticalAlignment="Bottom">
+                                                <CheckBox.ToolTip>
+                                                    <TextBlock TextWrapping="Wrap">
+                                                        La fonction "Rediriger vers" permet de modifier les articles que vous ajoutez à la composition s'ils existent déjà dans PrestaConnect.
+                                                        <LineBreak/>
+                                                        Les articles existants seront désactivés et une redirection permanente (301) sera affectée vers l'article de composition.
+                                                        <LineBreak/>
+                                                        Attention la redirection ne sera visible dans la fiche article qu'une fois la composition terminée et cochée "À synchroniser" !
+                                                        <LineBreak/>
+                                                        La valeur par défaut de cette option est modifiable dans la configuration.
+                                                    </TextBlock>
+                                                </CheckBox.ToolTip>
+                                            </CheckBox>
+                                        </Grid>
+                                    </TabItem>
+                                    <TabItem Header="Images">
+                                        <Grid>
+                                            <toolkit:DataGrid Margin="12,12,12,160" AutoGenerateColumns="False" EnableRowVirtualization="False" Name="dataGridCompositionArticleImage" ItemsSource="{Binding ListCompositionArticle}" SelectedItem="{Binding SelectedCompositionArticle}"
+                                                      CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" GridLinesVisibility="None" HeadersVisibility="Column" SelectionMode="Single" AlternatingRowBackground="Gainsboro" SelectionChanged="dataGridCompositionArticleImage_SelectionChanged">
+                                                <toolkit:DataGrid.RowStyle>
+                                                    <Style TargetType="toolkit:DataGridRow">
+                                                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                                        <Setter Property="Background" Value="{Binding Background, Mode=TwoWay}" />
+                                                    </Style>
+                                                </toolkit:DataGrid.RowStyle>
+                                                <toolkit:DataGrid.Resources>
+                                                    <local:BindingProxy x:Key="proxy" Data="{Binding}" />
+                                                </toolkit:DataGrid.Resources>
+                                                <toolkit:DataGrid.Columns>
+                                                    <toolkit:DataGridTextColumn Header="Référence" IsReadOnly="True" Width="10*" Binding="{Binding Path=F_ARTICLE_Composition.AR_Ref}"/>
+                                                    <toolkit:DataGridTextColumn Header="Désignation" IsReadOnly="True" Width="20*" Binding="{Binding Path=F_ARTICLE_Composition.AR_Design}"/>
+                                                    <toolkit:DataGridTextColumn Visibility="{Binding Data.ShowAttributeColumn, Source={StaticResource proxy}}" Header="Gamme" IsReadOnly="True" Width="15*" Binding="{Binding Path=F_ARTICLE_Composition.Gamme}"/>
+                                                    <toolkit:DataGridTextColumn Visibility="{Binding Data.ShowConditioningColumn, Source={StaticResource proxy}}" Header="Conditionnement" IsReadOnly="True" Width="15*" Binding="{Binding Path=F_ARTICLE_Composition.Conditionnement}"/>
+                                                    <toolkit:DataGridTextColumn Header="Déclinaison PrestaShop" IsReadOnly="True" Width="25*" Binding="{Binding Path=Declinaison}"/>
+                                                </toolkit:DataGrid.Columns>
+                                            </toolkit:DataGrid>
+
+                                            <Label Content="{Binding LabelAttachCompositionArticleImage}" Margin="23,0,0,138" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                                            <ListBox Name="ListBoxArticleImageComposition" Margin="12,0,12,12" Height="120" VerticalAlignment="Bottom" Style="{x:Null}" 
+                                                ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                                ItemsSource="{Binding Path=ListArticleImageComposition}" SelectedItem="{Binding SelectedArticleImageComposition}">
+                                                <ListBox.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal"/>
+                                                    </ItemsPanelTemplate>
+                                                </ListBox.ItemsPanel>
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid Width="64" MaxWidth="64" Height="auto" Background="{Binding color}" ToolTip="Veuillez sélectionner l'image avant de pouvoir gérer son affectation." >
+                                                            <Image Source="{Binding SmallImageTempPath}" MaxWidth="60" Margin="2,2,2,0" VerticalAlignment="Top" IsHitTestVisible="False" Focusable="False" />
+                                                            <CheckBox IsChecked="{Binding AttachedToCompositionArticle}" IsHitTestVisible="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}" Padding="-20" Margin="0,64,0,4" HorizontalAlignment="Center" Checked="CheckBoxAttachToCompositionArticle_Checked" Unchecked="CheckBoxAttachToCompositionArticle_Checked" />
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ListBox.ItemTemplate>
+                                                <ListBox.ItemContainerStyle>
+                                                    <Style TargetType="ListBoxItem">
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="ListBoxItem">
+                                                                    <Border Name="_Border"
+                                                                        CornerRadius="4"
+                                                                        Padding="2"
+                                                                        SnapsToDevicePixels="true">
+                                                                        <ContentPresenter />
+                                                                    </Border>
+                                                                    <ControlTemplate.Triggers>
+                                                                        <Trigger Property="IsSelected" Value="true">
+                                                                            <Setter TargetName="_Border" Property="Background" Value="DodgerBlue"/>
+                                                                        </Trigger>
+                                                                    </ControlTemplate.Triggers>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style>
+                                                </ListBox.ItemContainerStyle>
+                                            </ListBox>
+                                        </Grid>
+                                    </TabItem>
+                                </TabControl>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+			</TabItem>
+			<TabItem Header="Champs suplémentaires" x:Name="TabItemModuleDWF">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition />
+						<RowDefinition Height="300"/>
+					</Grid.RowDefinitions>
+					<DataGrid AutoGenerateColumns="False" Name="dataGridSearchArticleAdditionnalField" Margin="15"
+                  ItemsSource="{Binding ListResultAdditionnalFieldArticle}" SelectedItem="{Binding SelectedResultAdditionnalFieldArticle, Mode=TwoWay}"
+                  CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" GridLinesVisibility="None" HeadersVisibility="Column" SelectionMode="Single" 
+										Grid.Row="0">
+						<DataGrid.Resources>
+							<local:BindingProxy x:Key="proxy" Data="{Binding}" />
+						</DataGrid.Resources>
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Nom du champ" Binding="{Binding FieldNameLang, Mode=TwoWay}" IsReadOnly="True" Width="50*" />
+							<DataGridTextColumn Header="Valeur du champ" Binding="{Binding FieldValueAll}" IsReadOnly="True" Width="50*" />
+						</DataGrid.Columns>
+					</DataGrid>
+					<Grid Grid.Column="0" Grid.Row="1">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition></ColumnDefinition>
+							<ColumnDefinition Width="100"></ColumnDefinition>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="30"></RowDefinition>
+							<RowDefinition></RowDefinition>
+						</Grid.RowDefinitions>
+						<Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Top" Margin="15,0" HorizontalAlignment="Left" >
+							<Label.Content>
+								<TextBlock>
+									<TextBlock.Text>
+										<MultiBinding StringFormat="Champ suplémentaire : {0}">
+											<Binding Path="SelectedResultAdditionnalFieldArticle.FieldName" />
+										</MultiBinding>
+									</TextBlock.Text>
+								</TextBlock>
+							</Label.Content>
+						</Label>
+						<!-- <Grid Grid.Row="1" Visibility="{Binding TextAreaActive, Mode=TwoWay}">
+							<TextBox Height="250" Margin="15,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding SelectedResultAdditionnalFieldArticle.FieldValue, Mode=TwoWay}" AcceptsTab="True" AcceptsReturn="True"/>
+						</Grid> -->
+						<Grid Grid.Row="1" Visibility="{Binding TextActive, Mode=TwoWay}">
+							<TextBox Height="250" Margin="15,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding SelectedResultAdditionnalFieldArticle.FieldValue, Mode=TwoWay}" AcceptsTab="True" AcceptsReturn="True"/>
+						</Grid>
+						<!-- <Grid Grid.Row="1" Visibility="{Binding CheckBoxActive, Mode=TwoWay}">
+							<CheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,15,0,0"/>
+						</Grid>
+						<Grid Grid.Row="1" Visibility="{Binding SelectorActive, Mode=TwoWay}">
+							<ListBox Margin="15,0,15,15" />
+						</Grid> -->
+						<Grid Grid.Row="1" Visibility="{Binding RateActive, Mode=TwoWay}">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition></ColumnDefinition>
+								<ColumnDefinition></ColumnDefinition>
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="30"></RowDefinition>
+								<RowDefinition Height="30"></RowDefinition>
+							</Grid.RowDefinitions>
+							<Label Content="Note :" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,0" />
+							<TextBox Height="23" Margin="15,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding SelectedResultAdditionnalFieldArticle.FieldValue, Mode=TwoWay}"/>
+							<Label Content="Commentaire :" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,0" />
+							<TextBox Height="23" Margin="15,0" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding SelectedResultAdditionnalFieldArticle.FieldValue2, Mode=TwoWay}"/>
+						</Grid>
+						<Button Content="Valider" Name="ButtonSubmitAdditionnalField" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Bottom" Width="90" Height="38" Cursor="Hand" Click="ButtonSubmitAdditionnalField_Click" />
+					</Grid>
+				</Grid>
+			</TabItem>
+		</TabControl>
+        <Button Content="Valider" Name="ButtonSubmit" HorizontalAlignment="Right" Margin="0,0,20,16" VerticalAlignment="Bottom" Width="122" Height="38" Cursor="Hand" Click="ButtonSubmit_Click" />
+        <Button Content="Synchroniser cet article" IsEnabled="{Binding Item.Local.CanSync}" Visibility="Visible" x:Name="ButtonSync" HorizontalAlignment="Left" Margin="20,0,0,16" VerticalAlignment="Bottom" Width="186" Height="38" Cursor="Hand" Click="ButtonSync_Click" Grid.Column="1"  />
+        <Button Content="Synchroniser uniquement les stocks et prix" Visibility="Hidden" x:Name="ButtonSyncStockPrice" Margin="313.952,0,0,32" VerticalAlignment="Bottom" Height="38" Cursor="Hand" Click="ButtonSyncStockPrice_Click" Grid.Column="1" HorizontalAlignment="Left" Width="265"  />
+        <Button Content="Catégorie par défaut" HorizontalAlignment="Left" Margin="225,0,0,16" VerticalAlignment="Bottom" Width="150" Height="38" Cursor="Hand" Click="CatalogDefault_Click">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="Button.IsEnabled" Value="False" />
+                    <Setter Property="Button.Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=Window, Path=SelectedTabItemIndex}" Value="2">
+                            <Setter Property="Button.Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=SelectedCatalog, Converter={StaticResource IsNull}}" Value="False"/>
+                                <Condition Binding="{Binding Path=SelectedCatalog.IsDefault}" Value="False"/>
+                                <Condition Binding="{Binding Path=SelectedCatalog.ToAssociate}" Value="True"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Button.IsEnabled" Value="True" />
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button Visibility="{Binding Item.CanDeleteVisibility, UpdateSourceTrigger=PropertyChanged}" Content="Supprimer cet article" Style="{x:Null}" Foreground="Red" Cursor="Hand" FontWeight="ExtraBold" Height="38" HorizontalAlignment="Right" Margin="0,12,12,0" Name="buttonDelete" VerticalAlignment="Top" Width="140" Click="buttonDelete_Click" />
+        <Button Content="Transformer en composition" Cursor="Hand" Height="38" HorizontalAlignment="Center" Margin="0,0,0,16" Name="buttonTransform" VerticalAlignment="Bottom" Visibility="{Binding Item.CanTransformVisibility, UpdateSourceTrigger=PropertyChanged}" Width="180" Click="buttonTransform_Click" />
+    </Grid>
+</Window>

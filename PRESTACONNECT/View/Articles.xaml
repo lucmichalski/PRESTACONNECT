@@ -1,0 +1,517 @@
+﻿<Window x:Class="PRESTACONNECT.Articles"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:PRESTACONNECT"
+        xmlns:converters="clr-namespace:Alternetis.Windows.Converters;assembly=Alternetis.Windows"
+	    x:Name="Window"
+        xmlns:tk="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit"
+	    Title="Liste des articles"
+	    Width="1024" Height="768"
+        MinWidth="1024" MinHeight="768"
+	    WindowStyle="ThreeDBorderWindow" Icon="/PRESTACONNECT;component/prestaconnect.ico" WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="True"
+        Background="{DynamicResource ResourceKey=WindowBackgroundBrush}" Loaded="Window_Loaded" >
+    <Window.Resources>
+        <converters:HasCountConverter x:Key="HasCount"/>
+        <converters:IsNullConverter x:Key="IsNull"/>
+        <converters:IsNullOrEmptyConverter x:Key="IsNullOrEmpty"/>
+    </Window.Resources>
+    <Grid x:Name="LayoutRoot" Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Image Source="/PRESTACONNECT;component/img/article.png" Width="48" Height="48" HorizontalAlignment="Right" Margin="0,4,2,4" VerticalAlignment="Top" Grid.Column="1" />
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.30*" MinWidth="260" MaxWidth="800" />
+                <ColumnDefinition Width="*" MinWidth="480" />
+            </Grid.ColumnDefinitions>
+            <TreeView Margin="2" SelectedItemChanged="Catalogs_SelectedItemChanged">
+                <TreeViewItem Header="Hors catalogue" IsSelected="{Binding Path=SearchWithoutCatalogs, Mode=TwoWay}"/>
+                <TreeViewItem Header="Tous les catalogues" IsExpanded="True" ItemsSource="{Binding Path=Catalogs}">
+                    <TreeViewItem.ItemContainerStyle>
+                        <Style TargetType="TreeViewItem">
+                            <Setter Property="IsExpanded" Value="False"/>
+                        </Style>
+                    </TreeViewItem.ItemContainerStyle>
+                    <TreeViewItem.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Path=SortChildren}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Path=Cat_Name}">
+                                    <TextBlock.Style>
+                                        <Style>
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Path=Cat_Active}" Value="False"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="TextBlock.FontStyle" Value="Italic"/> 
+                                                    <Setter Property="TextBlock.Foreground" Value="Gray"/> 
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                    </TreeViewItem.ItemTemplate>
+                </TreeViewItem>
+            </TreeView>
+            <Label Grid.Column="1" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic">
+                <Label.Style>
+                    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                        <Setter Property="Label.Content" Value="Aucun article n'a été trouvé dans ce catalogue."/>
+                        <Setter Property="Label.Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=IsBusy}" Value="False"/>
+                                    <Condition Binding="{Binding Path=SelectedCatalogItems.Count, Converter={StaticResource HasCount}}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Label.Visibility" Value="Visible"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=SearchItem, Converter={StaticResource IsNullOrEmpty}}" Value="False"/>
+                                    <Condition Binding="{Binding Path=SelectedCatalog, Converter={StaticResource IsNull}}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Label.Content" Value="Aucun article ne correspond à votre recherche dans ce catalogue."/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=SearchItem, Converter={StaticResource IsNullOrEmpty}}" Value="False"/>
+                                    <Condition Binding="{Binding Path=SelectedCatalog, Converter={StaticResource IsNull}}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Label.Content" Value="Aucun article ne correspond à votre recherche."/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Label.Style>
+            </Label>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox x:Name="SearchItem" Margin="2,4,4,0" Text="{Binding Path=SearchItem, UpdateSourceTrigger=PropertyChanged}" ToolTip="Filtre de recherche article" AutomationProperties.Name="Filtre de recherche article" VerticalAlignment="Top" Height="26" KeyDown="SearchItem_KeyDown" />
+                    <ComboBox Grid.Column="1" Margin="2,4,4,0" ItemsSource="{Binding ListProductFilterActiveDefault}" SelectedItem="{Binding SelectedProductFilterActiveDefault, Mode=TwoWay}" DisplayMemberPath="Intitule" ToolTip="Filtre d'affichage des articles" AutomationProperties.Name="Filtre d'affichage des articles" VerticalAlignment="Top"/>
+                    <Button Name="SearchButton" AutomationProperties.Name="Rechercher" Grid.Column="2" Margin="2,4,4,0" IsDefault="True" Click="SearchItems_Click" VerticalAlignment="Top" Height="26" Width="26">
+                        <Button.Content>
+                            <Image Source="/PRESTACONNECT;component/img/recherche.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+                        </Button.Content>
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <!--<Condition Binding="{Binding Path=SearchItem, Converter={StaticResource IsNullOrEmpty}}" Value="True" />-->
+                                            <Condition Binding="{Binding Path=IsBusy}" Value="True" />
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Button.IsEnabled" Value="False"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Expander Header="Filtres avancés" x:Name="ExpanderAdvancedFilters" Margin="0,32,0,0" VerticalAlignment="Top" Grid.Row="0" Grid.ColumnSpan="3" MouseEnter="Expander_MouseEnter" MouseLeave="ExpanderAdvancedFilters_MouseLeave">
+                        <Grid>
+                            <StackPanel Margin="0" Orientation="Horizontal" VerticalAlignment="Top"  Grid.Row="0" Grid.ColumnSpan="3">
+                                <Label Content="Prendre en compte uniquement les articles modifiés entre le : " HorizontalAlignment="Left" Margin="2" VerticalAlignment="Center" />
+                                <DatePicker SelectedDate="{Binding FiltreDateStart}" Margin="2" />
+                                <Label Content=" et le : " HorizontalAlignment="Left" Margin="2" VerticalAlignment="Center" />
+                                <DatePicker SelectedDate="{Binding FiltreDateEnd}" Margin="2" />
+                                <Button Name="CancelDateButton" IsEnabled="{Binding NotBusy}" AutomationProperties.Name="Effacer filtre date" Grid.Column="2" Margin="4,4,2,4" Click="ButtonCancelDate_Click">
+                                    <Button.Content>
+                                        <Image Source="/PRESTACONNECT;component/Resources/remove.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
+                            <StackPanel Margin="0,30,0,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                <Label Content="Montrer les articles de type : " HorizontalAlignment="Left" Margin="2" VerticalAlignment="Center" />
+                                <CheckBox IsChecked="{Binding ShowStandardProducts}" Margin="4">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Height="18" Source="/PRESTACONNECT;component/Resources/product.png" />
+                                        <Label Margin="2" Content="Simple" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </CheckBox>
+                                <CheckBox IsChecked="{Binding ShowAttributeProducts}" Margin="4">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Height="18" Source="/PRESTACONNECT;component/Resources/pantone.png" />
+                                        <Label Margin="2" Content="À gamme(s)" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </CheckBox>
+                                <CheckBox IsChecked="{Binding ShowConditioningProducts}" Margin="4">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Height="18" Source="/PRESTACONNECT;component/Resources/bottles.png" />
+                                        <Label Margin="2" Content="En conditionnement" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </CheckBox>
+                                <CheckBox IsChecked="{Binding ShowCompositionProducts}" Margin="4">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Height="18" Source="/PRESTACONNECT;component/Resources/components.png" />
+                                        <Label Margin="2" Content="De composition" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </CheckBox>
+                            </StackPanel>
+                            <StackPanel Margin="0,58,0,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                <Label Content="Articles en pack : " HorizontalAlignment="Left" Margin="2" VerticalAlignment="Center" />
+                                <CheckBox IsChecked="{Binding ShowPackProducts}" Margin="4" IsThreeState="True">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Height="18" Source="/PRESTACONNECT;component/Resources/pack_assortment.png" />
+                                        <Label Margin="2" Content="Indifférent / Oui / Non" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </CheckBox>
+                                <Label Content="Rechercher dans les compositions : " HorizontalAlignment="Left" Margin="24,2,2,2" VerticalAlignment="Center" />
+                                <CheckBox IsChecked="{Binding SearchInComposition}" Margin="4" >
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Height="18" Source="/PRESTACONNECT;component/Resources/components.png" />
+                                        <Label Margin="2" Content="(références uniquement)" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </CheckBox>
+                            </StackPanel>
+                            <StackPanel Margin="0,86,0,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                <Label Content="À synchroniser : " HorizontalAlignment="Left" Margin="2" VerticalAlignment="Center" />
+                                <CheckBox IsChecked="{Binding ShowToSyncProducts}" Margin="4" IsThreeState="True">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Height="18" Source="/PRESTACONNECT;component/Resources/sync.png" />
+                                        <Label Margin="2" Content="Indifférent / Oui / Non" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </CheckBox>
+                            </StackPanel>
+                        </Grid>
+                    </Expander>
+                </Grid>
+                <DataGrid Name="DataGridArticles" ItemsSource="{Binding SelectedCatalogItems}" 
+                          SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2,2,2,25" Background="{x:Null}" Grid.Row="1" 
+                          CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="False" AutoGenerateColumns="False" 
+                          GridLinesVisibility="None" HeadersVisibility="{Binding HeaderVisibility}" SelectionMode="Extended"
+                          SelectionUnit="FullRow" CanUserReorderColumns="False" AlternatingRowBackground="{DynamicResource ResourceKey=NormalBrush}" IsSynchronizedWithCurrentItem="True">
+                    <DataGrid.Resources>
+                        <local:BindingProxy x:Key="proxy" Data="{Binding}" />
+                        <ContextMenu x:Key="DataGridColumnHeaderContextMenu">
+                            <MenuItem Header="ID PrestaConnect" IsCheckable="True" IsChecked="{Binding Data.ColonneIDVisible, Source={StaticResource proxy}}" />
+                            <MenuItem Header="Type" IsCheckable="True" IsChecked="{Binding Data.ColonneTypeVisible, Source={StaticResource proxy}}" />
+                            <MenuItem Header="Nom" IsCheckable="True" IsChecked="{Binding Data.ColonneNomVisible, Source={StaticResource proxy}}" />
+                            <MenuItem Header="Référence" IsCheckable="True" IsChecked="{Binding Data.ColonneReferenceVisible, Source={StaticResource proxy}}" />
+                            <MenuItem Header="EAN" IsCheckable="True" IsChecked="{Binding Data.ColonneEANVisible, Source={StaticResource proxy}}" />
+                            <MenuItem Header="Actif" IsCheckable="True" IsChecked="{Binding Data.ColonneActifVisible, Source={StaticResource proxy}}" />
+                            <MenuItem Header="À synchroniser" IsCheckable="True" IsChecked="{Binding Data.ColonneSyncVisible, Source={StaticResource proxy}}" />
+                            <MenuItem Header="Mise-à-jour des tarifs" IsCheckable="True" IsChecked="{Binding Data.ColonneSyncPriceVisible, Source={StaticResource proxy}}" />
+                            <MenuItem Header="Date" IsCheckable="True" IsChecked="{Binding Data.ColonneDateVisible, Source={StaticResource proxy}}" />
+                            <ContextMenu.Style>
+                                <Style TargetType="{x:Type ContextMenu}">
+                                    <Setter Property="SnapsToDevicePixels" Value="True" />
+                                    <Setter Property="OverridesDefaultStyle" Value="True" />
+                                    <Setter Property="Grid.IsSharedSizeScope" Value="True" />
+                                    <Setter Property="HasDropShadow" Value="True" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ContextMenu}">
+                                                <Border x:Name="Border" Background="{StaticResource WindowBackgroundBrush}" BorderBrush="{DynamicResource ResourceKey=SelectedBackgroundBrush}" BorderThickness="2">
+                                                    <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="HasDropShadow" Value="True">
+                                                        <Setter TargetName="Border" Property="Padding" Value="0,0,0,0" />
+                                                        <!--<Setter TargetName="Border" Property="CornerRadius" Value="0" />-->
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ContextMenu.Style>
+                        </ContextMenu>
+
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="ContextMenu"
+                                Value="{StaticResource DataGridColumnHeaderContextMenu}" />
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Style>
+                        <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=SelectedCatalogItems.Count}" Value="0">
+                                    <Setter Property="DataGrid.Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                                <!--<DataTrigger Binding="{Binding Path=SelectedCatalog.ExistToLocal}" Value="False">
+                                    <Setter Property="DataGrid.IsEnabled" Value="False"/>
+                                </DataTrigger>-->
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.Style>
+                    <DataGrid.RowDetailsTemplate>
+                        <DataTemplate>
+                            <Grid Margin="4">
+                                <Image Width="45" Height="45" Source="{Binding SmallImageTempPath}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <!--<Label Content="ID Sage :" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                <TextBlock Text="{Binding sageArticleLight.cbMarq}" HorizontalAlignment="Left" VerticalAlignment="Top"/>-->
+                                <Label Content="Référence Sage :" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="48,4,0,0" />
+                                <TextBlock Text="{Binding sageArticleLight.AR_Ref}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="142,4,0,0" />
+                                <Label Content="Désignation Sage :" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="260,4,0,0" />
+                                <TextBlock Text="{Binding sageArticleLight.AR_Design}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="364,4,0,0" />
+                                <Label Content="ID Prestashop :" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="48,25,0,0"/>
+                                <TextBlock Text="{Binding Pre_Id}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="136,25,0,0" />
+                                <Label Content="Date de modification Prestashop :" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="260,25,0,0" />
+                                <TextBlock Text="{Binding prestashopProduct.date_upd, ConverterCulture=fr, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="445,25,0,0" />
+                            </Grid>
+                        </DataTemplate>
+                    </DataGrid.RowDetailsTemplate>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Id" Binding="{Binding Art_Id}" Width="Auto" Visibility="{Binding Data.ColonneIDVisibility, Source={StaticResource proxy}}"/>
+                        <!--<DataGridTextColumn Header="Id PS" Binding="{Binding Pre_Id, UpdateSourceTrigger=PropertyChanged}" Width="auto" />-->
+                        <DataGridTemplateColumn Width="35" CanUserResize="False" SortMemberPath="TypeArticleString" Visibility="{Binding Data.ColonneTypeVisibility, Source={StaticResource proxy}}">
+                            <DataGridTemplateColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="Type" ToolTip="Type d'article" Padding="0 0 40 0"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image MaxHeight="18" Source="{Binding ImageTypeArticle}" ToolTip="{Binding TypeArticleString}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Image" IsReadOnly="True" Width="45" MaxWidth="80" Visibility="Hidden">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Source="{Binding SmallImageTempPath}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Nom" Binding="{Binding Art_Name}" Width="50*" Visibility="{Binding Data.ColonneNomVisibility, Source={StaticResource proxy}}"/>
+                        <DataGridTextColumn Header="Référence" Binding="{Binding Art_Ref}" Width="30*" MinWidth="80" MaxWidth="140" Visibility="{Binding Data.ColonneReferenceVisibility, Source={StaticResource proxy}}"/>
+                        <DataGridTextColumn Header="Ean13" Binding="{Binding Art_Ean13}" Width="20*" MaxWidth="140" Visibility="{Binding Data.ColonneEANVisibility, Source={StaticResource proxy}}"/>
+                        <DataGridTemplateColumn Header="Actif" Width="50" MaxWidth="50" CanUserResize="False" Visibility="{Binding Data.ColonneActifVisibility, Source={StaticResource proxy}}">
+                            <DataGridTemplateColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <Button Content="Actif" Width="50" Margin="-5,-11,-5,-11" HorizontalContentAlignment="Center"
+                                            Click="ToActiveSelectedCatalogItems_Click" ToolTip="Visibilité du produit sur la boutique"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox Name="CheckArticleActive" HorizontalAlignment="Center" IsChecked="{Binding Path=Art_Active, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Click="CheckArticleActive_Click">
+                                        <CheckBox.Style>
+                                            <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}"/>
+                                        </CheckBox.Style>
+                                    </CheckBox>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <!-- <JG> 21/03/2013 ajout gestion activation/désactivation synchronisation -->
+                        <DataGridTemplateColumn Header="À Synchroniser" Width="90" MaxWidth="90" CanUserResize="False" Visibility="{Binding Data.ColonneSyncVisibility, Source={StaticResource proxy}}">
+                            <DataGridTemplateColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <Button Content=" À Synchroniser " Width="90" Margin="-5,-11,-5,-11" HorizontalContentAlignment="Center"
+                                            Click="ToSyncSelectedCatalogItems_Click" ToolTip="Transfert des données articles entre Sage et PrestaShop"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox Name="CheckArticleSync" HorizontalAlignment="Center" IsChecked="{Binding Path=Art_Sync, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=CanSync}" Click="CheckArticleSync_Click">
+                                        <CheckBox.Style>
+                                            <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}"/>
+                                        </CheckBox.Style>
+                                    </CheckBox>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <!-- <JG> 03/06/2016 ajout gestion activation/désactivation synchronisation prix -->
+                        <DataGridTemplateColumn Header="Maj tarifs" Width="60" MaxWidth="60" CanUserResize="False" Visibility="{Binding Data.ColonneSyncPriceVisibility, Source={StaticResource proxy}}">
+                            <DataGridTemplateColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <Button Content="Maj tarifs" Width="60" Margin="-5,-11,-5,-11" HorizontalContentAlignment="Center"
+                                            Click="ToSyncPriceSelectedCatalogItems_Click" ToolTip="Transfert des tarifs Sage vers PrestaShop"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox Name="CheckArticleSync" HorizontalAlignment="Center" IsChecked="{Binding Path=Art_SyncPrice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=CanSyncPrice}" Click="CheckArticleSyncPrice_Click">
+                                        <CheckBox.Style>
+                                            <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}"/>
+                                        </CheckBox.Style>
+                                    </CheckBox>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Date de modification" Binding="{Binding Art_Date, ConverterCulture=fr, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="124" CanUserResize="False" Visibility="{Binding Data.ColonneDateVisibility, Source={StaticResource proxy}}">
+                            <!--<DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="{Binding DateForeColor}"></Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}" Value="True">
+                                            <Setter Property="Foreground" Value="{Binding DateSelectedForeColor}"></Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>-->
+                        </DataGridTextColumn>
+                        <!--<DataGridTextColumn Header="Date PS" IsReadOnly="True" Binding="{Binding prestashopProduct.date_upd, ConverterCulture=fr, UpdateSourceTrigger=PropertyChanged}" Width="80" />-->
+                    </DataGrid.Columns>
+                    <DataGrid.ItemContainerStyle>
+                        <Style TargetType="DataGridRow">
+                            <EventSetter Event="MouseDoubleClick" Handler="Items_MouseDoubleClick" />
+                            <EventSetter Event="KeyUp" Handler="DataGridArticles_KeyUp" />
+                        </Style>
+                    </DataGrid.ItemContainerStyle>
+                    <!--<DataGrid.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource ResourceKey=WindowBackgroundBrush}" />
+                                    <Setter Property="Foreground" Value="Black" />
+                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                    <Setter Property="BorderThickness" Value="0" />
+                                </Trigger>
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey=SelectedBackgroundBrush}" />
+                                    <Setter Property="BorderThickness" Value="2" />
+                                    <Setter Property="Background" Value="White" />
+                                    <Setter Property="Foreground" Value="Black" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.CellStyle>-->
+                </DataGrid>
+
+                <StatusBar Grid.Column="1" Grid.Row="1" BorderBrush="#FF688CAF" BorderThickness="1" Margin="2,0,2,2" Height="24" VerticalAlignment="Bottom" >
+                    <StatusBar.Style>
+                        <Style TargetType="{x:Type StatusBar}" BasedOn="{StaticResource {x:Type StatusBar}}">
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=SelectedCatalogItems.Count}" Value="0" />
+                                        <Condition Binding="{Binding Path=SelectedCatalog, Converter={StaticResource IsNull}}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StatusBar.Style>
+                    <TextBlock MinWidth="80" Margin="6,0,4,0" >
+			            <TextBlock.Text>
+				            <MultiBinding StringFormat="Articles : {0} ">
+					            <Binding ElementName="DataGridArticles" Path="Items.Count" />
+				            </MultiBinding>
+			            </TextBlock.Text>
+                    </TextBlock>
+                    <Separator />
+                    <TextBlock MinWidth="200" Margin="4,0,6,0" >
+			            <TextBlock.Text>
+				            <MultiBinding StringFormat="Catalogue courant : {0}">
+					            <Binding Path="SelectedCatalog.ComboText" />
+				            </MultiBinding>
+			            </TextBlock.Text>
+                    </TextBlock>
+                </StatusBar>
+            </Grid>
+
+            <GridSplitter HorizontalAlignment="Right" VerticalAlignment="Stretch" 
+                          AutomationProperties.Name="Délimiteur amovible"
+                          Grid.RowSpan="1" Grid.Column="0" Margin="0,4,1,4"  ResizeBehavior="CurrentAndNext"
+                          Width="3" Background="{DynamicResource ResourceKey=NormalBrush}" />
+        </Grid>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0" Width="350" Grid.Row="2">
+            <RadioButton Name="RadioAll" IsChecked="{Binding Full}" Content="Opération pour la totalité des articles à synchroniser" Margin="5,4,0,0"/>
+            <RadioButton Name="RadioSearch" IsChecked="{Binding Partial}" Content="Opération pour les articles du filtrage (catalogue/recherche)" Margin="5,4,0,0"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2">
+            <Button Click="ButtonGestionStatutArticle_Click" 
+                    Height="38" Width="100" Margin="2" AutomationProperties.Name="Gestion statut actif/inactif">
+                <Button.Content>
+                    <TextBlock Margin="6,0,6,0" Text="Gestion statut actif/inactif" TextWrapping="Wrap" TextAlignment="Center" />
+                </Button.Content>
+            </Button>
+            <Button Click="ButtonReimportSage_Click" 
+                    Height="38" Width="100" Margin="2" AutomationProperties.Name="Réimport depuis Sage">
+                <Button.Content>
+                    <TextBlock Margin="6,0,6,0" Text="Réimport depuis Sage" TextWrapping="Wrap" TextAlignment="Center" />
+                </Button.Content>
+            </Button>
+            <!--<Button Click="ButtonImportConditioningArticle_Click" IsEnabled="{Binding ConditioningActive}"
+                    Height="38" Width="120" Margin="2" AutomationProperties.Name="Importer les conditionnements">
+                <Button.Content>
+                    <TextBlock Margin="6,0,6,0" Text="Importer les conditionnements" TextWrapping="Wrap" TextAlignment="Center" />
+                </Button.Content>
+            </Button>
+            <Button Click="ButtonImportSageInformationLibre_Click" 
+                    Height="38" Width="200" Margin="2" AutomationProperties.Name="Importer les valeurs des statistiques et informations libres">
+                <Button.Content>
+                    <TextBlock Margin="6,0,6,0" Text="Importer les valeurs des statistiques et informations libres" TextWrapping="Wrap" TextAlignment="Center" />
+                </Button.Content>
+            </Button>-->
+            <Button Name="ButtonAddArticleComposition" Click="ButtonAddArticleComposition_Click" 
+                    Height="38" Width="120" Margin="2" AutomationProperties.Name="Créer un article de composition">
+                <Button.Content>
+                    <TextBlock Margin="6,0,6,0" Text="Créer un article de composition" TextWrapping="Wrap" TextAlignment="Center" />
+                </Button.Content>
+            </Button>
+            <Button Click="ButtonImportCatalogueInformationLibre_Click" 
+                    Height="38" Width="180" Margin="2" AutomationProperties.Name="Importer les catalogues depuis les informations libres">
+                <Button.Content>
+                    <TextBlock Margin="6,0,6,0" Text="Importer les catalogues depuis les informations libres" TextWrapping="Wrap" TextAlignment="Center" />
+                </Button.Content>
+            </Button>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="3">
+            <Button Content="Synchroniser" 
+                    Click="ButtonSync_Click" 
+                    Height="38" Width="100" Margin="2" />
+            <Button Click="ButtonTransfertStockPrice_Click" 
+                    Height="38" Width="100" Margin="2">
+                <Button.Content>
+                    <TextBlock Margin="6,0,6,0" Text="Transférer les stocks et prix" TextWrapping="Wrap" TextAlignment="Center" />
+                </Button.Content>
+            </Button>
+            <Button Click="ButtonTransfertStock_Click" 
+                    Height="38" Width="87" Margin="2">
+                <Button.Content>
+                    <TextBlock Margin="6,0,6,0" Text="Transférer les stocks" TextWrapping="Wrap" TextAlignment="Center" />
+                </Button.Content>
+            </Button>
+            <Button Click="ButtonSyncAttribute_Click" AutomationProperties.Name="Transférer les données rattachées aux déclinaisons"
+                    Height="38" Width="100" Margin="2">
+                <Button.Content>
+                    <TextBlock Margin="6,0,6,0" Text="Transférer les déclinaisons" TextWrapping="Wrap" TextAlignment="Center" />
+                </Button.Content>
+            </Button>
+            <Button Click="ButtonTransfertFeature_Click" AutomationProperties.Name="Transférer les caractéristiques"
+                    Height="38" Width="100" Margin="2">
+                <Button.Content>
+                    <TextBlock Margin="6,0,6,0" Text="Transférer les caractéristiques" TextWrapping="Wrap" TextAlignment="Center" />
+                </Button.Content>
+            </Button>
+            <Button Click="ButtonTransfertPack_Click" AutomationProperties.Name="Transférer les contenus des packs"
+                    Height="38" Width="120" Margin="2">
+                <Button.Content>
+                    <TextBlock Margin="6,0,6,0" Text="Transférer les contenus des packs" TextWrapping="Wrap" TextAlignment="Center" />
+                </Button.Content>
+            </Button>
+            <Button Click="ButtonTransfertImages_Click" IsEnabled="{Binding FtpActive, UpdateSourceTrigger=PropertyChanged}" 
+                    Height="38" Width="130" Margin="2" AutomationProperties.Name="Transférer les images et documents joints">
+                <Button.Content>
+                    <TextBlock Margin="6,0,6,0" Text="Transférer les images et documents joints" TextWrapping="Wrap" TextAlignment="Center" />
+                </Button.Content>
+            </Button>
+            <Button Click="ButtonSyncArticleCatalogue_Click"
+                    Height="38" Width="170" Margin="2" AutomationProperties.Name="Synchroniser les attributions aux catalogues">
+                <Button.Content>
+                    <TextBlock Margin="6,0,6,0" Text="Synchroniser les attributions aux catalogues" TextWrapping="Wrap" TextAlignment="Center" />
+                </Button.Content>
+            </Button>
+            <!--<Button Content="Créer un nouvel article ..." Click="ButtonNewArticle_Click" 
+                    HorizontalAlignment="Right" Width="200" Height="38"  />-->
+        </StackPanel>
+    </Grid>
+</Window>

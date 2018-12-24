@@ -1,0 +1,80 @@
+﻿<Window x:Class="PRESTACONNECT.View.Composition"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:PRESTACONNECT"
+        Title="Composition"
+	    Width="1024" Height="768"
+	    MinWidth="1024" MinHeight="768"
+	    WindowStyle="ThreeDBorderWindow" Icon="/PRESTACONNECT;component/prestaconnect.ico" WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="True"
+        Background="{DynamicResource ResourceKey=WindowBackgroundBrush}">
+    <Grid>
+        <Image Height="32" HorizontalAlignment="Left" Margin="10,10,0,0"  VerticalAlignment="Top" Width="32" Source="/PRESTACONNECT;component/Resources/components.png" />
+        <Label HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Content="Création d'un article de composition" Margin="54,14,0,0" />
+        <GroupBox Header="Recherche d'article Sage" Height="160" Margin="12,48,12,0" Name="groupBoxSearch" VerticalAlignment="Top">
+            <Grid>
+                <Label Content="Famille" HorizontalAlignment="Left" Margin="199,4,0,0" VerticalAlignment="Top" />
+                <ComboBox DisplayMemberPath="FA_Intitule" Height="23" HorizontalAlignment="Left" ItemsSource="{Binding ListF_FAMILLE}" Margin="199,22,0,0" Name="comboBoxFamille" SelectedItem="{Binding SelectedF_FAMILLE}" VerticalAlignment="Top" Width="180" />
+                <Label Content="Référence" HorizontalAlignment="Left" Margin="6,55,0,0" VerticalAlignment="Top" />
+                <RadioButton Content="Contient" GroupName="Reference" Height="16" HorizontalAlignment="Left" IsChecked="{Binding FilterReferenceContains}" Margin="65,55,0,0" Name="radioButtonReferenceContains" VerticalAlignment="Top" />
+                <RadioButton Content="Commence par" GroupName="Reference" Height="16" HorizontalAlignment="Left" IsChecked="{Binding FilterReferenceStartWith}" Margin="134,55,0,0" Name="radioButtonReferenceStart" VerticalAlignment="Top" />
+                <TextBox CharacterCasing="Upper" HorizontalAlignment="Left" Margin="6,73,0,0" Name="textBoxReferenceFilter" Text="{Binding FilterReferenceValue}" VerticalAlignment="Top" Width="227" />
+                <Label Content="Désignation" HorizontalAlignment="Left" Margin="251,55,0,0" VerticalAlignment="Top" />
+                <RadioButton Content="Contient" GroupName="Designation" Height="16" HorizontalAlignment="Left" IsChecked="{Binding FilterDesignationContains}" Margin="331,55,0,0" Name="radioButtonDesignationContains" VerticalAlignment="Top" />
+                <RadioButton Content="Commence par" GroupName="Designation" Height="16" HorizontalAlignment="Left" IsChecked="{Binding FilterDesignationStartWith}" Margin="411,55,0,0" Name="radioButtonDesignationStart" VerticalAlignment="Top" />
+                <TextBox HorizontalAlignment="Left" Margin="251,73,0,0" Name="textBoxDesignationFilter" Text="{Binding FilterDesignationValue}" VerticalAlignment="Top" Width="323" />
+                <Button Click="ButtonSearchCompositionArticle_Click" Height="28" HorizontalAlignment="Left" Margin="778,70,0,0" Name="ButtonSearchCompositionArticle" VerticalAlignment="Top" Width="100" IsDefault="True">
+                    <Grid>
+                        <Image HorizontalAlignment="Left" Margin="0" Source="/PRESTACONNECT;component/Img/recherche.png" Width="16" />
+                        <TextBlock Margin="22,0,0,0" Text="Rechercher" />
+                    </Grid>
+                </Button>
+                <Label Content="Exclure si déjà présents :" HorizontalAlignment="Left" Margin="6,107,0,0" VerticalAlignment="Top" />
+                <CheckBox Content="En tant qu'article" Height="16" HorizontalAlignment="Left" IsChecked="{Binding FilterArticle}" Margin="154,107,0,0" Name="checkBoxExclusionArticles" VerticalAlignment="Top" />
+                <CheckBox Content="Dans au moins une composition" Height="16" HorizontalAlignment="Left" IsChecked="{Binding FilterComposition}" Margin="288,107,0,0" Name="checkBoxExclusionCompositions" VerticalAlignment="Top" />
+                <Label Content="Taxe *" FontWeight="Bold" HorizontalAlignment="Left" Margin="6,4,0,0" VerticalAlignment="Top" />
+                <ComboBox DisplayMemberPath="TA_Intitule" Height="23" HorizontalAlignment="Left" ItemsSource="{Binding ListF_TAXE}" Margin="6,22,0,0" SelectedItem="{Binding SelectedF_TAXE}" VerticalAlignment="Top" Width="180" />
+                <Label Content="Gamme 1" HorizontalAlignment="Left" Margin="394,4,0,0" VerticalAlignment="Top" />
+                <ComboBox Height="23" HorizontalAlignment="Left" ItemsSource="{Binding ListP_GAMME}" Margin="394,22,0,0" Name="comboBoxGamme1" SelectedItem="{Binding SelectedP_GAMME1}" VerticalAlignment="Top" Width="180" />
+                <Label Content="Gamme 2" HorizontalAlignment="Left" Margin="585,4,0,0" VerticalAlignment="Top" />
+                <ComboBox Height="23" HorizontalAlignment="Left" ItemsSource="{Binding ListP_GAMME}" Margin="585,22,0,0" Name="comboBoxGamme2" SelectedItem="{Binding SelectedP_GAMME2}" VerticalAlignment="Top" Width="180" />
+                <Label Content="Conditionnement" HorizontalAlignment="Left" Margin="585,55,0,0" VerticalAlignment="Top" />
+                <ComboBox Height="23" HorizontalAlignment="Left" ItemsSource="{Binding ListP_CONDITIONNEMENT}" Margin="585,73,0,0" Name="comboBoxConditionnement" SelectedItem="{Binding SelectedP_CONDITIONNEMENT}" VerticalAlignment="Top" Width="180" />
+                <Button Click="buttonInitSearch_Click" Height="28" HorizontalAlignment="Left" Margin="778,19,0,0" Name="buttonInitSearch" VerticalAlignment="Top" Width="100">
+                    <Grid>
+                        <Image HorizontalAlignment="Left" Margin="0" Source="/PRESTACONNECT;component/Resources/remove.png" Width="16" />
+                        <TextBlock Margin="22,0,0,0" Text="Réinitialiser" />
+                    </Grid>
+                </Button>
+            </Grid>
+        </GroupBox>
+        <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" 
+                  CanUserReorderColumns="False" CanUserResizeRows="False" GridLinesVisibility="None" 
+                  HeadersVisibility="Column" ItemsSource="{Binding ListResultSearchCompositionArticle}" 
+                  Margin="12,214,12,84" 
+                  Name="dataGridSearchCompositionArticle" SelectedItem="{Binding SelectedResultSearchCompositionArticle}" SelectionMode="Single">
+            <DataGrid.Resources>
+                <local:BindingProxy x:Key="proxy" Data="{Binding}" />
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding AR_Ref}" Header="Référence" IsReadOnly="True" Width="15*" />
+                <DataGridTextColumn Binding="{Binding AR_Design}" Header="Désignation" IsReadOnly="True" Width="35*" />
+                <DataGridTextColumn Binding="{Binding Gamme}" Visibility="{Binding Data.ShowResultAttributeColumn, Source={StaticResource proxy}}" Header="Gamme" IsReadOnly="True" Width="25*" />
+                <DataGridTextColumn Binding="{Binding Conditionnement}" Visibility="{Binding Data.ShowResultConditioningColumn, Source={StaticResource proxy}}" Header="Conditionnement" IsReadOnly="True" Width="20*" />
+                <DataGridTextColumn Binding="{Binding Catalogue}" Header="Catalogue Sage" IsReadOnly="True" Width="20*" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button IsEnabled="{Binding CanAddComposition}" Content="Créer" Width="80" Height="28" ToolTip="Créer une composition à partir de cet article" VerticalAlignment="Bottom" HorizontalAlignment="Right" Name="ButtonCreateComposition" Click="ButtonCreateComposition_Click" Margin="0,0,12,12" />
+        
+        <StatusBar BorderBrush="#FF688CAF" BorderThickness="1" Height="24" Margin="12,0,12,62" VerticalAlignment="Bottom">
+            <TextBlock Margin="4,0,4,0" MinWidth="80" Text="{MultiBinding StringFormat=' \{0\} Résultats', Bindings={Binding ElementName=dataGridSearchCompositionArticle, Path=Items.Count}}" />
+            <Separator />
+            <TextBlock Margin="4,0,4,0" MinWidth="140" Text="{Binding StrCompositionFilteredProducts}" />
+        </StatusBar>
+        <Label Content="Catalogue de destination :" HorizontalAlignment="Left" Margin="16,0,0,18" Name="labelTargetCatalog" VerticalAlignment="Bottom"/>
+        <!--<ComboBox Name="ComboBoxImportSageChoixCatalogue" ItemsSource="{Binding Path=ListLocalCatalog}" 
+                                                  SelectedItem="{Binding Path=SelectedLocalCatalog}" DisplayMemberPath="ComboText" 
+                                                  Margin="161,0,106,13"  VerticalAlignment="Bottom" IsEnabled="{Binding SelectionLocalCatalog}" MaxDropDownHeight="500" />-->
+        <Label Content="{Binding StringTargetCatalog, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="172,0,0,18" Name="labelStringTargetCatalog" VerticalAlignment="Bottom"/>
+    </Grid>
+</Window>

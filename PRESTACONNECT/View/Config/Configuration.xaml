@@ -1,0 +1,2031 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+    xmlns:converters="clr-namespace:Alternetis.Windows.Converters;assembly=Alternetis.Windows"
+    xmlns:localconverters="clr-namespace:PRESTACONNECT.Converters"
+	x:Class="PRESTACONNECT.Configuration"
+	xmlns:local="clr-namespace:PRESTACONNECT"
+	xmlns:view="clr-namespace:PRESTACONNECT.View" 
+	x:Name="Window"
+    xmlns:dg="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit"
+	Title="Configuration"
+	MinWidth="1024" MinHeight="768" 
+	Width="1024" Height="768"
+	WindowStyle="ThreeDBorderWindow" Icon="/PRESTACONNECT;component/prestaconnect.ico" WindowStartupLocation="CenterScreen"
+    ShowInTaskbar="True"
+    Background="{DynamicResource ResourceKey=WindowBackgroundBrush}" Loaded="Window_Loaded" xmlns:my="clr-namespace:PRESTACONNECT.View" xmlns:my1="clr-namespace:PRESTACONNECT.View.Config">
+	<Window.Resources>
+		<converters:HasCountConverter x:Key="HasCount"/>
+		<converters:IsNullConverter x:Key="IsNull"/>
+		<localconverters:DateLivraisonModeToBooleanConverter x:Key="dateLivraisonModeToBooleanConverter"></localconverters:DateLivraisonModeToBooleanConverter>
+		<localconverters:DateLivraisonModeToJoursEnabledConverter x:Key="dateLivraisonModeToJoursEnabledConverter"></localconverters:DateLivraisonModeToJoursEnabledConverter>
+	</Window.Resources>
+	<Grid x:Name="LayoutRoot">
+		<Image Source="/PRESTACONNECT;component/img/setting.png" Width="48" Height="48" HorizontalAlignment="Right" Margin="0,12,12,0" VerticalAlignment="Top" d:LayoutOverrides="HorizontalAlignment, Height, GridBox" />
+		<Button Visibility="{Binding ExtranetOnly}" Content="Avancées ..." HorizontalAlignment="Right" Margin="0,0,146,12" VerticalAlignment="Bottom" Width="122" Height="38" Cursor="Hand" Click="Advanced_Click" />
+		<Button Content="Valider" Name="ButtonSubmit" HorizontalAlignment="Right" Margin="0,0,8,12" VerticalAlignment="Bottom" Width="122" Height="38" Cursor="Hand" Click="ButtonSubmit_Click"  />
+		<TabControl Margin="8,68,8,56">
+			<TabItem Header="Global" x:Name="TabItemGlobal">
+				<Grid>
+					<Label Content="Courriel de l'administrateur du site : " Height="20" HorizontalAlignment="Left" Margin="15,0,0,285" VerticalAlignment="Bottom" Width="192" />
+					<TextBox HorizontalAlignment="Left" Margin="218,0,0,285" Name="TextBoxMailAdminSite" Text="administrateur@domaine.com" ToolTip="administrateur@domaine.com" VerticalAlignment="Bottom" Width="241" />
+					<Label Content="* Cette adresse est utile à diverses notifications envoyées par PrestaConnect." FontSize="10" FontStretch="Normal" FontStyle="Oblique" FontWeight="Normal" Height="16" HorizontalAlignment="Left" Margin="465,0,0,289" VerticalAlignment="Bottom" Width="335" />
+
+					<Label Content="Clé cookie de votre site Prestashop : " HorizontalAlignment="Left" Margin="15,0,0,257" VerticalAlignment="Bottom" Height="20" />
+					<PasswordBox Password="" x:Name="PasswordBoxPrestashopCookieKey" Margin="218,0,168,255" VerticalAlignment="Bottom" Height="24" Width="590" />
+
+					<CheckBox Visibility="{Binding ExtranetOnly}" x:Name="CheckBoxImage" Content="Gestion des images et des documents dans Prestaconnect" HorizontalAlignment="Left" Margin="14,0,0,218" VerticalAlignment="Bottom" />
+					<TabControl Visibility="{Binding ExtranetOnly}" Height="200" Margin="8,0,8,8" Name="tabControlImages" VerticalAlignment="Bottom" IsEnabled="{Binding ElementName=CheckBoxImage, Path=IsChecked}">
+						<TabItem Header="Gestion des images PrestaShop">
+							<Grid>
+								<Label Content="* Cette option s'applique uniquement au transfert des images ajoutées et lors de l'import des images depuis Prestashop" FontSize="10" FontStyle="Oblique" Height="16" HorizontalAlignment="Left" Margin="287,9,0,0" VerticalAlignment="Top" />
+								<Label Content="Mode de gestion des images Prestashop à utiliser :" Height="20" HorizontalAlignment="Left" Margin="13,9,0,0" VerticalAlignment="Top" />
+								<ListBox Name="ListBoxImageStorageMode" Height="70" ItemsSource="{Binding Path=ListImageStorageMode}" Margin="125,35,0,0" SelectedItem="{Binding Path=SelectedImageStorageMode, Mode=TwoWay}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="325" SelectionChanged="ListBoxImageStorageMode_SelectionChanged">
+									<ListBox.ItemTemplate>
+										<DataTemplate>
+											<TextBlock Text="{Binding Path=Intitule}" />
+										</DataTemplate>
+									</ListBox.ItemTemplate>
+								</ListBox>
+								<CheckBox x:Name="CheckBoxImageSynchroPositionLegende" IsChecked="{Binding ImageSynchroPositionLegende}" Content="Pour les images déjà transférées dans Prestashop renvoyer la position et la légende lors des synchronisation images." HorizontalAlignment="Left" Margin="13,121,0,0" VerticalAlignment="Top" />
+								<Label Content="** Cette option est indispensable si vous gérez ces informations dans GADA" FontSize="10" FontStyle="Oblique" Height="16" HorizontalAlignment="Left" Margin="13,143,0,0" VerticalAlignment="Top" />
+							</Grid>
+						</TabItem>
+						<TabItem Header="Gestion des images PrestaConnect">
+							<Grid>
+								<Label Content="Système de stockage local des images articles :" Height="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" />
+								<Label Content="{Binding CurrentLocalStorageMode.Intitule}" Height="20" HorizontalAlignment="Left" Margin="269,10,0,0" VerticalAlignment="Top" />
+								<Button Content="Passer au mode de stockage avancé" Height="29" HorizontalAlignment="Left" IsEnabled="{Binding LocalStorageModeIsSimple}" Margin="154,36,0,0" Name="ButtonChangeLocalStorageMode" VerticalAlignment="Top" Width="240" Click="ButtonChangeLocalStorageMode_Click" />
+							</Grid>
+						</TabItem>
+					</TabControl>
+					<TabControl Margin="10,12,10,315">
+						<TabItem Header="Langue" Visibility="{Binding ExtranetOnly}">
+							<Grid>
+								<Label Content="Langue pour laquelle PrestaConnect doit permettre l'édition des données catalogues et produits :" HorizontalAlignment="Left" Margin="12,12,0,0" VerticalAlignment="Top" />
+								<ComboBox x:Name="ComboBoxLang" HorizontalAlignment="Left" Margin="546,8,0,0" VerticalAlignment="Top" Width="200" ToolTip="Langue" />
+							</Grid>
+						</TabItem>
+						<TabItem Header="Gestion des clients" Visibility="{Binding ExtranetOnly}">
+							<Grid>
+								<Label Content="Mode de gestion des nouveaux clients après inscription sur votre site:" HorizontalAlignment="Left" Margin="12,12,0,0" VerticalAlignment="Top" />
+								<RadioButton Content="Mode BtoC (création automatique des clients)" x:Name="RadioButtonBToC" HorizontalAlignment="Left" Margin="46,39,0,0" VerticalAlignment="Top" />
+								<RadioButton Content="Mode BtoB (mappage manuel des clients)" x:Name="RadioButtonBToB" Margin="46,75,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+								<CheckBox IsChecked="{Binding ClientMultiMappageBtoB}" IsEnabled="{Binding ElementName=RadioButtonBToB, Path=IsChecked}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="321,75,0,0" Width="280">
+									<Grid>
+										<TextBlock TextWrapping="Wrap">
+                            Autoriser le mappage de plusieurs comptes client PrestaShop avec un même compte client Sage</TextBlock>
+									</Grid>
+								</CheckBox>
+							</Grid>
+						</TabItem>
+						<TabItem Header="Gestion des remises" Visibility="{Binding ExtranetOnly}">
+							<Grid>
+								<Label Content="Remise à appliquer :" HorizontalAlignment="Left" Margin="12,18,0,0" VerticalAlignment="Top" />
+								<ListBox ItemsSource="{Binding Path=ListRemiseMode}" SelectedItem="{Binding Path=SelectedRemiseMode, Mode=TwoWay}" DisplayMemberPath="Intitule" HorizontalAlignment="Left" Margin="132,6,0,6" Width="428" />
+								<Label Visibility="{Binding SelectedRemiseMode.ShowConflit}" Content="Gestion des conflit de remises :" HorizontalAlignment="Left" Margin="629,18,0,0" VerticalAlignment="Top" />
+								<ListBox Visibility="{Binding SelectedRemiseMode.ShowConflit}" DisplayMemberPath="Intitule" HorizontalAlignment="Left" ItemsSource="{Binding Path=ListRemiseConflit}" Margin="629,44,0,6" SelectedItem="{Binding Path=SelectedRemiseConflit, Mode=TwoWay}" Width="311" />
+							</Grid>
+						</TabItem>
+						<TabItem Header="Connexion FTP" Name="TabItemFTP">
+							<Grid>
+								<Label Content="Adresse FTP :" HorizontalAlignment="Left" Margin="12,12,0,0" VerticalAlignment="Top" />
+								<TextBox x:Name="TextBoxFTPIP" HorizontalAlignment="Left" Margin="131,8,0,0" TextWrapping="Wrap" Text="ftp://" VerticalAlignment="Top" Width="325" />
+								<CheckBox Name="CheckBoxFTPSSL" Content="Connexion FTP en SSL" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="462,12,0,0" />
+								<Label Content="Utilisateur FTP :" HorizontalAlignment="Left" Margin="12,42,0,0" VerticalAlignment="Top" />
+								<TextBox x:Name="TextBoxFTPUser" HorizontalAlignment="Left" Margin="131,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="325" />
+								<Label Content="Mot de passe FTP :" HorizontalAlignment="Left" Margin="12,71,0,0" VerticalAlignment="Top" />
+								<PasswordBox x:Name="PasswordBox" HorizontalAlignment="Left" Margin="131,66,0,0" VerticalAlignment="Top" Width="325" Height="24" />
+								<Button x:Name="ButtonFTPTest" Click="ButtonFTPTest_Click" Content="Tester mon accès FTP" HorizontalAlignment="Left" Margin="475,64,0,0" VerticalAlignment="Top" Width="147" Height="25.96" />
+							</Grid>
+						</TabItem>
+					</TabControl>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Catalogue" x:Name="TabItemCatalogue">
+				<TabControl Margin="8">
+					<TabItem Header="Général" Name="tabItemCatalogueGeneral">
+						<Grid>
+							<Label Visibility="{Binding ExtranetOnly}" Content="Visibilité des catalogues et tarification des produits par groupe de client :" HorizontalAlignment="Left" Margin="26,36,0,0" VerticalAlignment="Top" />
+							<DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" GridLinesVisibility="None" HeadersVisibility="Column"
+                              ItemsSource="{Binding Path=ListGroup}" SelectedItem="{Binding SelectedGroup}" Margin="26,58,135,115" SelectionMode="Single" >
+								<DataGrid.Columns>
+									<DataGridTextColumn Binding="{Binding Path=Intitule}" Header="Groupe" IsReadOnly="True" Width="50*" />
+									<DataGridTemplateColumn Header="Catégorie tarifaire" Width="50*">
+										<DataGridTemplateColumn.CellTemplate>
+											<DataTemplate>
+												<Grid>
+													<Grid.ColumnDefinitions>
+														<ColumnDefinition Width="*" />
+														<ColumnDefinition Width="22" />
+													</Grid.ColumnDefinitions>
+													<TextBlock Text="{Binding Path=CategorieTarifaire.CT_Intitule, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2"/>
+													<Button x:Name="ButtonUnselectCatTarif" Grid.Column="1" Click="ButtonUnselectCatTarif_Click">
+														<Image Source="/PRESTACONNECT;component/Resources/remove.png" Width="20" Height="20"/>
+													</Button>
+												</Grid>
+											</DataTemplate>
+										</DataGridTemplateColumn.CellTemplate>
+										<DataGridTemplateColumn.CellEditingTemplate>
+											<DataTemplate>
+												<ComboBox ItemsSource="{Binding Path=DataContext.ListCategoriesTarifaires, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" 
+                                                  DisplayMemberPath="CT_Intitule" SelectedItem="{Binding Path=CategorieTarifaire, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+											</DataTemplate>
+										</DataGridTemplateColumn.CellEditingTemplate>
+									</DataGridTemplateColumn>
+									<DataGridCheckBoxColumn Binding="{Binding Path=Show}" Header="Montrer" Width="75" Visibility="{Binding ExtranetOnly}"/>
+								</DataGrid.Columns>
+							</DataGrid>
+							<CheckBox Visibility="{Binding ExtranetOnly}" x:Name="CheckBoxCanDeleteCatalogProductAssociation" IsChecked="{Binding CanDeleteCatalogProductAssociation}" Content="Autoriser Prestaconnect à supprimer les associations catalogues-produits" HorizontalAlignment="Left" Margin="26,0,0,66" Height="16" VerticalAlignment="Bottom" />
+							<Label Visibility="{Binding ExtranetOnly}" Content="* Seules les associations concernant les catalogues existants dans Prestaconnect ET Prestashop sont affectées par cette fonctionnalité." FontSize="10" FontStyle="Oblique" HorizontalAlignment="Left" Margin="26,0,0,42" Height="16" VerticalAlignment="Bottom" />
+						</Grid>
+					</TabItem>
+					<TabItem Header="Import via les informations libres" Name="tabItemCatalogueImport" Visibility="{Binding ExtranetOnly}">
+						<Grid>
+							<DataGrid AutoGenerateColumns="False"
+                                          Name="DataGridInformationLibreArticle" SelectionMode="Single" 
+                                          CanUserAddRows="False" CanUserDeleteRows="False" GridLinesVisibility="None" HeadersVisibility="Column"
+                                          ItemsSource="{Binding Path=ListInformationLibreArticle}" Margin="0,120,0,0">
+								<DataGrid.Columns>
+									<DataGridTextColumn Binding="{Binding Path=Sag_InfoLibreArticle}" Header="Information libre Article" IsReadOnly="True" Width="30*"/>
+									<DataGridTextColumn Header="Niveau de catalogue" Width="30*" Binding="{Binding Path=Inf_Catalogue}" IsReadOnly="True"/>
+									<DataGridTextColumn Header="Parent" Width="30*" Binding="{Binding Path=Inf_Parent}" IsReadOnly="True"/>
+									<DataGridTemplateColumn Header="Supprimer" Width="10*">
+										<DataGridTemplateColumn.CellTemplate>
+											<DataTemplate>
+												<Button x:Name="DataGridImportInfoLibreCataButtonDelete" Click="DataGridImportInfoLibreCataButtonDelete_Click">Supprimer</Button>
+											</DataTemplate>
+										</DataGridTemplateColumn.CellTemplate>
+									</DataGridTemplateColumn>
+									<DataGridTextColumn Header="Statistique" Width="30*" Binding="{Binding Path=Inf_IsStat}" IsReadOnly="True" Visibility="Hidden" />
+								</DataGrid.Columns>
+							</DataGrid>
+							<Label Content="Niveau catalogue :" HorizontalAlignment="Left" Margin="31,62,0,0" VerticalAlignment="Top" />
+							<ComboBox Margin="212,84,0,0" Name="CB_ParentCatalogue" SelectionChanged="CB_ParentCatalogue_SelectionChanged" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="255" />
+							<Label Content="Parent :" Height="20" HorizontalAlignment="Left" Margin="31,88,0,0" VerticalAlignment="Top" Width="170" />
+							<Button Content="Ajouter" Height="33" IsEnabled="False" Margin="512,71,0,0" Name="Btn_AddInfoLibreCataogue" VerticalAlignment="Top" Click="Btn_AddInfoLibreCataogue_Click" HorizontalAlignment="Left" Width="145" />
+							<ComboBox Margin="212,54,0,0" Name="Cb_NiveauCatalogue" SelectionChanged="Cb_NiveauCatalogue_SelectionChanged" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75" />
+							<RadioButton Height="24" HorizontalAlignment="Left" Margin="21,24,0,0" Name="RadIL" VerticalAlignment="Top" Width="467">
+								<StackPanel Orientation="Horizontal" Width="428">
+									<TextBlock Text="à partir d'une information libre" VerticalAlignment="Center" />
+									<ComboBox DisplayMemberPath="CB_Name" ItemsSource="{Binding ListSageInfolibreArticleTextTable}" Margin="10,0,0,0" Name="CB_InfoLibreCatalogue" SelectionChanged="CB_InfoLibreCatalogue_SelectionChanged" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="255" IsEnabled="{Binding ElementName=RadIL, Path=IsChecked}"/>
+								</StackPanel>
+							</RadioButton>
+							<RadioButton Height="24" HorizontalAlignment="Right" Margin="0,23,31,0" Name="RadStat" VerticalAlignment="Top" Width="425">
+								<StackPanel Orientation="Horizontal">
+									<TextBlock Text="à partir d'une statistique" VerticalAlignment="Center" />
+									<ComboBox DisplayMemberPath="P_IntStatArt1" Height="24" ItemsSource="{Binding ListSageStatistiqueArticle}" Margin="10,0,0,0" Name="CB_StatCatalogue" Width="255" IsEnabled="{Binding ElementName=RadStat, Path=IsChecked}" SelectionChanged="CB_StatCatalogue_SelectionChanged" />
+								</StackPanel>
+							</RadioButton>
+
+						</Grid>
+					</TabItem>
+				</TabControl>
+			</TabItem>
+			<TabItem Header="Article" x:Name="TabItemArticle" Visibility="{Binding ExtranetOnly}">
+				<Grid>
+					<TabControl Margin="8">
+						<TabItem Header="Général" Name="tabItemArticleGeneral">
+							<Grid>
+								<TabControl Margin="20">
+									<TabItem Header="Conditionnements">
+										<Grid>
+											<CheckBox HorizontalAlignment="Left" IsChecked="{Binding ImportConditionnementActif}" Margin="20,16,0,0" 
+                                                  Name="CheckBoxGestionConditionnementActif" VerticalAlignment="Top" 
+                                                  Content="Activer l'import des conditionnements en tant que déclinaisons. !! Attention les produits en conditionnement ne pourront plus être vendus à l'unité !!" />
+											<CheckBox HorizontalAlignment="Left" IsChecked="{Binding ConditionnementQuantiteToUPC}" Margin="20,46,0,0" VerticalAlignment="Top" 
+                                                  Content="Activer l'écriture de la quantité de l'énuméré de conditionnement dans la zone &quot;UPC&quot; de la déclinaison." />
+											<CheckBox HorizontalAlignment="Left" IsChecked="{Binding LimiteStockConditionnementMini}" Margin="20,76,0,0" VerticalAlignment="Top" Width="805">
+												<Grid>
+													<TextBlock TextWrapping="Wrap" TextAlignment="Justify">
+                                                         Activer la gestion de la valeur maximale du stock produit en fonction de l'unité de conditionnement la plus petite, permet ainsi l'affichage du produit hors-stock si le nombre d'unités en stock est inférieur au plus petit conditionnement transféré.
+													</TextBlock>
+												</Grid>
+											</CheckBox>
+										</Grid>
+									</TabItem>
+									<TabItem Header="Gestion des stocks">
+										<Grid>
+											<Label Content="Dépôt(s) :" HorizontalAlignment="Left" Margin="17,17,0,0" VerticalAlignment="Top" />
+											<ListBox Margin="80,10,480,10" x:Name="ListBoxSupply">
+												<ListBox.ItemTemplate>
+													<HierarchicalDataTemplate>
+														<CheckBox Content="{Binding Sup_Name}" IsChecked="{Binding Sup_Active}" Click="CheckBoxSupply_Click" />
+													</HierarchicalDataTemplate>
+												</ListBox.ItemTemplate>
+											</ListBox>
+
+											<Label Content="Stock à afficher sur le site :" Margin="0,37,307,0" VerticalAlignment="Top" HorizontalAlignment="Right" />
+											<ComboBox x:Name="ComboBoxArticleStock" Margin="0,30,22,0" VerticalAlignment="Top" SelectionChanged="ComboBoxArticleStock_SelectionChanged" HorizontalAlignment="Right" Width="230" />
+											<TextBlock x:Name="LabelInfoGestionStock" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Margin="0,76,22,0" Foreground="Black" FontStyle="Italic" HorizontalAlignment="Right" Width="411" />
+
+											<Label Content="Comportement de commande si rupture de stock (affecté aux nouveaux articles) :" HorizontalAlignment="Right" Margin="0,153,17,0" VerticalAlignment="Top" Foreground="Black" />
+											<ComboBox x:Name="ComboBoxArticleRupture" Margin="0,183,22,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="230" />
+
+											<CheckBox IsChecked="{Binding StockNegatifZero}" Height="16" HorizontalAlignment="Right" Margin="0,243,50,0" VerticalAlignment="Top">
+												<TextBlock TextWrapping="Wrap">
+                                                    Lorsque le stock calculé est négatif envoyer la valeur 0 à PrestaShop
+												</TextBlock>
+											</CheckBox>
+											<CheckBox IsChecked="{Binding StockNegatifZeroParDepot}" IsEnabled="{Binding StockNegatifZero}"  Height="16" HorizontalAlignment="Right" Margin="0,263,35,0" VerticalAlignment="Top">
+												<TextBlock TextWrapping="Wrap">
+                                                    Appliquer la valeur 0 de manière indépendante pour chaque dépôt
+												</TextBlock>
+											</CheckBox>
+
+											<GroupBox Header="Articles en contremarque" Height="145" HorizontalAlignment="Right" Margin="0,298,22,0" Name="groupBoxContremarque" VerticalAlignment="Top" Width="423">
+												<Grid>
+													<CheckBox Content="Synchroniser le stock Sage" IsChecked="{Binding StockArticleContremarqueActif}" HorizontalAlignment="Left" Margin="15,61,0,0" Name="checkBoxStockContremarqueSage" VerticalAlignment="Top" />
+													<Label Content="Stock forcé en contremarque :" HorizontalAlignment="Right" Margin="0,21,237,0" VerticalAlignment="Top" />
+													<TextBox x:Name="TextBoxArticleContremarque" HorizontalAlignment="Right" Margin="0,17,126,0" TextWrapping="Wrap" Text="0" Width="98" MaxLength="4" VerticalAlignment="Top" />
+												</Grid>
+											</GroupBox>
+										</Grid>
+									</TabItem>
+									<TabItem Header="Gestion du poids">
+										<Grid>
+											<Label Content="Type :" HorizontalAlignment="Left" Margin="17,17,0,0" VerticalAlignment="Top" />
+											<ComboBox x:Name="ComboBoxArticleType" Margin="174,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="238" />
+											<Label Content="Unité :" HorizontalAlignment="Left" Margin="17,49,0,0" VerticalAlignment="Top" />
+											<ComboBox x:Name="ComboBoxArticleUnite" Margin="174,42,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="238" />
+											<GroupBox Header="Conversion des énumérés en poids sur les déclinaisons pour les gammes :" Margin="17,85,466,60" Name="labelWeightConversion" >
+												<Grid>
+													<ListBox ItemsSource="{Binding Path=ListGamme}" Margin="6,6,6,60" Name="listBoxCombination">
+														<ListBox.ItemTemplate>
+															<DataTemplate>
+																<Grid>
+																	<Grid.ColumnDefinitions>
+																		<ColumnDefinition MinWidth="170" Width="*" />
+																		<ColumnDefinition Width="15" />
+																	</Grid.ColumnDefinitions>
+																	<TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="{Binding Path=G_Intitule}" Width="Auto" />
+																	<CheckBox Grid.Column="1" HorizontalAlignment="Right" IsChecked="{Binding Path=WeightConversion, Mode=TwoWay}" Width="Auto" />
+																</Grid>
+															</DataTemplate>
+														</ListBox.ItemTemplate>
+													</ListBox>
+													<Label Content="Utilisation d'un coefficient multiplicateur :" Margin="18,0,0,37" Name="labelWeightCoefficient" VerticalAlignment="Bottom" HorizontalAlignment="Left"  />
+													<ComboBox x:Name="ComboBoxInformationLibreCoefficient" ItemsSource="{Binding ListInfolibreCoefficient}" SelectedItem="{Binding SelectedInfolibreCoefficient}" DisplayMemberPath="CB_Name" Margin="18,0,0,7" Height="24" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="220" />
+												</Grid>
+											</GroupBox>
+											<CheckBox Content="Mettre à jour les poids lors de la synchronisation des stocks." Height="16" HorizontalAlignment="Left" Margin="17,0,0,24" Name="checkBoxPoidsSynchroStock" VerticalAlignment="Bottom" IsChecked="{Binding PoidsSynchroStock}"/>
+										</Grid>
+									</TabItem>
+									<TabItem Header="Gestion des tarifs">
+										<Grid>
+											<Label Content="Catégorie tarifaire :" HorizontalAlignment="Left" Margin="17,17,0,0" VerticalAlignment="Top" />
+											<ComboBox x:Name="ComboBoxArticleCategorieTarifaire" Margin="154,13,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="280" />
+											<Button Height="26" HorizontalAlignment="Left" Margin="448,13,0,0" Name="Bt_Effacer_ArticleCategorieTarifaire" VerticalAlignment="Top" Width="70" Click="Bt_Effacer_ArticleCategorieTarifaire_Click">
+												<StackPanel Orientation="Horizontal">
+													<Image HorizontalAlignment="Center" Margin="2" Source="/PRESTACONNECT;component/Resources/remove.png" Width="16" />
+													<TextBlock Margin="4,0,4,0" Text="Effacer" VerticalAlignment="Center" />
+												</StackPanel>
+											</Button>
+											<Label Foreground="Black" HorizontalAlignment="Left" Margin="32,47,0,0" Content="Permet de définir le prix de base du produit et de ses déclinaisons à partir d'une catégorie tarifaire, sinon c'est le prix fiche article qui sera utilisé." FontStyle="Italic" VerticalAlignment="Top" />
+
+											<Label Content="Catégorie comptable :" HorizontalAlignment="Left" Margin="17,111,0,0" VerticalAlignment="Top" />
+											<ComboBox x:Name="ComboBoxArticleCategorieComptable" SelectionChanged="ComboBoxArticleCategorieComptable_SelectionChanged" Margin="154,107,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="280" />
+											<Button Height="26" HorizontalAlignment="Left" Margin="448,107,0,0" Name="Bt_Effacer_ArticleCategorieComptable" VerticalAlignment="Top" Width="70" Click="Bt_Effacer_ArticleCategorieComptable_Click">
+												<StackPanel Orientation="Horizontal">
+													<Image HorizontalAlignment="Center" Margin="2" Source="/PRESTACONNECT;component/Resources/remove.png" Width="16" />
+													<TextBlock Margin="4,0,4,0" Text="Effacer" VerticalAlignment="Center" />
+												</StackPanel>
+											</Button>
+											<Label Foreground="Black" HorizontalAlignment="Left" Margin="32,141,0,0" Content="Permet d'affecter les règles de taxes aux produits en fonction du mappage des codes taxes." FontStyle="Italic" VerticalAlignment="Top" />
+
+											<CheckBox Content="Indiquer à PrestaConnect d'ignorer les prix spécifiques Prestashop possédant des dates de début et de fin lors du transfert des tarifs depuis Sage." Height="16" HorizontalAlignment="Left" IsChecked="{Binding FiltreDatePrixPrestashop}" Margin="17,196,0,0" VerticalAlignment="Top" />
+											<TextBlock FontStyle="Italic" Foreground="Black" Margin="32,218,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="667" TextWrapping="Wrap">
+                                                Cette option vous permet de saisir des prix spécifiques dans Prestashop sans qu'ils soient effacés lors du transfert des tarifs Sage.
+                                                La condition étant la présence de dates de début et/ou de fin sur vos prix spécifiques.
+                                                <LineBreak/><LineBreak/>
+                                                Attention tout disfonctionnement de l'application des tarifs Sage suite à la saisie de prix spécifiques dans Prestashop relèverait de votre responsabilité.
+											</TextBlock>
+											<CheckBox Content="Indiquer à PrestaConnect d'appliquer la règle Prestashop utilisant la valeur &quot;-1&quot; pour les prix spécifiques conservant le prix de base du produit et appliquant une réduction en pourcentage." Height="16" HorizontalAlignment="Left" IsChecked="{Binding RegleBasePrixSpecifique}" Margin="17,326,0,0" VerticalAlignment="Top" />
+										</Grid>
+									</TabItem>
+									<TabItem Header="Options d'import">
+										<Grid>
+											<CheckBox Content="Permettre d'importer les articles non cochés &quot;publié sur le site marchand&quot;"  x:Name="CheckBoxArticleNonPublieWeb" HorizontalAlignment="Left" Margin="23,21,0,0" VerticalAlignment="Top" />
+											<CheckBox x:Name="CheckBoxArticleSommeil" Content="Permettre d'importer les articles cochés &quot;en sommeil&quot;" Margin="23,59,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+										</Grid>
+									</TabItem>
+								</TabControl>
+							</Grid>
+						</TabItem>
+						<TabItem Header="Gestion des champs statistiques et informations libres" Name="tabItemArticleInformationLibre">
+							<Grid>
+								<CheckBox IsChecked="{Binding SuppressionAutoCaracteristique}" Content="Activer la suppression des valeurs des caractéristiques article, dans PrestaConnect et PrestaShop, lorsque l'information Sage importée est vide ou nulle" Margin="24,12,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+
+								<TabControl Margin="20,36,20,80">
+									<TabItem Header="Informations libres">
+										<DataGrid AutoGenerateColumns="False" Name="DataGridInformationLibre" SelectionMode="Single" 
+                                          CanUserAddRows="False" CanUserDeleteRows="False" GridLinesVisibility="None" HeadersVisibility="Column"
+                                          ItemsSource="{Binding Path=ListInformationLibre}" SelectedItem="{Binding SelectedInformationLibre}" >
+											<DataGrid.Columns>
+												<DataGridTextColumn Binding="{Binding Path=InfoLibre.Sag_InfoLibre}" Header="Information libre Sage" IsReadOnly="True" Width="50*" />
+												<DataGridTextColumn Binding="{Binding Path=SageInfoLibre.CB_TypeString}" Header="Type" IsReadOnly="True" Width="20*" />
+												<DataGridTemplateColumn Header="Mode de transfert des valeurs" Width="50*">
+													<DataGridTemplateColumn.CellTemplate>
+														<DataTemplate>
+															<TextBlock Text="{Binding Path=InfoValeursMode.Intitule, UpdateSourceTrigger=PropertyChanged}" Margin="2"/>
+														</DataTemplate>
+													</DataGridTemplateColumn.CellTemplate>
+													<DataGridTemplateColumn.CellEditingTemplate>
+														<DataTemplate>
+															<ComboBox ItemsSource="{Binding Path=DataContext.ListInformationLibreValeursMode, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                              DisplayMemberPath="Intitule" SelectedItem="{Binding Path=InfoValeursMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=Active, UpdateSourceTrigger=PropertyChanged}" />
+														</DataTemplate>
+													</DataGridTemplateColumn.CellEditingTemplate>
+												</DataGridTemplateColumn>
+												<DataGridTemplateColumn Header="Caractéristique Prestashop" Width="50*">
+													<DataGridTemplateColumn.CellTemplate>
+														<DataTemplate>
+															<Grid>
+																<Grid.ColumnDefinitions>
+																	<ColumnDefinition Width="*" />
+																	<ColumnDefinition Width="22" />
+																</Grid.ColumnDefinitions>
+																<TextBlock Text="{Binding Path=Feature.Name, UpdateSourceTrigger=PropertyChanged}" Margin="2"/>
+																<Button x:Name="ButtonUnselectInformationLibreFeature" Grid.Column="1" Click="ButtonUnselectInformationLibreFeature_Click">
+																	<Image Source="/PRESTACONNECT;component/Resources/remove.png" Width="20" Height="20"/>
+																</Button>
+															</Grid>
+														</DataTemplate>
+													</DataGridTemplateColumn.CellTemplate>
+													<DataGridTemplateColumn.CellEditingTemplate>
+														<DataTemplate>
+															<ComboBox ItemsSource="{Binding Path=DataContext.ListFeature, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                              DisplayMemberPath="Name" SelectedItem="{Binding Path=Feature, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+														</DataTemplate>
+													</DataGridTemplateColumn.CellEditingTemplate>
+												</DataGridTemplateColumn>
+												<DataGridTemplateColumn Width="150" Header="Créer la caractéristique">
+													<DataGridTemplateColumn.CellTemplate>
+														<DataTemplate>
+															<Button Name="ButtonCreateFeatureFromSageInformationLibre" Content="Créer dans Prestashop" IsEnabled="{Binding CanCreateFeature}" Click="ButtonCreateFeatureFromSageInformationLibre_Click"/>
+														</DataTemplate>
+													</DataGridTemplateColumn.CellTemplate>
+												</DataGridTemplateColumn>
+											</DataGrid.Columns>
+										</DataGrid>
+									</TabItem>
+									<TabItem Header="Statistiques">
+										<DataGrid AutoGenerateColumns="False" Name="DataGridStatistiqueArticle" SelectionMode="Single" 
+                                          CanUserAddRows="False" CanUserDeleteRows="False" GridLinesVisibility="None" HeadersVisibility="Column"
+                                          ItemsSource="{Binding Path=ListStatistiqueArticle}" SelectedItem="{Binding SelectedStatistiqueArticle}" >
+											<DataGrid.Columns>
+												<DataGridTextColumn Binding="{Binding Path=StatArt.Sag_StatArt}" Header="Statistique article Sage" IsReadOnly="True" Width="50*" />
+												<DataGridTemplateColumn Header="Mode de transfert des valeurs" Width="50*">
+													<DataGridTemplateColumn.CellTemplate>
+														<DataTemplate>
+															<TextBlock Text="{Binding Path=InfoValeursMode.Intitule, UpdateSourceTrigger=PropertyChanged}" Margin="2"/>
+														</DataTemplate>
+													</DataGridTemplateColumn.CellTemplate>
+													<DataGridTemplateColumn.CellEditingTemplate>
+														<DataTemplate>
+															<ComboBox ItemsSource="{Binding Path=DataContext.ListInformationLibreValeursMode, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                              DisplayMemberPath="Intitule" SelectedItem="{Binding Path=InfoValeursMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=Active, UpdateSourceTrigger=PropertyChanged}" />
+														</DataTemplate>
+													</DataGridTemplateColumn.CellEditingTemplate>
+												</DataGridTemplateColumn>
+												<DataGridTemplateColumn Header="Caractéristique Prestashop" Width="50*">
+													<DataGridTemplateColumn.CellTemplate>
+														<DataTemplate>
+															<Grid>
+																<Grid.ColumnDefinitions>
+																	<ColumnDefinition Width="*" />
+																	<ColumnDefinition Width="22" />
+																</Grid.ColumnDefinitions>
+																<TextBlock Text="{Binding Path=Feature.Name, UpdateSourceTrigger=PropertyChanged}" Margin="2"/>
+																<Button x:Name="ButtonUnselectStatistiqueFeature" Grid.Column="1" Click="ButtonUnselectStatistiqueFeature_Click">
+																	<Image Source="/PRESTACONNECT;component/Resources/remove.png" Width="20" Height="20"/>
+																</Button>
+															</Grid>
+														</DataTemplate>
+													</DataGridTemplateColumn.CellTemplate>
+													<DataGridTemplateColumn.CellEditingTemplate>
+														<DataTemplate>
+															<ComboBox ItemsSource="{Binding Path=DataContext.ListFeature, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                              DisplayMemberPath="Name" SelectedItem="{Binding Path=Feature, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+														</DataTemplate>
+													</DataGridTemplateColumn.CellEditingTemplate>
+												</DataGridTemplateColumn>
+												<DataGridTemplateColumn Width="150" Header="Créer la caractéristique">
+													<DataGridTemplateColumn.CellTemplate>
+														<DataTemplate>
+															<Button Name="ButtonCreateFeatureFromSageStatistiqueArticle" Content="Créer dans Prestashop" IsEnabled="{Binding CanCreateFeature}" Click="ButtonCreateFeatureFromSageStatistiqueArticle_Click"/>
+														</DataTemplate>
+													</DataGridTemplateColumn.CellTemplate>
+												</DataGridTemplateColumn>
+											</DataGrid.Columns>
+										</DataGrid>
+									</TabItem>
+									<TabItem Header="Informations fiche article">
+										<DataGrid AutoGenerateColumns="False" Name="DataGridInfoArticle" SelectionMode="Single" 
+                                          CanUserAddRows="False" CanUserDeleteRows="False" GridLinesVisibility="None" HeadersVisibility="Column"
+                                          ItemsSource="{Binding Path=ListSageInfoArticle}" SelectedItem="{Binding SelectedSageInfoArticle}">
+											<DataGrid.Columns>
+												<DataGridTextColumn Binding="{Binding Path=SageInfoArticle.Intitule}" Header="Information article Sage" IsReadOnly="True" Width="50*" />
+												<DataGridTemplateColumn Header="Mode de transfert des valeurs" Width="50*">
+													<DataGridTemplateColumn.CellTemplate>
+														<DataTemplate>
+															<TextBlock Text="{Binding Path=InfoValeursMode.Intitule, UpdateSourceTrigger=PropertyChanged}" Margin="2"/>
+														</DataTemplate>
+													</DataGridTemplateColumn.CellTemplate>
+													<DataGridTemplateColumn.CellEditingTemplate>
+														<DataTemplate>
+															<ComboBox ItemsSource="{Binding Path=DataContext.ListInformationLibreValeursMode, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                              DisplayMemberPath="Intitule" SelectedItem="{Binding Path=InfoValeursMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=Active, UpdateSourceTrigger=PropertyChanged}" />
+														</DataTemplate>
+													</DataGridTemplateColumn.CellEditingTemplate>
+												</DataGridTemplateColumn>
+												<DataGridTemplateColumn Header="Caractéristique Prestashop" Width="50*">
+													<DataGridTemplateColumn.CellTemplate>
+														<DataTemplate>
+															<Grid>
+																<Grid.ColumnDefinitions>
+																	<ColumnDefinition Width="*" />
+																	<ColumnDefinition Width="22" />
+																</Grid.ColumnDefinitions>
+																<TextBlock Text="{Binding Path=Feature.Name, UpdateSourceTrigger=PropertyChanged}" Margin="2"/>
+																<Button x:Name="ButtonUnselectInformationArticleFeature" Grid.Column="1" Click="ButtonUnselectInformationArticleFeature_Click">
+																	<Image Source="/PRESTACONNECT;component/Resources/remove.png" Width="20" Height="20"/>
+																</Button>
+															</Grid>
+														</DataTemplate>
+													</DataGridTemplateColumn.CellTemplate>
+													<DataGridTemplateColumn.CellEditingTemplate>
+														<DataTemplate>
+															<ComboBox ItemsSource="{Binding Path=DataContext.ListFeature, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                              DisplayMemberPath="Name" SelectedItem="{Binding Path=Feature, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+														</DataTemplate>
+													</DataGridTemplateColumn.CellEditingTemplate>
+												</DataGridTemplateColumn>
+												<DataGridTemplateColumn Width="150" Header="Créer la caractéristique">
+													<DataGridTemplateColumn.CellTemplate>
+														<DataTemplate>
+															<Button Name="ButtonCreateFeatureFromSageInformationArticle" Content="Créer dans Prestashop" IsEnabled="{Binding CanCreateFeature}" Click="ButtonCreateFeatureFromSageInformationArticle_Click"/>
+														</DataTemplate>
+													</DataGridTemplateColumn.CellTemplate>
+												</DataGridTemplateColumn>
+											</DataGrid.Columns>
+										</DataGrid>
+									</TabItem>
+								</TabControl>
+
+
+								<Grid Height="30" Margin="20,0,0,40" VerticalAlignment="Bottom" Width="910" HorizontalAlignment="Left">
+									<Label Content="Renseignement de la marque :" Height="20" HorizontalAlignment="Left" Margin="4,6,0,0" VerticalAlignment="Top" Width="170" />
+									<RadioButton Name="RadioMarqueInactif" Content="Inactif" IsChecked="True" Margin="190,6,0,0" Height="18" HorizontalAlignment="Left" Width="62" VerticalAlignment="Top" />
+									<RadioButton Name="RadioMarqueStatistique" IsChecked="{Binding MarqueStatActif}" Margin="281,2,0,0" Width="300" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left">
+										<RadioButton.Content>
+											<StackPanel Orientation="Horizontal" >
+												<TextBlock Text="à partir d'une statistique " VerticalAlignment="Center" />
+												<ComboBox Name="ComboMarqueStatistique" ItemsSource="{Binding ListSageStatistiqueArticle}" SelectedItem="{Binding SelectedMarqueSageStatistiqueArticle}" DisplayMemberPath="P_IntStatArt1" Width="150" IsEnabled="{Binding ElementName=RadioMarqueStatistique, Path=IsChecked}" />
+											</StackPanel>
+										</RadioButton.Content>
+									</RadioButton>
+									<RadioButton Name="RadioMarqueInfolibre" IsChecked="{Binding MarqueInfolibreActif}" Margin="604,2,0,0" Width="300" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left">
+										<RadioButton.Content>
+											<StackPanel Orientation="Horizontal">
+												<TextBlock Text="à partir d'une info libre " VerticalAlignment="Center" />
+												<ComboBox Name="ComboMarqueInfolibre" ItemsSource="{Binding ListSageInfolibreArticleTextTable}" SelectedItem="{Binding SelectedMarqueSageInfolibreArticle}" DisplayMemberPath="CB_Name" Width="150" IsEnabled="{Binding ElementName=RadioMarqueInfolibre, Path=IsChecked}"/>
+											</StackPanel>
+										</RadioButton.Content>
+									</RadioButton>
+								</Grid>
+								<Grid Height="30" Margin="20,0,0,10" VerticalAlignment="Bottom" Width="910" HorizontalAlignment="Left">
+									<Label Content="Renseignement du fournisseur :" Height="20" HorizontalAlignment="Left" Margin="4,6,0,0" VerticalAlignment="Top" Width="170" />
+									<RadioButton Name="RadioFournisseurInactif" Content="Inactif" IsChecked="True" Margin="190,6,0,0" Height="18" HorizontalAlignment="Left" Width="62" VerticalAlignment="Top" />
+									<RadioButton Name="RadioFournisseurStatistique" IsChecked="{Binding FournisseurStatActif}" IsEnabled="{Binding CanActiveFournisseurInfolibre}" Margin="281,2,0,0" Width="300" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left">
+										<RadioButton.Content>
+											<StackPanel Orientation="Horizontal" >
+												<TextBlock Text="à partir d'une statistique " VerticalAlignment="Center" />
+												<ComboBox Name="ComboFournisseurStatistique" ItemsSource="{Binding ListSageStatistiqueArticle}" SelectedItem="{Binding SelectedFournisseurSageStatistiqueArticle}" DisplayMemberPath="P_IntStatArt1" Width="150" IsEnabled="{Binding ElementName=RadioFournisseurStatistique, Path=IsChecked}" />
+											</StackPanel>
+										</RadioButton.Content>
+									</RadioButton>
+									<RadioButton Name="RadioFournisseurInfolibre" IsChecked="{Binding FournisseurInfolibreActif}" IsEnabled="{Binding CanActiveFournisseurInfolibre}" Margin="604,2,0,0" Width="300" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left">
+										<RadioButton.Content>
+											<StackPanel Orientation="Horizontal">
+												<TextBlock Text="à partir d'une info libre " VerticalAlignment="Center" />
+												<ComboBox Name="ComboFournisseurInfolibre" ItemsSource="{Binding ListSageInfolibreArticleTextTable}" SelectedItem="{Binding SelectedFournisseurSageInfolibreArticle}" DisplayMemberPath="CB_Name" Width="150" IsEnabled="{Binding ElementName=RadioFournisseurInfolibre, Path=IsChecked}"/>
+											</StackPanel>
+										</RadioButton.Content>
+									</RadioButton>
+								</Grid>
+							</Grid>
+						</TabItem>
+						<TabItem Header="Remplacement automatique de texte">
+							<Grid>
+								<Label Content="Permet le remplacement automatique de valeurs textes entières par une nouvelle valeur lors de l'import des informations libres et statistiques articles." HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" />
+								<GroupBox Header="Ajout d'un nouveau remplacement" Height="138" HorizontalAlignment="Left" Margin="14,42,0,0" VerticalAlignment="Top" Width="620">
+									<Grid>
+										<Label Content="Valeur provenant de Sage" HorizontalAlignment="Left" Margin="19,14,0,0" VerticalAlignment="Top" />
+										<TextBox Text="{Binding ReplacementOriginText}" HorizontalAlignment="Left" Margin="293,13,0,0" VerticalAlignment="Top" Width="300" MaxLength="500" />
+										<Label Content="Valeur à intégrer à Prestaconnect/Prestashop" HorizontalAlignment="Left" Margin="19,43,0,0" VerticalAlignment="Top" />
+										<TextBox Text="{Binding ReplacementNewText}" HorizontalAlignment="Left" Margin="293,42,0,0" VerticalAlignment="Top" Width="300" MaxLength="1000" />
+										<Button Content="Ajouter remplacement" Height="25" HorizontalAlignment="Left" Margin="443,72,0,0" Name="buttonAddReplacement" VerticalAlignment="Top" Width="150" Click="ButtonAddReplacement_Click" />
+									</Grid>
+								</GroupBox>
+								<GroupBox Header="Liste des remplacements existants" HorizontalAlignment="Left" Margin="14,186,0,6" Width="620" Height="333">
+									<Grid>
+										<DataGrid AutoGenerateColumns="False" Margin="0"
+                                          Name="DataGridTextReplace" SelectionMode="Single" 
+                                          CanUserAddRows="False" CanUserDeleteRows="False" GridLinesVisibility="None" HeadersVisibility="Column"
+                                          ItemsSource="{Binding Path=ListReplacement}" SelectedItem="{Binding SelectedReplacement}" >
+											<DataGrid.Columns>
+												<DataGridTextColumn Binding="{Binding Path=OriginText}" Header="Valeur provenant de Sage" IsReadOnly="True" Width="50*" />
+												<DataGridTextColumn Binding="{Binding Path=ReplacementText}" Header="Valeur à intégrer dans PC/PS" IsReadOnly="True" Width="50*" />
+												<DataGridTemplateColumn Width="100" Header="Supprimer">
+													<DataGridTemplateColumn.CellTemplate>
+														<DataTemplate>
+															<Button Name="ButtonDeleteReplacement" Content="Supprimer" Click="ButtonDeleteReplacement_Click"/>
+														</DataTemplate>
+													</DataGridTemplateColumn.CellTemplate>
+												</DataGridTemplateColumn>
+											</DataGrid.Columns>
+										</DataGrid>
+									</Grid>
+								</GroupBox>
+							</Grid>
+						</TabItem>
+						<TabItem Header="Modules supplémentaires" >
+							<Grid>
+								<TabControl Margin="5">
+									<TabItem Header="Page 1" Name="tabItemArticleModulePage1">
+										<Grid>
+											<CheckBox IsEnabled="{Binding CanActiveAECStockModule}" IsChecked="{Binding AECStockActif}" Content="Activer la gestion avancée des disponibilités de stocks" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,8,0,0" />
+											<TextBlock Foreground="Black" IsEnabled="{Binding AECStockActif}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="78,33,0,0">
+                                    Cette option permet d'envoyer les informations de stock suivantes dans PrestaShop :
+                                    <LineBreak/>- Stock réel
+                                    <LineBreak/>- Stock à terme
+                                    <LineBreak/>- Stock mini (valeur moyenne en cas de multi-dépôt)
+                                    <LineBreak/>- Stock maxi (valeur moyenne en cas de multi-dépôt)
+                                    <LineBreak/>
+                                    <LineBreak/>L'affichage et les règles utilisant ces informations sont à gérer intégralement dans PrestaShop.
+											</TextBlock>
+
+											<CheckBox Content="Activer le renseignement de la date de disponibilité du produit à partir d'une information libre article Sage" IsChecked="{Binding DateDispoInfoLibreActif}" HorizontalAlignment="Left" Margin="30,165,0,0" VerticalAlignment="Top" />
+											<Label Content="Information libre article dans laquelle récupérer la date de disponibilité :" IsEnabled="{Binding DateDispoInfoLibreActif}" HorizontalAlignment="Left" Margin="78,193,0,0" VerticalAlignment="Top" />
+											<ComboBox IsEnabled="{Binding DateDispoInfoLibreActif}" ItemsSource="{Binding ListDateDispoInfoLibre}" SelectedItem="{Binding SelectedDateDispoInfoLibre}" Name="comboBoxDateDispoInfoLibre" DisplayMemberPath="CB_Name" HorizontalAlignment="Left" Margin="564,188,0,0" VerticalAlignment="Top" Width="320" />
+											<TextBlock Foreground="Black" IsEnabled="{Binding AECStockActif}" VerticalAlignment="Top" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="78,223,0,0" Width="497" TextAlignment="Justify">
+                                    Cette information est mise-à-jour lors de la synchronisation article, si informations répercutées de PrestaConnect vers PrestaShop, ainsi que systématiquement lors des synchronisations stocks et stocks-prix.
+											</TextBlock>
+
+											<CheckBox Content="Activer le renseignement de la quantité minimale du produit à partir de :" IsChecked="{Binding QuantiteMiniActif}" HorizontalAlignment="Left" Margin="31,282,0,0" VerticalAlignment="Top" />
+											<RadioButton Content="l'intitulé du type de conditionnement article Sage" IsEnabled="{Binding QuantiteMiniActif}" IsChecked="{Binding QuantiteMiniConditionnement}" HorizontalAlignment="Left" Margin="79,304,0,0" VerticalAlignment="Top" />
+											<RadioButton Content="l'intitulé de l'unité de vente article Sage" IsEnabled="{Binding QuantiteMiniActif}" IsChecked="{Binding QuantiteMiniUniteVente}" HorizontalAlignment="Left" Margin="79,324,0,0" VerticalAlignment="Top" />
+
+											<CheckBox IsChecked="{Binding TransfertInfosFournisseurActif}" IsEnabled="{Binding CanActiveTransfertInfosFournisseur}" Content="Activer la possibilité d'envoyer les références fournisseurs Sage vers PrestaShop" HorizontalAlignment="Left" Margin="31,356,0,0" VerticalAlignment="Top"  />
+											<TextBlock Foreground="Black" HorizontalAlignment="Left" IsEnabled="{Binding TransfertInfosFournisseurActif}" Margin="78,378,0,0" TextAlignment="Justify" TextWrapping="Wrap" VerticalAlignment="Top" Width="497">
+                                    Les données sont mises-à-jour lors de la synchronisation article uniquement si les informations sont répercutées de PrestaConnect vers PrestaShop.
+                                    <LineBreak/>Seules les informations liées aux fournisseurs importés depuis Sage et synchronisés vers PrestaShop seront prises en compte.
+                                    <LineBreak/>
+                                    <LineBreak/>Cette option est incompatible avec l'alimentation du fournisseur depuis une information libre ou une statistique article de Sage.
+											</TextBlock>
+										</Grid>
+									</TabItem>
+									<TabItem Header="Page 2" Name="tabItemArticleModulePage2">
+										<Grid>
+											<CheckBox IsEnabled="{Binding CanActiveCanActiveDWFProductGuideratesModule}" IsChecked="{Binding DWFProductGuideratesActif, Mode=TwoWay}" Content="Activer le module &quot;notes des guides&quot; (module dwfproductguiderates)" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,8,0,0" />
+											<CheckBox IsEnabled="{Binding CanActiveCanActiveDWFProductExtraFieldsModule}" IsChecked="{Binding DWFProductExtraFieldsActif, Mode=TwoWay}" Content="Activer le module &quot;champs suplémentaires produits&quot; (module dwfproductextrafields)" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,29,0,0" />
+										</Grid>
+									</TabItem>
+								</TabControl>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Client" x:Name="TabItemClient">
+                <Grid>
+                    <TabControl Margin="8">
+                        <TabItem Header="Création clients" x:Name="TabItemClientCreation" Visibility="{Binding ExtranetOnly}">
+                            <Grid>
+                                <Grid Height="66" VerticalAlignment="Top">
+                                    <RadioButton x:Name="RadioClientCompteCentralisateur" IsChecked="True" Content="Compte client centralisateur" Margin="259,41,0,6" Height="19" HorizontalAlignment="Left" Width="178" Checked="RadioCompteTypeLien_Checked" />
+                                    <ComboBox Margin="469,34,192,0" x:Name="ComboClientCentralisateur" VerticalAlignment="Top" IsEnabled="True" Width="289" />
+                                    <RadioButton x:Name="RadioClientComptesIndividuels" IsChecked="False" Content="Comptes clients individuels" Margin="26,41,0,6" Height="19" HorizontalAlignment="Left" Width="178" Checked="RadioCompteTypeLien_Checked" />
+                                    <CheckBox IsChecked="{Binding ClientFiltreCommande}" Height="18" HorizontalAlignment="Left" Margin="27,10,0,0" Name="CheckBoxClientFiltreCommande" VerticalAlignment="Top" Width="419">
+                                        <CheckBox.Style>
+                                            <Style BasedOn="{StaticResource {x:Type CheckBox}}" TargetType="{x:Type CheckBox}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="ToggleButton.IsChecked" Value="True">
+                                                        <Setter Property="ContentControl.Content" Value="Synchronisation de la totalité des comptes clients" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                                <Setter Property="ToggleButton.IsChecked" Value="True" />
+                                                <Setter Property="ContentControl.Content" Value="Synchronisation des comptes clients ayant passé commande uniquement" />
+                                            </Style>
+                                        </CheckBox.Style>
+                                    </CheckBox>
+                                </Grid>
+                                <GroupBox Header="Paramètres de création des comptes clients individuels" Margin="8,72,8,158" IsEnabled="False" x:Name="GroupBoxOptionsComptesIndividuels">
+                                    <Grid>
+                                        <TabControl Margin="4,10,4,4">
+                                            <TabItem Header="Numérotation">
+                                                <Grid IsEnabled="{Binding NotBusy, UpdateSourceTrigger=PropertyChanged}">
+                                                    <Label Content="Composition numéro client : " HorizontalAlignment="Left" Margin="17,11,0,0" Name="labelCompositionNumeroClient" VerticalAlignment="Top" />
+                                                    <TextBox Text="{Binding ClientNumComposition, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="250" HorizontalAlignment="Left" Margin="180,7,0,0" Name="textBoxCompositionNumeroClient" VerticalAlignment="Top" CharacterCasing="Upper" />
+                                                    <Label Content="Exemple : " HorizontalAlignment="Left" Margin="450,11,0,0" VerticalAlignment="Top" />
+                                                    <Label Content="{Binding GetNumSample, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="504,11,0,0" VerticalAlignment="Top" />
+                                                    <Label Content="*Longueur maximale 17 caractères" FontStyle="Italic" Height="16" HorizontalAlignment="Left" Margin="680,11,0,0" Name="labelCompositionNumeroClientInfo" VerticalAlignment="Top" />
+                                                    <TextBlock x:Name="textBlockPrefixe" Text="[PREFIXE]" HorizontalAlignment="Left" Margin="18,47,0,0" VerticalAlignment="Top" Foreground="Black" />
+                                                    <TextBox x:Name="TextBoxClientPrefixe" Text="{Binding ClientNumPrefixe, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLength="8" Margin="88,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120" CharacterCasing="Upper" />
+                                                    <TextBlock Text="[NUMERO]" HorizontalAlignment="Left" Margin="452,47,0,0" VerticalAlignment="Top" Foreground="Black"/>
+                                                    <Label Content="Saisie du numéro sur                      chiffres. Exemple : " HorizontalAlignment="Left" Margin="528,47,0,0" VerticalAlignment="Top" />
+                                                    <view:NumericUpDown Minimum="2" Maximum="9" Value="{Binding ClientNumLongueurNumero, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Height="24" Width="50" Margin="650,43,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                                    <Label Content="{Binding GetNumberLengthSample, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="813,47,0,0" VerticalAlignment="Top" />
+                                                    <TextBlock Text="[NOM]" HorizontalAlignment="Left" Margin="17,77,0,0" VerticalAlignment="Top" Foreground="Black"/>
+                                                    <Label Content="Saisie du nom sur                      caractères. Exemple : " HorizontalAlignment="Left" Margin="88,77,0,0" VerticalAlignment="Top" />
+                                                    <view:NumericUpDown Minimum="1" Maximum="9" Value="{Binding ClientNumLongueurNom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Height="24" Width="50" Margin="195,73,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                                    <Label Content="{Binding GetNameLengthSample, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="373,77,0,0" VerticalAlignment="Top" />
+                                                    <ListBox ItemsSource="{Binding ListTypeNom}" SelectedItem="{Binding SelectedTypeNom}" DisplayMemberPath="Intitule" HorizontalAlignment="Left" Margin="88,102,0,0" VerticalAlignment="Top" Height="50" Width="342" />
+                                                    <TextBlock Foreground="Black" HorizontalAlignment="Left" Margin="17,160,0,0" Text="[DEP]" VerticalAlignment="Top" />
+                                                    <TextBlock Foreground="Black" TextWrapping="Wrap" Text="Numéro du département de l'adresse de facturation de la première commande du client ou à défaut de la première adresse saisie par le client" HorizontalAlignment="Left" Margin="88,160,0,0" VerticalAlignment="Top" Width="342" />
+                                                    <GroupBox Header="Paramètres de compteur" IsEnabled="{Binding Path=SelectedTypeNumero.CanDefineCounter}" Margin="485,125,0,0" Width="377" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                        <Grid>
+                                                            <ListBox ItemsSource="{Binding ListTypeCompteur}" SelectedItem="{Binding SelectedTypeCompteur}" DisplayMemberPath="Intitule" Height="50" Width="149" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3,2,0,0"  />
+                                                            <Label Content="Début du compteur" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="167,6,0,0" />
+                                                            <view:NumericUpDown Minimum="1" Value="{Binding ClientNumDebutCompteur, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                                Maximum="{Binding ClientNumMaxCompteur, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="280,2,0,0" />
+														</Grid>
+													</GroupBox>
+													<ListBox ItemsSource="{Binding ListTypeNumero}" SelectedItem="{Binding SelectedTypeNumero}" DisplayMemberPath="Intitule" Height="50" HorizontalAlignment="Left" Margin="528,69,0,0" VerticalAlignment="Top" Width="281" />
+												</Grid>
+											</TabItem>
+											<TabItem Header="Numérotation (Options)">
+												<Grid>
+													<CheckBox IsChecked="{Binding ClientNumDepartementRemplacerCodeISO}" HorizontalAlignment="Left" Margin="18,17,0,0" VerticalAlignment="Top" Width="300">
+														<Grid>
+															<TextBlock TextWrapping="Wrap" TextAlignment="Justify">
+                                                                Activer le remplacement du numéro de département par le code ISO du pays dans le numéro de client Sage généré pour les pays suivants :
+															</TextBlock>
+														</Grid>
+													</CheckBox>
+													<ListBox IsEnabled="{Binding ClientNumDepartementRemplacerCodeISO}" ItemsSource="{Binding Path=ListCountryReplaceISOCode}" Margin="18,70,0,6" HorizontalAlignment="Left" Width="300" >
+														<ListBox.ItemTemplate>
+															<DataTemplate>
+																<Grid>
+																	<Grid.ColumnDefinitions>
+																		<ColumnDefinition MinWidth="250" Width="*" />
+																		<ColumnDefinition Width="15" />
+																	</Grid.ColumnDefinitions>
+																	<TextBlock Grid.Column="0" Text="{Binding Path=PsCountryLang.Name}" HorizontalAlignment="Left" Width="Auto" />
+																	<CheckBox Grid.Column="1" IsChecked="{Binding Path=Replace_ISOCode}" Width="Auto" HorizontalAlignment="Right" />
+																</Grid>
+															</DataTemplate>
+														</ListBox.ItemTemplate>
+													</ListBox>
+													<Button IsEnabled="{Binding ClientNumDepartementRemplacerCodeISO}" Height="38" HorizontalAlignment="Left" Margin="321,70,0,0" Name="buttonCheckAllCountryReplaceCodeISO" VerticalAlignment="Top" Width="59" Click="buttonCheckAllCountryReplaceCodeISO_Click">
+														<Grid>
+															<TextBlock TextWrapping="Wrap" TextAlignment="Center">
+                                                                Tout cocher
+															</TextBlock>
+														</Grid>
+													</Button>
+													<Button IsEnabled="{Binding ClientNumDepartementRemplacerCodeISO}" Height="38" HorizontalAlignment="Left" Margin="321,111,0,0" Name="buttonUncheckAllCountryReplaceCodeISO" VerticalAlignment="Top" Width="59" Click="buttonUncheckAllCountryReplaceCodeISO_Click">
+														<Grid>
+															<TextBlock TextWrapping="Wrap" TextAlignment="Center">
+                                                                Tout décocher
+															</TextBlock>
+														</Grid>
+													</Button>
+												</Grid>
+											</TabItem>
+											<TabItem Header="Tarification et solvabilité">
+												<Grid>
+													<GroupBox Header="Paramètres de saisies" Margin="10,10,0,0" Width="280" HorizontalAlignment="Left" Height="120" VerticalAlignment="Top">
+														<Grid>
+															<Label Content="Compte général :" Margin="12,12,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment" />
+															<ComboBox x:Name="ComboBoxClientCompteGeneral" Margin="6,42,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="256" />
+														</Grid>
+													</GroupBox>
+													<GroupBox Header="Tarification" Margin="296,10,0,0" Width="315" HorizontalAlignment="Left" Height="120" VerticalAlignment="Top">
+														<Grid>
+															<Label Content="Catégorie tarifaire :" Margin="12,12,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+															<ComboBox x:Name="ComboBoxClientCategorieTarifaire" Margin="128,6,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="169" />
+															<Label Content="Collaborateur :" Margin="12,48,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment" />
+															<ComboBox x:Name="ComboBoxClientCollaborateur" Margin="128,42,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="169" />
+														</Grid>
+													</GroupBox>
+													<GroupBox Header="Solvabilité" Margin="617,10,0,0" Width="273" HorizontalAlignment="Left" Height="120" VerticalAlignment="Top">
+														<Grid>
+															<Label Content="Code Risque :" Margin="12,12,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" />
+															<ComboBox x:Name="ComboBoxClientCodeRisque" Margin="111,6,0,0" VerticalAlignment="Top" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Left" Width="144" />
+															<CheckBox Content="Placé sous surveillance" x:Name="CheckBoxClientSurveillance" HorizontalAlignment="Left" Margin="12,48,0,6" VerticalAlignment="Top" />
+														</Grid>
+													</GroupBox>
+												</Grid>
+											</TabItem>
+											<TabItem Header="Options de traitement gestion commerciale">
+												<Grid>
+													<GroupBox Header="Saisie de document" Margin="10,10,0,0" Width="579" HorizontalAlignment="Left" Height="198" VerticalAlignment="Top">
+														<Grid>
+															<Label Content="Dépôt :" Margin="12,12,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+															<ComboBox x:Name="ComboBoxClientDepot" Margin="120,6,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="151" />
+															<Label Content="Code affaire :" Margin="300,12,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+															<ComboBox x:Name="ComboBoxClientCodeAffaire" Margin="399,6,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="151" />
+															<Label Content="Devise :" Margin="12,43,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+															<ComboBox x:Name="ComboBoxClientDevise" Margin="120,37,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="151" />
+															<Label Content="Périodicité :" Margin="12,75,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+															<ComboBox x:Name="ComboBoxClientPeriodicite" Margin="120,69,0,0" HorizontalAlignment="Left" Width="151" VerticalAlignment="Top" />
+															<Label Content="Priorité livraison :" Margin="300,43,0,0" VerticalAlignment="Top" Height="16" HorizontalAlignment="Left" />
+															<TextBox x:Name="TextBoxClientPrioriteLivraison" Margin="399,37,0,0" TextWrapping="Wrap" Text="0" Height="26" VerticalAlignment="Top" d:LayoutOverrides="Height" HorizontalAlignment="Left" Width="58.477" MaxLength="2" TextChanged="TextBoxClientPrioriteLivraison_TextChanged" />
+															<CheckBox Content="Établir une facture par BL" x:Name="CheckBoxClientBLFacture" HorizontalAlignment="Left" Margin="12,110,0,0" VerticalAlignment="Top" d:LayoutOverrides="HorizontalAlignment" />
+															<CheckBox Content="Livraison partielle" x:Name="CheckBoxClientLivraisonPartielle" HorizontalAlignment="Left" Margin="12,132,0,0" VerticalAlignment="Top" />
+														</Grid>
+													</GroupBox>
+													<GroupBox Header="Comptabilité" Margin="595,10,0,0" Width="295" HorizontalAlignment="Left" Height="198" VerticalAlignment="Top">
+														<Grid>
+															<Label Content="Catégorie comptable :" Margin="12,12,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+															<ComboBox x:Name="ComboBoxClientCompteComptable" Margin="12,37,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="252" />
+															<Button x:Name="ButtonConfigurationCatCompta" Content="Catégories comptables par pays" Margin="12,105,0,0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Width="252" Click="ButtonConfigurationCatCompta_Click" />
+														</Grid>
+													</GroupBox>
+												</Grid>
+											</TabItem>
+											<TabItem Header="Options de traitement comptabilité">
+												<Grid>
+													<GroupBox Header="Paramètres de saisies" Margin="10,10,0,0" Width="280" HorizontalAlignment="Left" Height="120" VerticalAlignment="Top">
+														<Grid>
+															<CheckBox Content="Lettrage automatique" x:Name="CheckBoxClientLettrageAutomatique" HorizontalAlignment="Left" Margin="12,19,0,0" VerticalAlignment="Top" />
+															<CheckBox Content="Validation automatique des règlements" x:Name="CheckBoxClientValidationReglement" HorizontalAlignment="Left" Margin="12,54,0,0" VerticalAlignment="Top" />
+														</Grid>
+													</GroupBox>
+													<GroupBox Header="Rappels" Margin="296,10,0,0" Width="280" Height="120" VerticalAlignment="Top" HorizontalAlignment="Left">
+														<Grid>
+															<CheckBox Content="Hors Rappel / Relevé" x:Name="CheckBoxClientRappel" HorizontalAlignment="Left" Margin="12,19,0,0" VerticalAlignment="Top" />
+															<CheckBox Content="Non soumis à pénalité de retard" x:Name="CheckBoxClientPenalite" HorizontalAlignment="Left" Margin="12,52,0,0" VerticalAlignment="Top" />
+														</Grid>
+													</GroupBox>
+													<GroupBox Header="Paramètres d'impression" Margin="582,10,0,0" Width="300" HorizontalAlignment="Left" Height="120" VerticalAlignment="Top">
+														<Grid>
+															<Label Content="Saut de ligne :" Margin="12,19,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" d:LayoutOverrides="VerticalAlignment" />
+															<ComboBox x:Name="ComboBoxClientSautLigne" Margin="113,13,0,0" HorizontalAlignment="Left" Width="170" SelectionChanged="ComboBoxClientSautLigne_SelectionChanged" Height="25.96" VerticalAlignment="Top" />
+															<Label Content="Nombre de ligne(s) :" Margin="12,54,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+															<TextBox x:Name="TextBoxClientNombreLigne" HorizontalAlignment="Left" Margin="156,48,0,0" TextWrapping="Wrap" Text="0" Width="58.477" Height="26" VerticalAlignment="Top" d:LayoutOverrides="Height" MaxLength="2" TextChanged="TextBoxClientNombreLigne_TextChanged" />
+														</Grid>
+													</GroupBox>
+												</Grid>
+											</TabItem>
+											<TabItem Header="Options">
+												<Grid>
+													<GroupBox Header="Informations fiche client" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"
+                                                              Height="202" Width="440">
+														<Grid>
+															<CheckBox IsChecked="{Binding ClientCiviliteActif}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="4,8,0,0">
+																<Grid>
+																	<TextBlock TextWrapping="Wrap" TextAlignment="Justify">
+                                                                        Activer le renseignement de la civilité dans le champ "Qualité" de Sage.
+																	</TextBlock>
+																</Grid>
+															</CheckBox>
+
+															<CheckBox IsChecked="{Binding ClientSocieteIntituleActif}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="4,32,0,0">
+																<Grid>
+																	<TextBlock TextWrapping="Wrap" TextAlignment="Justify">
+                                                                        Activer l'utilisation du champ "Société", renseigné sur le client ou l'adresse PrestaShop, pour alimenter les intitulés client et adresse dans Sage.
+																	</TextBlock>
+																</Grid>
+															</CheckBox>
+
+															<CheckBox IsChecked="{Binding ClientNIFActif}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="4,72,0,0">
+																<Grid>
+																	<TextBlock TextWrapping="Wrap" TextAlignment="Justify">
+                                                                        Activer le renseignement du champ "Siret" de Sage à partir du "Numéro d'identification fiscale" de l'adresse de PrestaShop.
+																	</TextBlock>
+																</Grid>
+															</CheckBox>
+
+															<CheckBox IsChecked="{Binding ClientInfosMajusculeActif}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="4,112,0,0">
+																<Grid>
+																	<TextBlock TextWrapping="Wrap" TextAlignment="Justify">
+                                                                        Activer la mise en majuscule des informations de la fiche client (intitulé, abrégé et informations adresse).
+																	</TextBlock>
+																</Grid>
+															</CheckBox>
+														</Grid>
+													</GroupBox>
+													<!--<GroupBox Header="Paramètres de saisie" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="326,10,0,0"
+                                                              Height="160" Width="560">
+                                                        <CheckBox IsChecked="{Binding ClientCiviliteActif}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="4,8,0,0">
+                                                            <Grid>
+                                                                <TextBlock TextWrapping="Wrap" TextAlignment="Justify">
+                                                                        Désactiver l'affectation automatique du numéro de mobile dans la champ téléphone de Sage si le numéro de téléphone n'est pas renseigné dans l'adresse PrestaShop.
+                                                                </TextBlock>
+                                                            </Grid>
+                                                        </CheckBox>
+                                                    </GroupBox>-->
+												</Grid>
+											</TabItem>
+										</TabControl>
+									</Grid>
+								</GroupBox>
+								<GroupBox Header="Paramètres de création des adresses de livraisons" Margin="8,0,8,6" Height="143" x:Name="GroupBoxOptionsAdresses" VerticalAlignment="Bottom">
+									<Grid>
+										<Label Content="Intitulé adresse Sage composée : " HorizontalAlignment="Left" Margin="27,41,0,0" VerticalAlignment="Top" />
+										<RadioButton x:Name="RadioClientAdresseIntituleCodePrestashop" Content="Préfixe client et numéro adresse Prestashop" Height="18" Margin="227,41,0,0" HorizontalAlignment="left" Width="250" IsChecked="True" VerticalAlignment="Top" />
+										<RadioButton x:Name="RadioClientAdresseIntituleNomPrenomPrestashop" Content="Nom Prénom client et numéro adresse Prestashop (l'ensemble nom/prénom sera tronqué si il dépasse 35 caractères)" HorizontalAlignment="left" Margin="227,63,0,0" Height="18" VerticalAlignment="Top" />
+										<Label Content="Conditions de livraisons :" Margin="26,14,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment" />
+										<ComboBox x:Name="ComboBoxClientConditionLivraison" Margin="227,7,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="200" />
+										<Label Content="Mode d'expédition :" Margin="492,14,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+										<ComboBox x:Name="ComboBoxClientModeExpedition" Margin="644,7,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="200" />
+										<CheckBox HorizontalAlignment="Left" IsChecked="{Binding ClientAdresseTelephonePositionFixe}" Margin="19,88,0,0" VerticalAlignment="Top">
+											<Grid>
+												<TextBlock TextAlignment="Justify" TextWrapping="Wrap">Toujours placer le numéro de mobile/portable Prestashop dans la zone "Télécopie" dans Sage.</TextBlock>
+											</Grid>
+										</CheckBox>
+									</Grid>
+								</GroupBox>
+							</Grid>
+						</TabItem>
+						<TabItem Header="Transfert clients" x:Name="TabItemClientTransfert">
+							<Grid>
+								<Label Content="Catégories tarifaires disponibles : " Height="20" HorizontalAlignment="Left" Margin="24,12,0,0" VerticalAlignment="Top" />
+								<ListBox Margin="226,6,0,421" x:Name="ListBoxCategoriesTransfert" ItemsSource="{Binding Path=ListPriceCategoryAvailable}" ToolTip="Cocher les catégories pour lesquelles vous souhaitez autoriser le transfert des clients" HorizontalAlignment="Left" Width="300">
+									<ListBox.ItemTemplate>
+										<DataTemplate>
+											<Grid>
+												<Grid.ColumnDefinitions>
+													<ColumnDefinition MinWidth="250" Width="*" />
+													<ColumnDefinition Width="15" />
+												</Grid.ColumnDefinitions>
+												<TextBlock Grid.Column="0" Text="{Binding Path=CT_Intitule}" HorizontalAlignment="Left" Width="Auto" />
+												<CheckBox Grid.Column="1" IsChecked="{Binding Path=TransfertClient, Mode=TwoWay}" Width="Auto" HorizontalAlignment="Right" IsEnabled="{Binding Path=Available}" />
+											</Grid>
+										</DataTemplate>
+									</ListBox.ItemTemplate>
+								</ListBox>
+								<TabControl Margin="8,0,8,12" Height="389" VerticalAlignment="Bottom">
+									<TabItem Header="Identification des comptes">
+										<Grid>
+                                            <Label Content="* Les clients sans mail sur la fiche client ou l'adresse principale ne seront pas transférés." HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top" Height="16" FontStretch="Normal" FontStyle="Oblique" FontWeight="Normal" FontSize="10" Width="386" />
+                                            <Label Content="Adresse mail utilisée pour l'identification du compte :" Height="20" HorizontalAlignment="Left" Margin="6,28,0,0" VerticalAlignment="Top" />
+                                            <ListBox Height="60" HorizontalAlignment="Left" Margin="18,52,0,0" Name="listBox_MailAccountIdentification" VerticalAlignment="Top" Width="269" ItemsSource="{Binding ListMailAccountIdentification}" SelectedItem="{Binding SelectedMailAccountIdentification, Mode=TwoWay}" DisplayMemberPath="Intitule" />
+
+                                            <Label Visibility="{Binding Path=VisibleMailAccountIdentificationContact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Service du contact :" Height="25" HorizontalAlignment="Left" Margin="18,118,0,0" Name="Label_ServiceContactEmail" VerticalAlignment="Top" />
+                                            <ComboBox Visibility="{Binding Path=VisibleMailAccountIdentificationContact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="135,118,0,216" Name="listBox_ServiceContactEmail" Width="120" ItemsSource="{Binding Path=ListMailToContactService}" SelectedItem="{Binding Path=SelectedMailAccountIdentificationContactService, Mode=TwoWay}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Grid.Column="0" Text="{Binding Path=S_Intitule}" HorizontalAlignment="Left" Width="Auto" />
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                            
+                                            <CheckBox Height="35" HorizontalAlignment="Left" Margin="18,149,0,0" Name="checkBox_MailAccountAlternative" VerticalAlignment="Top" Width="413" >
+                                                <ContentPresenter>
+                                                    <ContentPresenter.Content>
+                                                        <TextBlock Width="395">
+                                                            Si adresse sélectionnée vide utiliser l'autre adresse 
+                                                            <LineBreak/>(entre 'Mail fiche client' et 'Mail adresse principale')
+                                                        </TextBlock>
+                                                    </ContentPresenter.Content>
+                                                </ContentPresenter>
+                                            </CheckBox>
+                                            <Label Content="Génération du mot de passe aléatoire :" Height="20" Margin="6,203,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="205" />
+                                            <Label Content="Nombre de caractère du mot de passe aléatoire :" Height="20" HorizontalAlignment="Left" Margin="18,229,0,0" VerticalAlignment="Top" />
+                                            <ComboBox ItemsSource="{Binding RandomPasswordLength}" SelectedItem="{Binding SelectedRandomPasswordLength}" Height="23" Margin="284,226,0,0" Name="comboBox_RandomPasswordLength" VerticalAlignment="Top" HorizontalAlignment="Left" Width="59" />
+                                            <CheckBox Content="Inclusion possible de caractère spéciaux" Height="16" Margin="18,255,0,0" Name="checkBox_RandomPasswordIncludeSpecialCharacters" VerticalAlignment="Top" HorizontalAlignment="Left" Width="228" />
+
+                                            <my1:RegexMailExample HorizontalAlignment="Left" Margin="437,16,0,8" x:Name="regexMailExample1"
+                                                                  ListRegexMail="{Binding ListRegexMail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                                  SelectedRegexMail="{Binding SelectedRegexMail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                                  VerticalAlignment="Top" Width="480" />
+										</Grid>
+									</TabItem>
+									<TabItem Header="E-Mail d'information de création du compte">
+										<Grid>
+											<Label Content="** Attention selon le paramètrage cet e-mail peut contenir le mot de passe aléatoire." HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top" Height="16" FontStretch="Normal" FontStyle="Oblique" FontWeight="Normal" FontSize="10" Width="386" />
+											<Label Content="Cet e-mail doit être envoyé :" Height="20" HorizontalAlignment="Left" Margin="9,28,0,0" VerticalAlignment="Top" />
+											<CheckBox Content="à l'administrateur du site" Height="16" HorizontalAlignment="Left" Margin="243,28,0,0" Name="checkBox_MailCopyAdmin" VerticalAlignment="Top" />
+											<ListBox Height="86" HorizontalAlignment="Left" Margin="9,54,0,0" Name="listBox_MailTo" VerticalAlignment="Top" Width="421" ItemsSource="{Binding ListMailNotification}" SelectedItem="{Binding SelectedMailNotification, Mode=TwoWay}" DisplayMemberPath="Intitule" />
+											<Label Content="Et aux contacts faisant partis des types et services :" Height="20" HorizontalAlignment="Left" Margin="490,28,0,0" VerticalAlignment="Top" />
+											<ListBox HorizontalAlignment="Left" Margin="490,54,0,18" Name="listBox_MailToSageContactType" Width="200" ItemsSource="{Binding Path=ListMailToContactType}">
+												<ListBox.ItemTemplate>
+													<DataTemplate>
+														<Grid>
+															<Grid.ColumnDefinitions>
+																<ColumnDefinition MinWidth="150" Width="*" />
+																<ColumnDefinition Width="15" />
+															</Grid.ColumnDefinitions>
+															<TextBlock Grid.Column="0" Text="{Binding Path=C_Intitule}" HorizontalAlignment="Left" Width="Auto" />
+															<CheckBox Grid.Column="1" Content="" IsChecked="{Binding Path=MailTo, Mode=TwoWay}" Width="Auto" HorizontalAlignment="Right" />
+														</Grid>
+													</DataTemplate>
+												</ListBox.ItemTemplate>
+											</ListBox>
+											<ListBox HorizontalAlignment="Left" Margin="700,54,0,18" Name="listBox_MailToSageContactService" Width="201" ItemsSource="{Binding Path=ListMailToContactService}">
+												<ListBox.ItemTemplate>
+													<DataTemplate>
+														<Grid>
+															<Grid.ColumnDefinitions>
+																<ColumnDefinition MinWidth="150" Width="*" />
+																<ColumnDefinition Width="15" />
+															</Grid.ColumnDefinitions>
+															<TextBlock Grid.Column="0" Text="{Binding Path=S_Intitule}" HorizontalAlignment="Left" Width="Auto" />
+															<CheckBox Grid.Column="1" Content="" IsChecked="{Binding Path=MailTo, Mode=TwoWay}" Width="Auto" HorizontalAlignment="Right" />
+														</Grid>
+													</DataTemplate>
+												</ListBox.ItemTemplate>
+											</ListBox>
+											<Label Content="Les destinataires autres que le titulaire du compte Prestashop reçoivent le mail :" Height="20" HorizontalAlignment="Left" Margin="9,154,0,0" VerticalAlignment="Top" />
+											<RadioButton Content="en copie" Height="16" HorizontalAlignment="Left" Margin="20,180,0,0" Name="radioButton_MailCopy" VerticalAlignment="Top" IsChecked="True" />
+											<RadioButton Content="indépendamment" Height="16" HorizontalAlignment="Left" Margin="20,208,0,0" Name="radioButton_MailPerAddress" VerticalAlignment="Top" />
+										</Grid>
+									</TabItem>
+									<TabItem Header="Transfert des adresses">
+										<Grid>
+											<Label Content="*** Les adresses pour lesquelles le pays ne sera pas renseigné ou n'existera pas dans Prestashop ne seront pas transmissibles (insensible à la casse)." HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top" Height="16" FontStretch="Normal" FontStyle="Oblique" FontWeight="Normal" FontSize="10" Width="906" />
+											<Label Content="**** Pour être actif un compte Prestashop doit posséder au minimum une adresse, si aucune adressse ne peut être créée le compte ne sera pas transféré." HorizontalAlignment="Left" Margin="6,24,0,0" VerticalAlignment="Top" Height="16" FontStretch="Normal" FontStyle="Oblique" FontWeight="Normal" FontSize="10" Width="906" />
+											<Label Visibility="{Binding ExtranetOnly}" Content="***** Le transfert de l'adresse de la fiche client (facturation) entraînera la création d'une adresse de livraison dans Sage si elle est utilisée en tant qu'adresse de livraison dans une commande." FontSize="10" FontStretch="Normal" FontStyle="Oblique" FontWeight="Normal" Height="16" HorizontalAlignment="Left" Margin="6,42,0,0" VerticalAlignment="Top" Width="906" />
+											<Label Content="Types d'adresse disponibles :" Height="20" HorizontalAlignment="Left" Margin="17,80,0,0" VerticalAlignment="Top" />
+											<ListBox Height="75" HorizontalAlignment="Left" Margin="17,106,0,0" Name="listBox_ChoiceAdress" VerticalAlignment="Top" Width="370" ItemsSource="{Binding Path=ListSageAddressSend}">
+												<ListBox.ItemTemplate>
+													<DataTemplate>
+														<Grid>
+															<Grid.ColumnDefinitions>
+																<ColumnDefinition MinWidth="320" Width="*" />
+																<ColumnDefinition Width="15" />
+															</Grid.ColumnDefinitions>
+															<TextBlock Grid.Column="0" Text="{Binding Path=Intitule}" HorizontalAlignment="Left" Width="Auto" />
+															<CheckBox Grid.Column="1" Content="" IsChecked="{Binding Path=ToSend, Mode=TwoWay}" Width="Auto" HorizontalAlignment="Right" />
+														</Grid>
+													</DataTemplate>
+												</ListBox.ItemTemplate>
+											</ListBox>
+											<Label Content="Comportement si l'adresse ne comporte pas de numéro de téléphone :" Height="20" HorizontalAlignment="Left" Margin="433,80,0,0" VerticalAlignment="Top" />
+											<ListBox Height="75" HorizontalAlignment="Left" Margin="433,106,0,0" Name="listBox_PhoneNumberOperation" VerticalAlignment="Top" Width="452" ItemsSource="{Binding Path=ListLockPhoneNumber}">
+												<ListBox.ItemTemplate>
+													<DataTemplate>
+														<Grid>
+															<Grid.ColumnDefinitions>
+																<ColumnDefinition MinWidth="400" Width="*" />
+																<ColumnDefinition Width="15" />
+															</Grid.ColumnDefinitions>
+															<TextBlock Grid.Column="0" Text="{Binding Path=Intitule}" HorizontalAlignment="Left" Width="Auto" />
+															<CheckBox Grid.Column="1" Content="" IsChecked="{Binding Path=Active, Mode=TwoWay}" Width="Auto" HorizontalAlignment="Right" />
+														</Grid>
+													</DataTemplate>
+												</ListBox.ItemTemplate>
+											</ListBox>
+											<Label Content="Valeur de la saisie fictive :" Height="20" HorizontalAlignment="Left" Margin="433,188,0,0" VerticalAlignment="Top" />
+											<TextBox Height="23" HorizontalAlignment="Left" Margin="574,186,0,0" Name="textBox_PhoneFictionValue" Text="(exemple : votre numéro de téléphone ou '  .  .  .  .  ')" ToolTip="(exemple : votre numéro de téléphone ou '  .  .  .  .  ')" VerticalAlignment="Top" Width="311" />
+										</Grid>
+									</TabItem>
+									<TabItem Header="Gestion des informations">
+										<Grid>
+											<Label Content="****** La sélection des informations s'applique sur les données du compte client Prestashop et celles des adresses transférées depuis Sage." FontSize="10" FontStretch="Normal" FontStyle="Oblique" FontWeight="Normal" Height="16" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="906" />
+											<Label Content="Alias =" Height="20" HorizontalAlignment="Left" Margin="18,28,0,0" VerticalAlignment="Top" />
+											<ListBox HorizontalAlignment="Left" Margin="6,48,0,96" Name="listBox_AliasValues" Width="200" ItemsSource="{Binding Path=ListAliasValue}" SelectedItem="{Binding Path=SelectedAliasValue, Mode=TwoWay}">
+												<ListBox.ItemTemplate>
+													<DataTemplate>
+														<TextBlock Text="{Binding Path=Intitule}" />
+													</DataTemplate>
+												</ListBox.ItemTemplate>
+											</ListBox>
+											<Label Content="Nom =" Height="20" HorizontalAlignment="Left" Margin="224,28,0,0" VerticalAlignment="Top" />
+											<ListBox HorizontalAlignment="Left" Margin="212,48,0,96" Name="listBox_LastNameValues" Width="244" ItemsSource="{Binding Path=ListLastNameValue}" SelectedItem="{Binding Path=SelectedLastNameValue, Mode=TwoWay}">
+												<ListBox.ItemTemplate>
+													<DataTemplate>
+														<TextBlock Text="{Binding Path=Intitule}" />
+													</DataTemplate>
+												</ListBox.ItemTemplate>
+											</ListBox>
+											<Label Content="Prénom =" Height="20" HorizontalAlignment="Left" Margin="474,28,0,0" VerticalAlignment="Top" />
+											<ListBox HorizontalAlignment="Left" Margin="462,48,0,96" Name="listBox_FirstNameValues" Width="244" ItemsSource="{Binding Path=ListFirstNameValue}" SelectedItem="{Binding Path=SelectedFirstNameValue, Mode=TwoWay}">
+												<ListBox.ItemTemplate>
+													<DataTemplate>
+														<TextBlock Text="{Binding Path=Intitule}" />
+													</DataTemplate>
+												</ListBox.ItemTemplate>
+											</ListBox>
+											<Label Content="Société =" Height="20" HorizontalAlignment="Left" Margin="724,28,0,0" VerticalAlignment="Top" />
+											<ListBox HorizontalAlignment="Left" Margin="712,48,0,96" Name="listBox_CompanyValues" Width="200" ItemsSource="{Binding Path=ListCompanyValue}" SelectedItem="{Binding Path=SelectedCompanyValue, Mode=TwoWay}">
+												<ListBox.ItemTemplate>
+													<DataTemplate>
+														<TextBlock Text="{Binding Path=Intitule}" />
+													</DataTemplate>
+												</ListBox.ItemTemplate>
+											</ListBox>
+											<Label Content="Caractère/chaîne de séparation de l'intitulé de compte/adresse :" Height="20" HorizontalAlignment="Left" Margin="18,0,0,62" VerticalAlignment="Bottom" />
+											<Label Content="******* Si le caractère séparateur n'est pas renseigné ou absent la séparation se fera sur le premier &quot;espace&quot; contenu." FontSize="10" FontStretch="Normal" FontStyle="Oblique" FontWeight="Normal" Height="16" HorizontalAlignment="Left" Margin="18,0,0,40" VerticalAlignment="Bottom" />
+											<TextBox Text="{Binding ClientSeparateurIntitule, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Margin="376,0,0,64" VerticalAlignment="Bottom" Width="150" MaxLength="10" HorizontalContentAlignment="Center" />
+											<CheckBox Content="Autoriser l'envoi des chiffres dans les champs nom et prénom" IsChecked="{Binding TransfertClientNameIncludeNumbers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="18,0,0,16" VerticalAlignment="Bottom" />
+										</Grid>
+									</TabItem>
+									<TabItem Header="Autres options">
+										<Grid>
+											<CheckBox Content="Les nouveaux comptes sont activés par défaut" Height="16" HorizontalAlignment="Left" Margin="17,22,0,0" Name="checkBox_AccountActivation" VerticalAlignment="Top" />
+											<CheckBox Visibility="{Binding ExtranetOnly}" Content="Abonnement newsletter pour les nouveaux comptes" Height="16" HorizontalAlignment="Left" Margin="17,68,0,0" Name="checkBox_NewsLetter" VerticalAlignment="Top" />
+											<CheckBox Visibility="{Binding ExtranetOnly}" Content="Abonnement publicitaire pour les nouveaux comptes" Height="16" HorizontalAlignment="Left" Margin="17,98,0,0" Name="checkBox_OptIn" VerticalAlignment="Top" />
+											<CheckBox Content="Générer un fichier contenant la liste des comptes créés" Height="16" HorizontalAlignment="Left" Margin="17,142,0,0" Name="checkBox_GenerateAccountFile" VerticalAlignment="Top" />
+											<CheckBox Content="Envoyer un mail contenant un rapport sur les informations envoyées dans Prestashop à l'administrateur du site" Height="16" HorizontalAlignment="Left" Margin="17,182,0,0" Name="checkBox_RapportTransfert" VerticalAlignment="Top" />
+											<CheckBox Visibility="Hidden" Content="Intégrer le transfert client au processus de synchronisation des clients (Synchronisation manuelle et tâche planifiée)" Height="16" HorizontalAlignment="Left" Margin="17,204,0,0" Name="checkBox_IntegrationSynchroClient" VerticalAlignment="Top" IsEnabled="False" />
+										</Grid>
+									</TabItem>
+								</TabControl>
+							</Grid>
+						</TabItem>
+						<TabItem Header="Gestion des champs statistiques et informations libre clients" Name="tabItemArticleInformationLibreClient" Visibility="{Binding ExtranetOnly}">
+							<Grid>
+								<CheckBox Height="18" HorizontalAlignment="Left" IsEnabled="{Binding Path=CanActiveCustomerFeatureModule, UpdateSourceTrigger=PropertyChanged}" IsChecked="{Binding ModuleStatInfolibreClientActif}" 
+                                          Margin="20,16,0,0" Name="CheckBoxStatInfoLibreClientActif" VerticalAlignment="Top" Width="650"
+                                          Content="Activer la gestion des statistiques et informations libres client (nécessite le module Prestashop AECCustomerFeature)."/>
+								<DataGrid AutoGenerateColumns="False" Margin="20,47,20,0" IsEnabled="{Binding ElementName=CheckBoxStatInfoLibreClientActif, Path=IsChecked}"
+                                          Name="DataGridStatistiqueClient" SelectionMode="Single" 
+                                          CanUserAddRows="False" CanUserDeleteRows="False" GridLinesVisibility="None" HeadersVisibility="Column"
+                                          ItemsSource="{Binding Path=ListStatistiqueClient}" SelectedItem="{Binding SelectedStatistiqueClient}" Height="250" VerticalAlignment="Top">
+									<DataGrid.Columns>
+										<DataGridTextColumn Binding="{Binding Path=StatClient.Sag_StatClient}" Header="Statistique client Sage" IsReadOnly="True" Width="50*" />
+										<!--<DataGridTextColumn Binding="{Binding Path=SageInfoLibreClient.CB_TypeString}" Header="Type" IsReadOnly="True" Width="20*" />-->
+										<DataGridTemplateColumn Header="Mode de transfert des valeurs" Width="50*">
+											<DataGridTemplateColumn.CellTemplate>
+												<DataTemplate>
+													<TextBlock Text="{Binding Path=InfoValeursMode.Intitule}" Margin="2"/>
+												</DataTemplate>
+											</DataGridTemplateColumn.CellTemplate>
+											<DataGridTemplateColumn.CellEditingTemplate>
+												<DataTemplate>
+													<ComboBox ItemsSource="{Binding Path=DataContext.ListInformationLibreValeursMode, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                              DisplayMemberPath="Intitule" SelectedItem="{Binding Path=InfoValeursMode, Mode=TwoWay}" IsEnabled="{Binding Path=Active, UpdateSourceTrigger=PropertyChanged}" />
+												</DataTemplate>
+											</DataGridTemplateColumn.CellEditingTemplate>
+										</DataGridTemplateColumn>
+										<!--<DataGridCheckBoxColumn Binding="{Binding Path=InfoLibreClient.Inf_Sync}" Header="Transférer" Width="75" />-->
+										<DataGridTemplateColumn Header="Caractéristique Prestashop" Width="50*">
+											<DataGridTemplateColumn.CellTemplate>
+												<DataTemplate>
+													<TextBlock Text="{Binding Path=CustomerFeature.Name, UpdateSourceTrigger=PropertyChanged}" Margin="2"/>
+												</DataTemplate>
+											</DataGridTemplateColumn.CellTemplate>
+											<DataGridTemplateColumn.CellEditingTemplate>
+												<DataTemplate>
+													<ComboBox ItemsSource="{Binding Path=DataContext.ListCustomerFeature, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                              DisplayMemberPath="Name" SelectedItem="{Binding Path=CustomerFeature, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+												</DataTemplate>
+											</DataGridTemplateColumn.CellEditingTemplate>
+										</DataGridTemplateColumn>
+										<DataGridTemplateColumn Width="150" Header="Créer la caractéristique">
+											<DataGridTemplateColumn.CellTemplate>
+												<DataTemplate>
+													<Button Name="ButtonCreateCustomerFeatureFromSageStatistiqueClient" Content="Créer dans Prestashop" IsEnabled="{Binding CanCreateCustomerFeature}" Click="ButtonCreateCustomerFeatureFromSageStatistiqueClient_Click"/>
+												</DataTemplate>
+											</DataGridTemplateColumn.CellTemplate>
+										</DataGridTemplateColumn>
+									</DataGrid.Columns>
+								</DataGrid>
+								<DataGrid AutoGenerateColumns="False" Margin="20,310,20,20" IsEnabled="{Binding ElementName=CheckBoxStatInfoLibreClientActif, Path=IsChecked}"
+                                          Name="DataGridInformationLibreClient" SelectionMode="Single" 
+                                          CanUserAddRows="False" CanUserDeleteRows="False" GridLinesVisibility="None" HeadersVisibility="Column"
+                                          ItemsSource="{Binding Path=ListInformationLibreClient}" SelectedItem="{Binding SelectedInformationLibreClient}">
+									<DataGrid.Columns>
+										<DataGridTextColumn Binding="{Binding Path=InfoLibreClient.Sag_InfoLibreClient}" Header="Information libre client Sage" IsReadOnly="True" Width="50*" />
+										<DataGridTextColumn Binding="{Binding Path=SageInfoLibre.CB_TypeString}" Header="Type" IsReadOnly="True" Width="20*" />
+										<DataGridTemplateColumn Header="Mode de transfert des valeurs" Width="50*">
+											<DataGridTemplateColumn.CellTemplate>
+												<DataTemplate>
+													<TextBlock Text="{Binding Path=InfoValeursMode.Intitule, UpdateSourceTrigger=PropertyChanged}" Margin="2"/>
+												</DataTemplate>
+											</DataGridTemplateColumn.CellTemplate>
+											<DataGridTemplateColumn.CellEditingTemplate>
+												<DataTemplate>
+													<ComboBox ItemsSource="{Binding Path=DataContext.ListInformationLibreValeursMode, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                              DisplayMemberPath="Intitule" SelectedItem="{Binding Path=InfoValeursMode, Mode=TwoWay}" IsEnabled="{Binding Path=Active, UpdateSourceTrigger=PropertyChanged}" />
+												</DataTemplate>
+											</DataGridTemplateColumn.CellEditingTemplate>
+										</DataGridTemplateColumn>
+										<!--<DataGridCheckBoxColumn Binding="{Binding Path=InfoLibreClient.Inf_Sync}" Header="Transférer" Width="75" />-->
+										<DataGridTemplateColumn Header="Caractéristique Prestashop" Width="50*">
+											<DataGridTemplateColumn.CellTemplate>
+												<DataTemplate>
+													<TextBlock Text="{Binding Path=CustomerFeature.Name, UpdateSourceTrigger=PropertyChanged}" Margin="2"/>
+												</DataTemplate>
+											</DataGridTemplateColumn.CellTemplate>
+											<DataGridTemplateColumn.CellEditingTemplate>
+												<DataTemplate>
+													<ComboBox ItemsSource="{Binding Path=DataContext.ListCustomerFeature, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                              DisplayMemberPath="Name" SelectedItem="{Binding Path=CustomerFeature, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+												</DataTemplate>
+											</DataGridTemplateColumn.CellEditingTemplate>
+										</DataGridTemplateColumn>
+										<DataGridTemplateColumn Width="150" Header="Créer la caractéristique">
+											<DataGridTemplateColumn.CellTemplate>
+												<DataTemplate>
+													<Button Name="ButtonCreateCustomerFeatureFromSageInformationLibreClient" Content="Créer dans Prestashop" IsEnabled="{Binding CanCreateCustomerFeature}" Click="ButtonCreateCustomerFeatureFromSageInformationLibreClient_Click"/>
+												</DataTemplate>
+											</DataGridTemplateColumn.CellTemplate>
+										</DataGridTemplateColumn>
+									</DataGrid.Columns>
+								</DataGrid>
+							</Grid>
+						</TabItem>
+						<TabItem Header="Modules supplémentaires" Visibility="{Binding ExtranetOnly}">
+							<TabControl Margin="8">
+								<TabItem Header="Page 1">
+									<Grid>
+										<CheckBox IsEnabled="{Binding CanActiveAECCollaborateurModule}" IsChecked="{Binding AECCollaborateurActif}" Content="Activer la visiblité du collaborateur sur PrestaShop" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,20,0,0" />
+										<TextBlock Foreground="Black" IsEnabled="{Binding AECCollaborateurActif}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="78,45,0,0">
+                                            Cette option permet d'envoyer les informations du collaborateur suivantes dans PrestaShop :
+                                            <LineBreak/>- Nom du collaborateur
+                                            <LineBreak/>- Prénom du collaborateur
+                                            <LineBreak/>- Téléphone du collaborateur
+                                            <LineBreak/>
+                                            <LineBreak/>L'affichage et les règles utilisant ces informations sont à gérer intégralement dans PrestaShop.
+										</TextBlock>
+
+										<CheckBox IsEnabled="{Binding CanActiveAECPaiementModule}" IsChecked="{Binding AECPaiementActif}" Content="Activer la visiblité des conditions de paiement sur PrestaShop" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,160,0,0" />
+										<TextBlock Foreground="Black" IsEnabled="{Binding AECPaiementActif}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="78,185,0,0">
+                                            Cette option permet d'envoyer les conditions de paiement sur PrestaShop
+                                            <LineBreak/>
+                                            <LineBreak/>L'affichage et les règles utilisant ces informations sont à gérer intégralement dans PrestaShop.
+										</TextBlock>
+
+										<CheckBox IsChecked="{Binding AECCustomerOutstandingActif}" IsEnabled="{Binding CanActiveAECCustomerOutstandingModule}" Content="Activer l'envoi de l'encours client Sage dans PrestaShop" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,250,0,0" />
+										<TextBlock Foreground="Black" IsEnabled="{Binding AECCustomerOutstandingActif}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="78,275,0,0">
+                                            Cette option permet d'envoyer les informations d'encours client Sage suivantes dans PrestaShop :
+                                            <LineBreak />- Encours autorisé (0 si compte bloqué)
+                                            <LineBreak />- Encours actuel
+                                            <LineBreak />
+                                            <LineBreak />L'affichage et les règles utilisant ces informations sont à gérer intégralement dans PrestaShop.
+										</TextBlock>
+
+										<CheckBox IsChecked="{Binding AECCustomerInfoActif}" IsEnabled="{Binding CanActiveAECCustomerInfoModule}" Content="Activer l'envoi du numéro de client Sage dans PrestaShop" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,375,0,0" />
+										<TextBlock Foreground="Black" IsEnabled="{Binding AECCustomerInfoActif}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="78,400,0,0">
+                                            Cette option permet d'envoyer le numéro du compte client Sage dans PrestaShop.
+                                            <LineBreak />
+                                            <LineBreak />L'affichage et les règles utilisant ces informations sont à gérer intégralement dans PrestaShop.
+										</TextBlock>
+									</Grid>
+								</TabItem>
+								<TabItem Header="Page 2">
+									<Grid>
+										<TextBlock Foreground="Black" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="24,24,0,0">
+                                            Définition des groupes dans lesquels placer les clients en fonction de leur code risque Sage :
+										</TextBlock>
+										<DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" GridLinesVisibility="None" HeadersVisibility="Column"
+                                                  ItemsSource="{Binding Path=ListCodeRisque}" Margin="24,46,24,24" SelectedItem="{Binding SelectedCodeRisque}" SelectionMode="Single">
+											<DataGrid.Columns>
+												<DataGridTextColumn Binding="{Binding Path=R_Intitule}" Header="Code risque" IsReadOnly="True" Width="50*" />
+												<DataGridTemplateColumn Header="Groupe de client PrestaShop" Width="50*">
+													<DataGridTemplateColumn.CellEditingTemplate>
+														<DataTemplate>
+															<ComboBox DisplayMemberPath="Name" ItemsSource="{Binding Path=DataContext.ListPsGroup, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" 
+                                                                      SelectedItem="{Binding Path=SelectedPsGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+														</DataTemplate>
+													</DataGridTemplateColumn.CellEditingTemplate>
+													<DataGridTemplateColumn.CellTemplate>
+														<DataTemplate>
+															<Grid>
+																<Grid.ColumnDefinitions>
+																	<ColumnDefinition Width="*" />
+																	<ColumnDefinition Width="22" />
+																</Grid.ColumnDefinitions>
+																<TextBlock Margin="2" Text="{Binding Path=SelectedPsGroup.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+																<Button Click="ButtonUnselectCodeRisqueGroup_Click" Grid.Column="1" Name="ButtonUnselectCodeRisqueGroup">
+																	<Image Height="20" Source="/PRESTACONNECT;component/Resources/remove.png" Width="20" />
+																</Button>
+															</Grid>
+														</DataTemplate>
+													</DataGridTemplateColumn.CellTemplate>
+												</DataGridTemplateColumn>
+												<DataGridCheckBoxColumn Header="Détachement si compte bloqué" Binding="{Binding Path=LockCondition}" Width="50*"/>
+												<DataGridTemplateColumn Header="Groupe de client PrestaShop par défaut" Width="50*">
+													<DataGridTemplateColumn.CellEditingTemplate>
+														<DataTemplate>
+															<ComboBox DisplayMemberPath="Name" ItemsSource="{Binding Path=DataContext.ListPsGroup, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" 
+                                                                      SelectedItem="{Binding Path=SelectedPsGroupDefault, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+														</DataTemplate>
+													</DataGridTemplateColumn.CellEditingTemplate>
+													<DataGridTemplateColumn.CellTemplate>
+														<DataTemplate>
+															<Grid>
+																<Grid.ColumnDefinitions>
+																	<ColumnDefinition Width="*" />
+																	<ColumnDefinition Width="22" />
+																</Grid.ColumnDefinitions>
+																<TextBlock Margin="2" Text="{Binding Path=SelectedPsGroupDefault.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+																<Button Click="ButtonUnselectCodeRisqueGroupDefault_Click" Grid.Column="1" Name="ButtonUnselectCodeRisqueGroupDefault">
+																	<Image Height="20" Source="/PRESTACONNECT;component/Resources/remove.png" Width="20" />
+																</Button>
+															</Grid>
+														</DataTemplate>
+													</DataGridTemplateColumn.CellTemplate>
+												</DataGridTemplateColumn>
+											</DataGrid.Columns>
+										</DataGrid>
+									</Grid>
+								</TabItem>
+								<TabItem Header="Page 3">
+									<Grid>
+										<CheckBox IsChecked="{Binding PortfolioCustomerEmployeeActif}" IsEnabled="{Binding CanActivePortfolioCustomerEmployee}" Content="Activer la gestion de l'attribution des clients aux comptes employés PrestaShop" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="24,18,0,0" />
+										<TextBlock Foreground="Black" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="24,48,0,0">
+                                            Gestion des liens entre les collaborateurs Sage et les comptes employés de PrestaShop :
+										</TextBlock>
+										<DataGrid IsEnabled="{Binding PortfolioCustomerEmployeeActif}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" GridLinesVisibility="None" HeadersVisibility="Column"
+                                                  ItemsSource="{Binding Path=ListCollaborateur}" Margin="24,72,24,24" SelectedItem="{Binding SelectedCollaborateur}" SelectionMode="Single">
+											<DataGrid.Columns>
+												<DataGridTextColumn Binding="{Binding Path=CO_Intitule}" Header="Collaborateur" IsReadOnly="True" Width="50*" />
+												<DataGridTemplateColumn Header="Employé PrestaShop" Width="50*">
+													<DataGridTemplateColumn.CellEditingTemplate>
+														<DataTemplate>
+															<ComboBox DisplayMemberPath="EmployeeName" ItemsSource="{Binding Path=DataContext.ListPsEmployee, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" 
+                                                                      SelectedItem="{Binding Path=SelectedPsEmployee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+														</DataTemplate>
+													</DataGridTemplateColumn.CellEditingTemplate>
+													<DataGridTemplateColumn.CellTemplate>
+														<DataTemplate>
+															<Grid>
+																<Grid.ColumnDefinitions>
+																	<ColumnDefinition Width="*" />
+																	<ColumnDefinition Width="22" />
+																</Grid.ColumnDefinitions>
+																<TextBlock Margin="2" Text="{Binding Path=SelectedPsEmployee.EmployeeName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+																<Button Click="ButtonUnselectCollaborateurEmployee_Click" Grid.Column="1" Name="ButtonUnselectCollaborateurEmployee">
+																	<Image Height="20" Source="/PRESTACONNECT;component/Resources/remove.png" Width="20" />
+																</Button>
+															</Grid>
+														</DataTemplate>
+													</DataGridTemplateColumn.CellTemplate>
+												</DataGridTemplateColumn>
+											</DataGrid.Columns>
+										</DataGrid>
+									</Grid>
+								</TabItem>
+							</TabControl>
+						</TabItem>
+					</TabControl>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Taxe" x:Name="TabItemTaxe" Visibility="{Binding ExtranetOnly}">
+				<Grid>
+					<Label Content="Taxe Sage :" HorizontalAlignment="Left" Margin="28.466,46,0,0" VerticalAlignment="Top" />
+					<Label Content="Règle de taxe Prestashop :" HorizontalAlignment="Left" Margin="28,89,0,0" VerticalAlignment="Top" />
+					<Label Content="Article de remplacement :" HorizontalAlignment="Left" Margin="29,131,0,0" VerticalAlignment="Top" />
+					<Label Content="Article de remise :" HorizontalAlignment="Left" Margin="29,172,0,0" VerticalAlignment="Top" Visibility="hidden" />
+					<ComboBox Margin="228.5,39.332,0,0" VerticalAlignment="Top" x:Name="ComboBoxTaxSage" SelectionChanged="ComboBoxTaxSage_SelectionChanged" HorizontalAlignment="Left" Width="260" />
+					<ComboBox Margin="228,82,0,0" VerticalAlignment="Top" x:Name="ComboBoxTaxPrestashop" SelectionChanged="ComboBoxTaxPrestashop_SelectionChanged" HorizontalAlignment="Left" Width="260" />
+					<ComboBox Margin="228,124,0,0" VerticalAlignment="Top" x:Name="ComboBoxTaxSageArticleRemplacement" HorizontalAlignment="Left" Width="260" DisplayMemberPath="AR_Ref" />
+					<ComboBox Margin="228,165,0,0" VerticalAlignment="Top" x:Name="ComboBoxTaxSageArticleRemise" HorizontalAlignment="Left" Width="260" IsEnabled="False" DisplayMemberPath="AR_Ref" Visibility="hidden"/>
+					<DataGrid HorizontalAlignment="Left" Margin="29,269,0,0" VerticalAlignment="Top" Width="800" x:Name="DataGridTaxe" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" SelectionMode="Single" GridLinesVisibility="None" HeadersVisibility="Column" IsReadOnly="True">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Taxe Sage" x:Name="DataGridTexBoxColumnTaxSage" Binding="{Binding Sag_Name}" Width="172.*" />
+							<DataGridTextColumn Header="Règle de taxe Prestashop" x:Name="DataGridTexBoxColumnTaxPrestashop" Binding="{Binding Pre_Name}" Width="172.*" />
+							<DataGridTextColumn Header="Article de remise" IsReadOnly="True" Binding="{Binding Sag_ArticleRemise}" Width="90.*"  Visibility="hidden"/>
+							<DataGridTextColumn Header="Article de remplacement" IsReadOnly="True" Binding="{Binding Sag_ArticleRemplacement}" Width="90.*" />
+							<DataGridTemplateColumn Header="Supprimer" Width="50.*">
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<Button x:Name="DataGridButtonDelete" Click="DataGridButtonDelete_Click">Supprimer</Button>
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+						</DataGrid.Columns>
+					</DataGrid>
+					<Button Content="Associer les taxes" x:Name="ButtonAssocierTaxes" Height="33" HorizontalAlignment="Left" IsEnabled="False" Margin="343,214,0,0" VerticalAlignment="Top" Width="145" Click="AssocierTaxes_Click" />
+
+					<GroupBox Header="Saisie dans Sage" Height="226" HorizontalAlignment="Left" Margin="562,342,0,0" Name="GroupBoxRemiseModeSaisie" VerticalAlignment="Top" Width="408" Visibility="Hidden">
+						<Grid>
+							<Label Content="Mode de saisi des remises dans Sage :" Height="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" />
+							<ListBox DisplayMemberPath="Intitule" Height="60" HorizontalAlignment="Left" ItemsSource="{Binding ListLigneRemiseMode}" Margin="10,36,0,0" Name="listBoxLigneRemiseMode" SelectedItem="{Binding SelectedLigneRemiseMode, Mode=TwoWay}" VerticalAlignment="Top" Width="380" SelectionMode="Single" SelectionChanged="listBoxLigneRemiseMode_SelectionChanged" />
+						</Grid>
+					</GroupBox>
+					<GroupBox Header="Sélection des zones de lecture/écriture des taxes" Height="174" Margin="0,21,28,0" Name="groupBoxTaxSage" VerticalAlignment="Top" Width="370" HorizontalAlignment="Right">
+						<Grid>
+							<Label Content="Code taxe Sage à utiliser pour la TVA :" Height="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" />
+							<ComboBox DisplayMemberPath="Intitule" ItemsSource="{Binding ListTaxSage}" Margin="10,30,0,0" Name="comboBoxTaxSageTVA" SelectedItem="{Binding SelectedTaxSageTVA, Mode=TwoWay}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="330" />
+							<Label Content="Code taxe Sage à utiliser pour l'éco-taxe :" Height="20" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" />
+							<ComboBox DisplayMemberPath="Intitule" HorizontalAlignment="Left" ItemsSource="{Binding ListTaxSage}" Margin="10,90,0,0" Name="comboBoxTaxSageEco" SelectedItem="{Binding SelectedTaxSageEco, Mode=TwoWay}" VerticalAlignment="Top" Width="330" />
+						</Grid>
+					</GroupBox>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Commande" x:Name="TabItemCommande">
+				<Grid>
+					<TabControl Margin="20">
+						<TabControl.Items>
+							<TabItem Header="Informations documents Sage" Visibility="{Binding ExtranetOnly}">
+								<Grid>
+									<TabControl Margin="20">
+										<TabItem Header="Informations générales">
+											<Grid>
+												<Label Content="Dépôt :" Margin="32,20,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+												<ComboBox x:Name="ComboBoxCommandeDepot" Margin="200,14,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="220" />
+												<Label Content="Souche :" Margin="32,56,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+												<ComboBox x:Name="ComboBoxCommandeSouche" Margin="200,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="220" />
+												<Label Content="Statut du bon de commande  :" Margin="32,93,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+												<ComboBox x:Name="ComboBoxSageBCStatut" Margin="200,87,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="220" />
+												<Label Content="Statut du devis  :" Margin="32,129,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+												<ComboBox x:Name="ComboBoxSageDevisStatut" Margin="200,123,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="220" />
+
+
+												<GroupBox Header="Gestion des frais de port" Margin="30,164,0,0" Width="390" HorizontalAlignment="Left" Height="172" VerticalAlignment="Top">
+													<Grid>
+														<CheckBox IsChecked="{Binding CommandeLigneFraisPort}" Name="checkBoxCommandeLigneFraisPort" Margin="31,23,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
+															<CheckBox.Style>
+																<Style BasedOn="{StaticResource {x:Type CheckBox}}" TargetType="{x:Type CheckBox}">
+																	<Style.Triggers>
+																		<Trigger Property="ToggleButton.IsChecked" Value="True">
+																			<Setter Property="ContentControl.Content" Value="Les frais de port seront saisis en ligne de document" />
+																		</Trigger>
+																	</Style.Triggers>
+																	<Setter Property="ToggleButton.IsChecked" Value="True" />
+																	<Setter Property="ContentControl.Content" Value="Les frais de port seront saisis en pied de document" />
+																</Style>
+															</CheckBox.Style>
+														</CheckBox>
+														<Label Content="Article à utiliser pour les frais de port en ligne :" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="49,53,0,0" />
+														<ComboBox IsEnabled="{Binding CommandeLigneFraisPort, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding ListArticleHorsStock}" SelectedItem="{Binding SelectedArticlePort, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="AR_Ref" Margin="49,77,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="250" Height="26" />
+
+													</Grid>
+												</GroupBox>
+
+												<GroupBox Header="Gestion des bons de réductions par defaut" Margin="451,165,0,0" Width="359" HorizontalAlignment="Left" Height="166" VerticalAlignment="Top">
+													<Grid>
+														<TextBlock TextWrapping="Wrap" Foreground="Black" HorizontalAlignment="Left" Margin="24,22,0,0" VerticalAlignment="Top" Width="304">
+                                                            Article à utiliser pour saisir les lignes correspondant aux bons de réductions s'appliquant à la commande :
+														</TextBlock>
+														<ComboBox DisplayMemberPath="AR_Ref" HorizontalAlignment="Left" ItemsSource="{Binding ListArticleHorsStock}" Margin="24,76,0,0" SelectedItem="{Binding SelectedArticleReduction, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="241" />
+														<Button Height="26" HorizontalAlignment="Left" Margin="271,76,0,0" Name="Bt_EffacerArticleBonReduction" Click="Bt_EffacerArticleBonReduction_Click" VerticalAlignment="Top" Width="70">
+															<StackPanel Orientation="Horizontal">
+																<Image HorizontalAlignment="Center" Margin="2" Source="/PRESTACONNECT;component/Resources/remove.png" Width="16" />
+																<TextBlock Margin="4,0,4,0" Text="Effacer" VerticalAlignment="Center" />
+															</StackPanel>
+														</Button>
+														<Button Content="Gestion de plusieurs bons de réductions" Height="26" HorizontalAlignment="Left" Margin="24,107,0,0" VerticalAlignment="Top" Width="252" Click="ButtonGestionMultiBonReduction_Click" />
+													</Grid>
+												</GroupBox>
+												<CheckBox IsChecked="{Binding CopyReferencePrestashop}"  HorizontalAlignment="Left" Width="359" Margin="451,350,0,0" Name="Ck_CopyReferencePrestashop" VerticalAlignment="Top">
+													<Grid>
+														<TextBlock TextWrapping="Wrap">
+                                                            Insertion de la référence de commande Prestashop dans la référence du document Sage.
+														</TextBlock>
+													</Grid>
+												</CheckBox>
+												<Button Content="Gestion des catégories comptables par pays" Height="26" HorizontalAlignment="Left" Margin="481,14,0,0" Click="ButtonConfigurationCatCompta_Click"  VerticalAlignment="Top" Width="252" />
+												<GroupBox Header="Gestion de la date de livraison" Margin="30,345,0,0" Width="390" HorizontalAlignment="Left" Height="80" VerticalAlignment="Top">
+													<Grid Margin="0,5">
+														<Grid.ColumnDefinitions>
+															<ColumnDefinition Width="200"></ColumnDefinition>
+															<ColumnDefinition Width="100"></ColumnDefinition>
+														</Grid.ColumnDefinitions>
+														<Grid.RowDefinitions>
+															<RowDefinition Height="Auto"></RowDefinition>
+															<RowDefinition Height="Auto"></RowDefinition>
+														</Grid.RowDefinitions>
+														<CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding CommandeDateLivraisonMode, Converter={StaticResource dateLivraisonModeToBooleanConverter}, ConverterParameter=DateCommandeInc}" Content="Date de commande" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+														<StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" IsEnabled="{Binding CommandeDateLivraisonMode, Converter={StaticResource dateLivraisonModeToJoursEnabledConverter}}">
+															<Label Content="+" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,0"></Label>
+															<TextBox Text="{Binding CommandeDateLivraisonJours}" MinWidth="50"></TextBox>
+															<Label Content="jours" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,0"></Label>
+														</StackPanel>
+														<CheckBox Grid.Row="1" Grid.Column="0" IsChecked="{Binding CommandeDateLivraisonMode, Converter={StaticResource dateLivraisonModeToBooleanConverter}, ConverterParameter=DateLivraison}" Content="Date de livraison" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+													</Grid>
+												</GroupBox>
+											</Grid>
+										</TabItem>
+										<TabItem Header="Informations de facturation">
+											<Grid>
+												<CheckBox IsChecked="{Binding UpdateAdresseFacturation}" HorizontalAlignment="Left" Width="510" Margin="38,15,0,0" Name="Ck_UpdateAdresseFacturation" VerticalAlignment="Top">
+													<Grid>
+														<TextBlock TextWrapping="Wrap">
+                                                            Indiquer à PrestaConnect de mettre-à-jour l'adresse de facturation, onglet &quot;Identification&quot; de la fiche client Sage,
+                                                            à chaque nouvelle commande créée pour le client.
+														</TextBlock>
+													</Grid>
+												</CheckBox>
+
+												<CheckBox IsChecked="{Binding InsertFacturationEntete}" HorizontalAlignment="Left" Width="719" Margin="38,60,0,0" VerticalAlignment="Top">
+													<Grid>
+														<TextBlock TextWrapping="Wrap">
+                                                            Inscrire les informations suivantes de l'adresse de facturation sur les entêtes 1 à 4 des document dans Sage
+														</TextBlock>
+													</Grid>
+												</CheckBox>
+												<TextBlock TextWrapping="Wrap" Foreground="Black" HorizontalAlignment="Left" Margin="80,82,0,0" VerticalAlignment="Top">
+                                                    - Prénom et Nom (Entête 1)
+                                                    <LineBreak />- Société (Entête 2)
+                                                    <LineBreak />- Adresse (Entête 3)
+                                                    <LineBreak />- Code postal et Ville (Entête 4)
+												</TextBlock>
+											</Grid>
+										</TabItem>
+										<TabItem Header="Informations de livraison">
+											<Grid>
+												<CheckBox IsEnabled="{Binding CanActiveSoColissimoDelivery}" IsChecked="{Binding SoColissimoDeliveryActive}" HorizontalAlignment="Left" Width="719" Margin="38,15,0,0" VerticalAlignment="Top">
+													<Grid>
+														<TextBlock TextWrapping="Wrap">
+                                                            Activer la récupération des informations de livraison enregistrées par le module SoColissimo dans la table "so_delivery".
+														</TextBlock>
+													</Grid>
+												</CheckBox>
+
+												<CheckBox Content="Inscrire le type de point relais et son ID dans une information libre : " IsEnabled="{Binding SoColissimoDeliveryActive}" IsChecked="{Binding SoColissimoInfolibreTypePointActive}" Margin="77,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+												<ComboBox DisplayMemberPath="CB_Name" IsEnabled="{Binding SoColissimoInfolibreTypePointActive}" ItemsSource="{Binding SoColissimoListInfolibreEntete}" SelectedItem="{Binding SelectedInfolibreEnteteSoColissimoTypePoint}" VerticalAlignment="Top" Margin="550,45,40,0" />
+
+												<CheckBox Content="Inscrire les noms et prénom du destinataire dans une information libre : " IsEnabled="{Binding SoColissimoDeliveryActive}" IsChecked="{Binding SoColissimoInfolibreDestinataireActive}" Margin="77,85,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+												<ComboBox DisplayMemberPath="CB_Name" IsEnabled="{Binding SoColissimoInfolibreDestinataireActive}" ItemsSource="{Binding SoColissimoListInfolibreEntete}" SelectedItem="{Binding SelectedInfolibreEnteteSoColissimoDestinataire}" VerticalAlignment="Top" Margin="550,80,40,0" />
+
+												<CheckBox Content="Remplacer le numéro de téléphone de l'adresse de livraison par celui enregistré par le module." IsEnabled="{Binding SoColissimoDeliveryActive}" IsChecked="{Binding SoColissimoReplacePhoneActive}" Margin="77,120,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+
+												<CheckBox Content="Utiliser le nom du point relais, lorsque présent, pour alimenter l'intitulé de l'adresse de livraison." IsEnabled="{Binding SoColissimoDeliveryActive}" IsChecked="{Binding SoColissimoReplaceAddressNameActive}" Margin="77,155,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+											</Grid>
+										</TabItem>
+										<TabItem Header="Informations complémentaires">
+											<Grid>
+												<TextBlock Margin="12,12,0,0" VerticalAlignment="Top"  HorizontalAlignment="Left" TextWrapping="Wrap" Foreground="Black">
+                                                Ces informations complémentaires seront saisies en tant que commentaire(s) en :
+												</TextBlock>
+												<RadioButton Margin="460,12,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" GroupName="Comment" Content="début de document" IsChecked="{Binding CommentStart}"/>
+												<RadioButton Margin="600,12,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" GroupName="Comment" Content="fin de document" IsChecked="{Binding CommentEnds}"/>
+												<TextBlock Margin="12,36,12,0" VerticalAlignment="Top" TextWrapping="Wrap" Foreground="Black">
+                                                    Pour chacune vous pouvez éditer le texte indicatif qui précédera la valeur, celui-ci a pour but de préciser la nature de l'information.
+												</TextBlock>
+
+												<TabControl Margin="10,80,10,10">
+													<TabItem Header="Commentaires libres">
+														<Grid>
+															<CheckBox Margin="12,30,12,0" VerticalAlignment="Top" IsChecked="{Binding CommandeCommentaireLibre1Actif}">
+																<CheckBox.Content>
+																	<Grid>
+																		<Grid.ColumnDefinitions>
+																			<ColumnDefinition Width="300"/>
+																			<ColumnDefinition Width="480"/>
+																		</Grid.ColumnDefinitions>
+																		<Label Grid.Column="0" VerticalAlignment="Center" Content="Commentaire libre 1"/>
+																		<TextBox Grid.Column="1" Margin="0" MaxLength="69" Text="{Binding CommandeCommentaireLibre1Texte}" IsEnabled="{Binding CommandeCommentaireLibre1Actif}"/>
+																	</Grid>
+																</CheckBox.Content>
+															</CheckBox>
+															<CheckBox Margin="12,60,12,0" VerticalAlignment="Top" IsChecked="{Binding CommandeCommentaireLibre2Actif}">
+																<CheckBox.Content>
+																	<Grid>
+																		<Grid.ColumnDefinitions>
+																			<ColumnDefinition Width="300"/>
+																			<ColumnDefinition Width="480"/>
+																		</Grid.ColumnDefinitions>
+																		<Label Grid.Column="0" VerticalAlignment="Center" Content="Commentaire libre 2"/>
+																		<TextBox Grid.Column="1" Margin="0" MaxLength="69" Text="{Binding CommandeCommentaireLibre2Texte}" IsEnabled="{Binding CommandeCommentaireLibre2Actif}"/>
+																	</Grid>
+																</CheckBox.Content>
+															</CheckBox>
+															<CheckBox Margin="12,90,12,0" VerticalAlignment="Top" IsChecked="{Binding CommandeCommentaireLibre3Actif}">
+																<CheckBox.Content>
+																	<Grid>
+																		<Grid.ColumnDefinitions>
+																			<ColumnDefinition Width="300"/>
+																			<ColumnDefinition Width="480"/>
+																		</Grid.ColumnDefinitions>
+																		<Label Grid.Column="0" VerticalAlignment="Center" Content="Commentaire libre 3"/>
+																		<TextBox Grid.Column="1" Margin="0" MaxLength="69" Text="{Binding CommandeCommentaireLibre3Texte}" IsEnabled="{Binding CommandeCommentaireLibre3Actif}"/>
+																	</Grid>
+																</CheckBox.Content>
+															</CheckBox>
+														</Grid>
+													</TabItem>
+													<TabItem Header="Informations commande">
+														<Grid>
+															<CheckBox Margin="12,30,12,0" VerticalAlignment="Top" IsChecked="{Binding CommandeCommentaireBoutiqueActif}">
+																<CheckBox.Content>
+																	<Grid>
+																		<Grid.ColumnDefinitions>
+																			<ColumnDefinition Width="300"/>
+																			<ColumnDefinition Width="480"/>
+																		</Grid.ColumnDefinitions>
+																		<Label Grid.Column="0" VerticalAlignment="Center" Content="Nom de votre boutique Prestashop"/>
+																		<TextBox Grid.Column="1" Margin="0" MaxLength="59" Text="{Binding CommandeCommentaireBoutiqueTexte}" IsEnabled="{Binding CommandeCommentaireBoutiqueActif}"/>
+																	</Grid>
+																</CheckBox.Content>
+															</CheckBox>
+															<CheckBox Margin="12,60,12,0" VerticalAlignment="Top" IsChecked="{Binding CommandeCommentaireNumeroActif}">
+																<CheckBox.Content>
+																	<Grid>
+																		<Grid.ColumnDefinitions>
+																			<ColumnDefinition Width="300"/>
+																			<ColumnDefinition Width="480"/>
+																		</Grid.ColumnDefinitions>
+																		<Label Grid.Column="0" VerticalAlignment="Center" Content="Numéro de la commande sous Prestashop"/>
+																		<TextBox Grid.Column="1" Margin="0" MaxLength="59" Text="{Binding CommandeCommentaireNumeroTexte}" IsEnabled="{Binding CommandeCommentaireNumeroActif}"/>
+																	</Grid>
+																</CheckBox.Content>
+															</CheckBox>
+															<CheckBox Margin="12,90,12,0" VerticalAlignment="Top" IsChecked="{Binding CommandeCommentaireReferencePaiementActif}">
+																<CheckBox.Content>
+																	<Grid>
+																		<Grid.ColumnDefinitions>
+																			<ColumnDefinition Width="300"/>
+																			<ColumnDefinition Width="480"/>
+																		</Grid.ColumnDefinitions>
+																		<Label Grid.Column="0" VerticalAlignment="Center" Content="Référence du premier paiement"/>
+																		<TextBox Grid.Column="1" Margin="0" MaxLength="59" Text="{Binding CommandeCommentaireReferencePaiementTexte}" IsEnabled="{Binding CommandeCommentaireReferencePaiementActif}"/>
+																	</Grid>
+																</CheckBox.Content>
+															</CheckBox>
+															<CheckBox Margin="12,120,12,0" VerticalAlignment="Top" IsChecked="{Binding CommandeCommentaireDateActif}">
+																<CheckBox.Content>
+																	<Grid>
+																		<Grid.ColumnDefinitions>
+																			<ColumnDefinition Width="300"/>
+																			<ColumnDefinition Width="480"/>
+																		</Grid.ColumnDefinitions>
+																		<Label Grid.Column="0" VerticalAlignment="Center" Content="Date d'enregistrement de la commande"/>
+																		<TextBox Grid.Column="1" Margin="0" MaxLength="59" Text="{Binding CommandeCommentaireDateTexte}" IsEnabled="{Binding CommandeCommentaireDateActif}"/>
+																	</Grid>
+																</CheckBox.Content>
+															</CheckBox>
+														</Grid>
+													</TabItem>
+													<TabItem Header="Messages client">
+														<Grid>
+															<CheckBox Margin="12,30,12,0" VerticalAlignment="Top" IsChecked="{Binding CommandeCommentaireClientActif}">
+																<CheckBox.Content>
+																	<Grid>
+																		<Grid.ColumnDefinitions>
+																			<ColumnDefinition Width="300"/>
+																			<ColumnDefinition Width="480"/>
+																		</Grid.ColumnDefinitions>
+																		<Label Grid.Column="0" VerticalAlignment="Center" Content="Libellé indicateur d'un message client sur la commande"/>
+																		<TextBox Grid.Column="1" Margin="0" MaxLength="69" Text="{Binding CommandeCommentaireClientTexte}" IsEnabled="{Binding CommandeCommentaireClientActif}"/>
+																	</Grid>
+																</CheckBox.Content>
+															</CheckBox>
+															<CheckBox Margin="12,60,12,0" VerticalAlignment="Top" IsChecked="{Binding CommandeCommentaireAdresseFacturationActif}">
+																<CheckBox.Content>
+																	<Grid>
+																		<Grid.ColumnDefinitions>
+																			<ColumnDefinition Width="300"/>
+																			<ColumnDefinition Width="480"/>
+																		</Grid.ColumnDefinitions>
+																		<Label Grid.Column="0" VerticalAlignment="Center" Content="Libellé d'informations sur l'adresse de facturation"/>
+																		<TextBox Grid.Column="1" Margin="0" MaxLength="69" Text="{Binding CommandeCommentaireAdresseFacturationTexte}" IsEnabled="{Binding CommandeCommentaireAdresseFacturationActif}"/>
+																	</Grid>
+																</CheckBox.Content>
+															</CheckBox>
+															<CheckBox Margin="12,90,12,0" VerticalAlignment="Top" IsChecked="{Binding CommandeCommentaireAdresseLivraisonActif}">
+																<CheckBox.Content>
+																	<Grid>
+																		<Grid.ColumnDefinitions>
+																			<ColumnDefinition Width="300"/>
+																			<ColumnDefinition Width="480"/>
+																		</Grid.ColumnDefinitions>
+																		<Label Grid.Column="0" VerticalAlignment="Center" Content="Libellé d'informations sur l'adresse de livraison"/>
+																		<TextBox Grid.Column="1" Margin="0" MaxLength="69" Text="{Binding CommandeCommentaireAdresseLivraisonTexte}" IsEnabled="{Binding CommandeCommentaireAdresseLivraisonActif}"/>
+																	</Grid>
+																</CheckBox.Content>
+															</CheckBox>
+														</Grid>
+													</TabItem>
+												</TabControl>
+
+											</Grid>
+										</TabItem>
+										<TabItem Header="Gestion de packaging">
+											<Grid>
+												<TextBlock Margin="12,12,12,0" VerticalAlignment="Top" TextWrapping="Wrap" Foreground="Black">
+                                                Information libre indiquant la référence article de la nomenclature de type "Article lié" à insérer dans la commande en tant que packaging pour le produit commandé.
+                                                Attention la tarification des éléments de ce packaging sera toujours nulle.
+												</TextBlock>
+												<ComboBox Name="ComboBoxInformationLibrePackaging" ItemsSource="{Binding ListInfolibrePackaging}" SelectedItem="{Binding SelectedInfolibrePackaging}" DisplayMemberPath="CB_Name" Margin="153,58,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="230" />
+												<Button Name="Bt_EffacerInformationLibrePackaging" Click="Bt_EffacerInformationLibrePackaging_Click" HorizontalAlignment="Left" Margin="389,58,0,0" VerticalAlignment="Top" Width="70" Height="26">
+													<Button.Content>
+														<StackPanel Orientation="Horizontal">
+															<Image Source="/PRESTACONNECT;component/Resources/remove.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+															<TextBlock VerticalAlignment="Center" Margin="4,0,4,0" Text="Effacer" />
+														</StackPanel>
+													</Button.Content>
+												</Button>
+
+												<TextBlock Margin="12,111,12,0" VerticalAlignment="Top" TextWrapping="Wrap" Foreground="Black">
+                                                Référence article de la nomenclature de type "Article lié" à insérer dans la commande en tant que packaging pour le produit commandé.
+                                                Attention la tarification des éléments de ce packaging sera toujours nulle.
+												</TextBlock>
+												<ComboBox Name="ComboBoxArticlePackaging" ItemsSource="{Binding ListArticlePackaging}" SelectedItem="{Binding SelectedArticlePackaging}" DisplayMemberPath="AR_Ref" Margin="153,157,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="230" />
+												<Button Name="Bt_EffacerArticlePackaging" Click="Bt_EffacerArticlePackaging_Click" Height="26" HorizontalAlignment="Left" Margin="389,157,0,0" VerticalAlignment="Top" Width="70" >
+													<Button.Content>
+														<StackPanel Orientation="Horizontal">
+															<Image Source="/PRESTACONNECT;component/Resources/remove.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+															<TextBlock VerticalAlignment="Center" Margin="4,0,4,0" Text="Effacer" />
+														</StackPanel>
+													</Button.Content>
+												</Button>
+											</Grid>
+										</TabItem>
+									</TabControl>
+								</Grid>
+							</TabItem>
+							<TabItem Header="Options de traitement des commandes Prestashop" Visibility="{Binding ExtranetOnly}">
+								<Grid>
+									<Label Content="Prise en compte des commandes :" Margin="26,18,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+									<DatePicker SelectedDate="{Binding CommandeFiltreDate}" Height="25" HorizontalAlignment="Left" Margin="221,14,0,0" 
+                                        Name="datePickerCommandeFiltreDate" VerticalAlignment="Top" Width="187" ToolTip="Permet de définir à partir de quelle date PrestaConnect doit prendre en compte les clients et commandes enregistrés sur votre PrestaShop" />
+									<Label Content="Gestion des statuts de commande :" Margin="26,62,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+									<DataGrid x:Name="DataGridCommande" Margin="20,84,20,125" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" GridLinesVisibility="None" HeadersVisibility="Column" >
+										<DataGrid.Columns>
+											<DataGridTextColumn IsReadOnly="True" x:Name="DataGridCommandeId" Header="Id" Binding="{Binding Id}" />
+											<DataGridTextColumn IsReadOnly="True" x:Name="DataGridCommandeStatut" Width="*" Header="Statut" Binding="{Binding Statut}" />
+											<DataGridCheckBoxColumn x:Name="DataGridCommandeCreateBC" Header="Création BC Sage" Binding="{Binding CreateBCSage}" />
+											<DataGridCheckBoxColumn x:Name="DataGridCommandeCreateDevis" Header="Création Devis Sage" Binding="{Binding CreateDevisSage}" />
+											<DataGridCheckBoxColumn x:Name="DataGridCommandePayment" Header="Passage en paiement accepté" Binding="{Binding Payment}" />
+											<DataGridCheckBoxColumn x:Name="DataGridCommandeRelance" Header="Relance" Binding="{Binding Relance}" />
+											<DataGridCheckBoxColumn x:Name="DataGridCommandeAnnulation" Header="Annulation" Binding="{Binding Annulation}" />
+										</DataGrid.Columns>
+									</DataGrid>
+									<GroupBox Header="Système de relance de paiement et d'annulation automatique" Margin="20,0,20,6" Name="groupBoxRelance" Height="113" VerticalAlignment="Bottom">
+										<Grid>
+											<Label Content="Périodicité des relances (jours) :" HorizontalAlignment="Left" Margin="18,14,0,0" VerticalAlignment="Top" />
+											<ComboBox HorizontalAlignment="Left" Margin="218,9,0,0" Name="Relance1" Width="159" Height="26" VerticalAlignment="Top" />
+											<ComboBox HorizontalAlignment="Left" Margin="432,9,0,0" Name="Relance2" VerticalAlignment="Top" Width="159" />
+											<ComboBox HorizontalAlignment="Left" Margin="646,9,0,0" Name="Relance3" VerticalAlignment="Top" Width="159" Height="26" />
+											<ComboBox HorizontalAlignment="Left" Margin="218,46,0,0" Name="AnnulationCommande" VerticalAlignment="Top" Width="159" />
+											<Label Content="Annulation de la commande :" HorizontalAlignment="Left" Margin="18,51,0,0" VerticalAlignment="Top" />
+											<Label Content="jour(s) après la dernière relance." HorizontalAlignment="Left" Margin="387,51,0,0" VerticalAlignment="Top" />
+										</Grid>
+									</GroupBox>
+								</Grid>
+							</TabItem>
+							<TabItem Header="Mise à jour des statuts dans Prestashop" Visibility="{Binding ExtranetOnly}">
+								<Grid>
+									<TextBlock TextWrapping="Wrap" Foreground="Black" Margin="20,20,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="600">
+                                        Permet de définir le statut à appliquer sur la commande Prestashop lors de la création du document dans Sage 
+                                        puis lorsque la transformation du document Sage est détectée par la synchronisation des commandes.
+									</TextBlock>
+									<GroupBox Header="Mise à jour des statuts dans Prestashop" Margin="20,70,156,0" Name="groupBoxStatutPrestashop" Height="260" VerticalAlignment="Top">
+										<Grid>
+											<Label Content="Devis :" Margin="24,14,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+											<ComboBox x:Name="ComboBoxCommandeStatutDE" Margin="185,9,80,0" VerticalAlignment="Top" />
+											<Button Name="Bt_EffacerStatutDE" Click="Bt_EffacerStatutDE_Click" HorizontalAlignment="Right" Margin="0,9,6,0" VerticalAlignment="Top" Width="70" Height="26">
+												<Button.Content>
+													<StackPanel Orientation="Horizontal">
+														<Image Source="/PRESTACONNECT;component/Resources/remove.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+														<TextBlock VerticalAlignment="Center" Margin="4,0,4,0" Text="Effacer" />
+													</StackPanel>
+												</Button.Content>
+											</Button>
+
+											<Label Content="Bon de commande :" Margin="24,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+											<ComboBox x:Name="ComboBoxCommandeStatutBC" Margin="185,45,80,0" VerticalAlignment="Top" />
+											<Button Name="Bt_EffacerStatutBC" Click="Bt_EffacerStatutBC_Click" HorizontalAlignment="Right" Margin="0,45,6,0" VerticalAlignment="Top" Width="70" Height="26">
+												<Button.Content>
+													<StackPanel Orientation="Horizontal">
+														<Image Source="/PRESTACONNECT;component/Resources/remove.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+														<TextBlock VerticalAlignment="Center" Margin="4,0,4,0" Text="Effacer" />
+													</StackPanel>
+												</Button.Content>
+											</Button>
+
+											<Label Content="Préparation de livraison :" Margin="24,86,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+											<ComboBox x:Name="ComboBoxCommandeStatutPL" Margin="185,81,80,0" VerticalAlignment="Top" />
+											<Button Name="Bt_EffacerStatutPL" Click="Bt_EffacerStatutPL_Click" HorizontalAlignment="Right" Margin="0,81,6,0" VerticalAlignment="Top" Width="70" Height="26">
+												<Button.Content>
+													<StackPanel Orientation="Horizontal">
+														<Image Source="/PRESTACONNECT;component/Resources/remove.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+														<TextBlock VerticalAlignment="Center" Margin="4,0,4,0" Text="Effacer" />
+													</StackPanel>
+												</Button.Content>
+											</Button>
+
+											<Label Content="Bon de livraison :" Margin="24,122,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+											<ComboBox x:Name="ComboBoxCommandeStatutBL" Margin="185,117,80,0" VerticalAlignment="Top" />
+											<Button Name="Bt_EffacerStatutBL" Click="Bt_EffacerStatutBL_Click" HorizontalAlignment="Right" Margin="0,117,6,0" VerticalAlignment="Top" Width="70" Height="26">
+												<Button.Content>
+													<StackPanel Orientation="Horizontal">
+														<Image Source="/PRESTACONNECT;component/Resources/remove.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+														<TextBlock VerticalAlignment="Center" Margin="4,0,4,0" Text="Effacer" />
+													</StackPanel>
+												</Button.Content>
+											</Button>
+
+											<Label Content="Facture :" Margin="24,158,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+											<ComboBox x:Name="ComboBoxCommandeStatutFA" Margin="185,153,80,0" VerticalAlignment="Top" />
+											<Button Name="Bt_EffacerStatutFA" Click="Bt_EffacerStatutFA_Click" HorizontalAlignment="Right" Margin="0,153,6,0" VerticalAlignment="Top" Width="70" Height="26">
+												<Button.Content>
+													<StackPanel Orientation="Horizontal">
+														<Image Source="/PRESTACONNECT;component/Resources/remove.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+														<TextBlock VerticalAlignment="Center" Margin="4,0,4,0" Text="Effacer" />
+													</StackPanel>
+												</Button.Content>
+											</Button>
+
+											<Label Content="Facture comptabilisée :" Margin="24,194,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+											<ComboBox x:Name="ComboBoxCommandeStatutFC" Margin="185,189,80,0" VerticalAlignment="Top" />
+											<Button Name="Bt_EffacerStatutFC" Click="Bt_EffacerStatutFC_Click" HorizontalAlignment="Right" Margin="0,189,6,0" VerticalAlignment="Top" Width="70" Height="26">
+												<Button.Content>
+													<StackPanel Orientation="Horizontal">
+														<Image Source="/PRESTACONNECT;component/Resources/remove.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+														<TextBlock VerticalAlignment="Center" Margin="4,0,4,0" Text="Effacer" />
+													</StackPanel>
+												</Button.Content>
+											</Button>
+										</Grid>
+									</GroupBox>
+
+									<CheckBox IsChecked="{Binding ForceNumeroFactureSage}"  HorizontalAlignment="Left" Width="556" Margin="32,340,0,0" Name="Ck_ForceNumeroFactureSage" VerticalAlignment="Top">
+										<Grid>
+											<TextBlock TextWrapping="Wrap">
+                                                Forcer le remplacement du numéro de la facture PrestaShop par le numéro de la facture Sage lors de la modification du statut pour "Facture" et/ou "Facture comptabilisée".
+											</TextBlock>
+										</Grid>
+									</CheckBox>
+									<Label Content="Nombre de jours de prise en compte des commandes pour la mise-à-jour partielle des statuts :" HorizontalAlignment="Left" Margin="32,388,0,0" Name="label1" VerticalAlignment="Top" />
+									<my:NumericUpDown Minimum="1" Maximum="365" Value="{Binding JoursAutomateStatut, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="538,384,0,0" x:Name="numericUpDownJoursAutomateStatut" VerticalAlignment="Top" Width="50" />
+									<Label Content="Ce paramètre s'applique uniquement sur le traitement déclenché via l'argument &quot;SynchroStatutCommandeNJours&quot;." FontStyle="Italic" HorizontalAlignment="Left" Margin="32,410,0,0" Name="label2" VerticalAlignment="Top" />
+
+                                    <Grid Height="54" Margin="20,440,20,0" VerticalAlignment="Top">
+                                        <Label Content="Renseignement du numéro de tracking :" Height="20" HorizontalAlignment="Left" Margin="4,6,0,0" VerticalAlignment="Top" Width="220" />
+                                        <RadioButton Name="RadioTrackingInactif" Content="Inactif" IsChecked="True" Margin="230,6,0,0" Height="18" HorizontalAlignment="Left" Width="62" VerticalAlignment="Top" />
+                                        <RadioButton Name="RadioTrackingEntete" IsChecked="{Binding TrackingEnteteActif}" Margin="300,2,0,0" Width="450" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                            <RadioButton.Content>
+                                                <StackPanel Orientation="Horizontal" >
+                                                    <TextBlock Text="à partir d'une entête :     " VerticalAlignment="Center" />
+                                                    <ComboBox Name="ComboTrackingEntete" ItemsSource="{Binding ListSageFieldDocumentEntete}" SelectedItem="{Binding SelectedTrackingFieldDocumentEntete}" DisplayMemberPath="Intitule" Width="300" IsEnabled="{Binding ElementName=RadioTrackingEntete, Path=IsChecked}" />
+                                                </StackPanel>
+                                            </RadioButton.Content>
+                                        </RadioButton>
+                                        <RadioButton Name="RadioTrackingInfolibre" IsChecked="{Binding TrackingInfolibreActif}" Margin="300,28,0,0" Width="450" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                            <RadioButton.Content>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="à partir d'une info libre : " VerticalAlignment="Center" />
+                                                    <ComboBox Name="ComboTrackingInfolibre" ItemsSource="{Binding ListSageInfolibreDocumentTextTable}" SelectedItem="{Binding SelectedTrackingInfolibreDocument}" DisplayMemberPath="CB_Name" Width="300" IsEnabled="{Binding ElementName=RadioTrackingInfolibre, Path=IsChecked}"/>
+                                                </StackPanel>
+                                            </RadioButton.Content>
+                                        </RadioButton>
+                                    </Grid>
+                                </Grid>
+                            </TabItem>
+                            <TabItem Header="Modules supplémentaires" Name="TabItemCommandeModules" >
+                                <Grid>
+                                    <TabControl Margin="12">
+                                        <TabItem Header="Page 1" Height="22" VerticalAlignment="Bottom">
+                                            <Grid>
+                                                <CheckBox IsEnabled="{Binding CanActiveAECInvoiceHistory}" IsChecked="{Binding AECInvoiceHistoryActif}" Content="Activer la possibilité de fournir à vos clients leurs factures comptabilisées au format PDF" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,30,0,0" />
+                                                <Label Content="Information libre définissant si l'envoi de mail de notification est autorisé pour le client :" HorizontalAlignment="Left" IsEnabled="{Binding AECInvoiceHistoryActif}" Margin="78,61,0,0" VerticalAlignment="Top" />
+                                                <ComboBox DisplayMemberPath="CB_Name" IsEnabled="{Binding AECInvoiceHistoryActif}" ItemsSource="{Binding ListSageInfolibreClientTextTable}" Margin="564,56,8,0" SelectedItem="{Binding SelectedInfolibreInvoiceHistorySendMail}" VerticalAlignment="Top" />
+                                                <Label Content="Valeur de l'information libre indiquant que l'envoi de mail est autorisé :" HorizontalAlignment="Left" IsEnabled="{Binding AECInvoiceHistoryActif}" Margin="78,93,0,0" VerticalAlignment="Top" />
+                                                <TextBox HorizontalAlignment="Right" IsEnabled="{Binding AECInvoiceHistoryActif}" Margin="0,89,8,0" Text="{Binding InfolibreInvoiceHistorySendMailValue}" VerticalAlignment="Top" Width="320" MaxLength="69" />
+                                                
+                                                <CheckBox IsEnabled="{Binding CanActiveAECInvoiceHistory}" IsChecked="{Binding AECInvoiceHistoryArchivePDF}" Content="Activer l'archivage des fichiers PDF" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="78,132,0,0" />
+                                                <Label Content="Dossier de stockage des archives PDF :" HorizontalAlignment="Left" IsEnabled="{Binding AECInvoiceHistoryArchivePDF}" Margin="130,154,0,0" VerticalAlignment="Top" />
+                                                <TextBox x:Name="Tb_ArchivePDFFolder" IsEnabled="{Binding AECInvoiceHistoryArchivePDF}" Margin="354,151,44,0" Text="{Binding Path=AECInvoiceHistoryArchivePDFFolder, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalAlignment="Top" />
+                                                <Button Content="..." Height="24" HorizontalAlignment="Right" Margin="0,150,8,0" ToolTip="Sélectionner un répertoire" VerticalAlignment="Top" Width="30" Click="ButtonArchivePDFFolder_Click" />
+                                            </Grid>
+                                        </TabItem>
+                                        <TabItem Header="Page 2" Visibility="{Binding ExtranetOnly}">
+                                            <Grid>
+                                                <CheckBox IsEnabled="{Binding CanActiveOleaPromoModule}" IsChecked="{Binding OleaPromoActif}" Content="Activer la gestion des gratuits avec le module OleaPromo" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,30,0,0" />
+                                                <Label IsEnabled="{Binding OleaPromoActif}" Content="Suffixe de référence produit permettant de retrouver l'article Sage servant à l'insertion des produits gratuits" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="78,55,0,0" />
+                                                <TextBox IsEnabled="{Binding OleaPromoActif}" Text="{Binding OleaSuffixeGratuit}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="200" Margin="684,51,0,0" />
+
+												<CheckBox IsEnabled="{Binding CanActivePreorderModule}" IsChecked="{Binding PreorderActif}" Content="Activer la gestion des précommandes" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,106,0,0" />
+												<Label IsEnabled="{Binding PreorderActif}" Content="Nécessite que votre clé cookie soit renseignée dans les paramètres globaux !" HorizontalAlignment="Left" Margin="264,106,0,0" VerticalAlignment="Top" FontStyle="Oblique" FontWeight="Bold" />
+												<Label IsEnabled="{Binding PreorderActif}" Content="Information libre indiquant les articles en précommande :" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="78,136,0,0" />
+												<ComboBox IsEnabled="{Binding PreorderActif}" Name="ComboBoxPreorderInfolibre" ItemsSource="{Binding ListSageInfolibreArticleTextTable}" SelectedItem="{Binding SelectedInfolibrePreorder}" DisplayMemberPath="CB_Name" Width="320" HorizontalAlignment="Left" Margin="564,131,0,0" VerticalAlignment="Top" />
+												<Label IsEnabled="{Binding PreorderActif}" Content="Valeur de l'information libre pour laquelle considéré l'article en précommande :" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="78,168,0,0" />
+												<TextBox IsEnabled="{Binding PreorderActif}" Text="{Binding PreorderInfolibreValue}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="200" Margin="684,164,0,0" />
+												<Label IsEnabled="{Binding PreorderActif}" Content="Produit Prestashop à utiliser dans le panier pour règler le solde de la précommande :" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="78,200,0,0" />
+												<ComboBox IsEnabled="{Binding PreorderActif}" ItemsSource="{Binding ListPreorderPrestashopProduct}" SelectedItem="{Binding SelectedPreorderPrestashopProduct}" DisplayMemberPath="ComboText" Width="320" HorizontalAlignment="Left" Margin="564,195,0,0" VerticalAlignment="Top" />
+												<Label IsEnabled="{Binding PreorderActif}" Content="Statut à appliquer à la commande Prestashop une fois le règlement transféré dans SAGE :" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="78,232,0,0" />
+												<ComboBox IsEnabled="{Binding PreorderActif}" ItemsSource="{Binding ListPreorderPrestashopOrderState}" SelectedItem="{Binding SelectedPreorderPrestashopOrderState}" DisplayMemberPath="Name" Width="320" HorizontalAlignment="Left" Margin="564,227,0,0" VerticalAlignment="Top" />
+
+                                                <Label IsEnabled="{Binding PreorderActif}" Content="Information libre entête à renseigner lorsque que la précommande est soldée :" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="78,273,0,0" />
+                                                <ComboBox IsEnabled="{Binding PreorderActif}" Name="ComboBoxPreorderInfolibreEntete" ItemsSource="{Binding ListInfolibreEntete}" SelectedItem="{Binding SelectedInfolibreEntetePreorder}" DisplayMemberPath="CB_Name" Width="320" HorizontalAlignment="Left" Margin="564,268,0,0" VerticalAlignment="Top" />
+                                                <Label IsEnabled="{Binding PreorderActif}" Content="Valeur à saisir dans l'information libre entête lors du solde de la précommande :" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="78,304,0,0" />
+                                                <TextBox IsEnabled="{Binding PreorderActif}" Text="{Binding PreorderInfolibreEnteteValue}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="200" Margin="684,300,0,0" />
+                                            </Grid>
+                                        </TabItem>
+										<TabItem Header="Marketplace">
+											<Grid>
+												<TextBlock TextWrapping="Wrap" Foreground="Black" Margin="20,20,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="876">
+													Cette partie vous permet de définir des requêtes, ne retournant qu'une seule valeur, qui seront éxécutées à partir des 
+													tables PrestaShop pour transmettre cette valeur	dans un champ de la table F_DOCENTETE.
+												</TextBlock>
+												<Label Content="Nom de la colonne F__DOCENTETE :" HorizontalAlignment="Left" Margin="20,78,0,0" VerticalAlignment="Top"/>
+												<TextBox HorizontalAlignment="Left" Height="23" Margin="270,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="327" Name="TextBoxCommandeMarcketPlaceColumnName"/>
+												<Label Content="Texte à remplacer par l'Id de la commande :" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,107,0,0"/>
+												<TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="327" Margin="270,103,0,0" Name="TextBoxCommandeMarcketPlaceTextRemplace"/>
+												<Label Content="Requête retournant la valeur à insérer :" HorizontalAlignment="Left" Margin="20,134,0,0" VerticalAlignment="Top"/>
+												<TextBox HorizontalAlignment="Left" Height="23" Margin="270,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="327" Name="TextBoxCommandeMarcketPlaceSQLRequest"/>
+												<Button Content="Ajouter" HorizontalAlignment="Left" Margin="521,165,0,0" VerticalAlignment="Top" Width="76" Height="31" 
+																Name="ButtonCommandeMarcketPlaceAjout" Click="ButtonCommandeMarcketPlaceAjout_Click"/>
+												<DataGrid Margin="20,216,0,0" VerticalAlignment="Top" x:Name="DataGridCommandeMarcketPlace" AutoGenerateColumns="False" 
+																	IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" GridLinesVisibility="None" 
+																	HeadersVisibility="Column" HorizontalAlignment="Left" Width="599">
+													<DataGrid.Columns>
+														<DataGridTextColumn Header="Colonne Sage (F_DOCENTETE)" Binding="{Binding Ord_ColoumName}" Width="172.*" />
+														<DataGridTextColumn Header="Texte remplacent id__order" Binding="{Binding Ord_ReplaceText}" Width="172.*" />
+														<DataGridTextColumn Header="Requête PrestaShop" Width="172.*" Binding="{Binding Ord_MySQLRequest}" />
+														<DataGridTemplateColumn Header="Supprimer" Width="84.*">
+															<DataGridTemplateColumn.CellTemplate>
+																<DataTemplate>
+																	<Button x:Name="DataGridCommandeMarcketPlaceButtonDelete" Click="DataGridCommandeMarcketPlaceButtonDelete_Click">Supprimer</Button>
+																</DataTemplate>
+															</DataGridTemplateColumn.CellTemplate>
+														</DataGridTemplateColumn>
+													</DataGrid.Columns>
+												</DataGrid>
+											</Grid>
+										</TabItem>
+									</TabControl>
+								</Grid>
+							</TabItem>
+						</TabControl.Items>
+					</TabControl>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Règlement" x:Name="TabItemReglement" Visibility="{Binding ExtranetOnly}">
+				<Grid>
+					<CheckBox x:Name="CheckBoxReglement" Content="Activer le transfert des règlements en tant qu'acomptes" HorizontalAlignment="Left" Margin="27,24,0,0" VerticalAlignment="Top"/>
+					<CheckBox x:Name="CheckBoxEcheance" IsChecked="{Binding ReglementEcheancierActif}" Content="Activer la modification du mode de règlement de l'échéancier si absence de règlement" HorizontalAlignment="Left" Margin="27,46,0,0" VerticalAlignment="Top"/>
+
+					<Label Content="Moyen de paiement : " HorizontalAlignment="Left" Margin="27,120,0,0" VerticalAlignment="Top"/>
+					<ComboBox SelectionChanged="ComboBoxReglementPrestashop_SelectionChanged" TextBoxBase.TextChanged="ComboBoxReglementPrestashop_TextChanged" x:Name="ComboBoxReglementPrestashop" Margin="227,112,0,0" VerticalAlignment="Top" Height="24" HorizontalAlignment="Left" Width="274" d:LayoutOverrides="HorizontalAlignment" IsEditable="True"/>
+					<Label Content="Mode de règlement Sage : " HorizontalAlignment="Left" Margin="27,160,0,0" VerticalAlignment="Top"/>
+					<ComboBox SelectionChanged="ComboBoxReglementModeReglement_SelectionChanged" x:Name="ComboBoxReglementModeReglement" Margin="227,152,0,0" VerticalAlignment="Top" Height="24" HorizontalAlignment="Left" Width="274" d:LayoutOverrides="HorizontalAlignment"/>
+					<Label Content="Code journal Sage : " HorizontalAlignment="Left" Margin="27,200,0,0" VerticalAlignment="Top"/>
+					<ComboBox SelectionChanged="ComboBoxReglementCodeJournal_SelectionChanged" x:Name="ComboBoxReglementCodeJournal" Margin="227,192,0,0" VerticalAlignment="Top" Height="24" HorizontalAlignment="Left" Width="274" d:LayoutOverrides="HorizontalAlignment"/>
+					<Button Content="Associer" x:Name="ButtonAssocierReglements" Height="33" HorizontalAlignment="Left" IsEnabled="False" Margin="386,240,0,0" VerticalAlignment="Top" Width="115" Click="AssocierReglements_Click" />
+					<DataGrid Margin="27,294,0,0" VerticalAlignment="Top" x:Name="DataGridReglement" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" GridLinesVisibility="None" HeadersVisibility="Column" HorizontalAlignment="Left" Width="598.534">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Moyen de paiement " Binding="{Binding Set_PaymentMethod}" Width="172.*" />
+							<DataGridTextColumn Header="Mode de règlement Sage" Binding="{Binding Set_Intitule}" Width="172.*" />
+							<DataGridTextColumn Header="Code journal Sage" Width="172.*" Binding="{Binding Set_Journal}" />
+							<DataGridTemplateColumn Header="Supprimer" Width="84.*">
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<Button x:Name="DataGridReglementButtonDelete" Click="DataGridReglementButtonDelete_Click">Supprimer</Button>
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+						</DataGrid.Columns>
+					</DataGrid>
+
+					<CheckBox Content="Autoriser l'identification partielle de la méthode de paiement PrestaShop (commence par la valeur saisie)" IsChecked="{Binding ReglementLibellePartielActif}" HorizontalAlignment="Left" Margin="27,70,0,0" VerticalAlignment="Top" />
+				</Grid>
+			</TabItem>
+			<TabItem Header="Transporteur" x:Name="TabItemTransporteur" Visibility="{Binding ExtranetOnly}">
+				<Grid>
+					<ComboBox Margin="228.5,39.332,0,0" VerticalAlignment="Top" x:Name="ComboBoxCarrierSage" SelectionChanged="ComboBoxCarrierSage_SelectionChanged" HorizontalAlignment="Left" Width="260" />
+					<ComboBox Margin="228,92,0,0" VerticalAlignment="Top" x:Name="ComboBoxCarrierPrestashop" SelectionChanged="ComboBoxCarrierPrestashop_SelectionChanged" HorizontalAlignment="Left" Width="260" />
+					<Label Content="Transporteur Prestashop :" HorizontalAlignment="Left" Margin="28,102,0,0" VerticalAlignment="Top"/>
+					<Label Content="Transporteur Sage :" HorizontalAlignment="Left" Margin="27.799,49.332,0,0" VerticalAlignment="Top"/>
+					<Button Content="Associer les transporteurs" x:Name="ButtonAssocierCarriers" Height="33" HorizontalAlignment="Left" IsEnabled="False" Margin="317,144,0,0" VerticalAlignment="Top" Width="171" Click="AssocierCarriers_Click" />
+					<DataGrid HorizontalAlignment="Left" Margin="29,214,0,0" VerticalAlignment="Top" Width="459" x:Name="DataGridCarrier" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" GridLinesVisibility="None" HeadersVisibility="Column">
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Transporteur Sage" x:Name="DataGridTexBoxColumnCarrierSage" Binding="{Binding Sag_Name}" Width="172.*" />
+							<DataGridTextColumn Header="Transporteur Prestashop" x:Name="DataGridTexBoxColumnCarrierPrestashop" Binding="{Binding Pre_Name}" Width="172.*" />
+							<DataGridTemplateColumn Header="Supprimer" Width="84.*">
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<Button x:Name="DataGridCarrierButtonDelete" Click="DataGridCarrierButtonDelete_Click">Supprimer</Button>
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Mail" x:Name="TabItemMail">
+				<Grid>
+					<CheckBox Visibility="{Binding ExtranetOnly}" x:Name="CheckBoxOrderMailActive" Content="Envoyer les emails aux clients avec Prestaconnect" HorizontalAlignment="Left" Margin="20,12,0,0" VerticalAlignment="Top" Width="280"/>
+					<CheckBox x:Name="CheckBoxOrderMailSSL" Content="Connexion sécurisée SSL" HorizontalAlignment="Left" Margin="780,46,0,0" VerticalAlignment="Top" Width="171" IsChecked="False"/>
+					<Label Content="Adresse e-mail de l'expéditeur :" HorizontalAlignment="Left" Margin="39,46,0,0" VerticalAlignment="Top"/>
+					<TextBox x:Name="TextBoxOrderMailUser" MaxLength="255" HorizontalAlignment="Left" Margin="227,41.08,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242"/>
+					<Label Content="Mot de passe :" HorizontalAlignment="Left" Margin="505,46,0,0" VerticalAlignment="Top"/>
+					<PasswordBox MaxLength="255" x:Name="PasswordBoxOrderMailPassword" Margin="593,43,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="160"/>
+					<Label Content="SMTP :" HorizontalAlignment="Left" Margin="39,78,0,0" VerticalAlignment="Top" d:LayoutOverrides="HorizontalAlignment" />
+					<TextBox MaxLength="255" x:Name="TextBoxOrderMailSMTP" HorizontalAlignment="Left" Margin="227,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242" d:LayoutOverrides="HorizontalAlignment" />
+					<Label Content="Port :" HorizontalAlignment="Left" Margin="505,79,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.287,-0.501" d:LayoutOverrides="HorizontalAlignment"/>
+					<TextBox  MaxLength="6" x:Name="TextBoxOrderMailPort" HorizontalAlignment="Left" Margin="593,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="67" TextChanged="TextBoxOrderMailPort_TextChanged"/>
+					<Label Content="Addresse e-mail de test :" HorizontalAlignment="Left" Margin="39,114,0,0" VerticalAlignment="Top" />
+					<TextBox x:Name="TextBoxOrderMailUserTest" MaxLength="255" HorizontalAlignment="Left" Margin="227,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242" />
+					<Button x:Name="ButtonMailTest" Content="Tester mes paramètres" HorizontalAlignment="Left" Margin="780,102,0,0" Width="176" Click="ButtonMailTest_Click" Height="40" VerticalAlignment="Top" />
+					<Label Content="Opération effectuée : " Margin="20,180,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="139"/>
+					<ComboBox x:Name="ComboBoxMailTemplaceStatut" Margin="208,173,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="320" SelectionChanged="ComboBoxMailTemplaceStatut_SelectionChanged" >
+						<ComboBoxItem Content="0 - Devis" Visibility="{Binding ExtranetOnly}"/>
+						<ComboBoxItem Content="1 - Bon de commande" Visibility="{Binding ExtranetOnly}"/>
+						<ComboBoxItem Content="2 - Préparation de livraison" Visibility="{Binding ExtranetOnly}"/>
+						<ComboBoxItem Content="3 - Bon de livraison" Visibility="{Binding ExtranetOnly}"/>
+						<ComboBoxItem Content="6 - Facture" Visibility="{Binding ExtranetOnly}"/>
+						<ComboBoxItem Content="7 - Facture comptabilisée" Visibility="{Binding ExtranetOnly}"/>
+						<ComboBoxItem Content="9 - Passage en paiement accepté" Visibility="{Binding ExtranetOnly}"/>
+						<ComboBoxItem Content="19 - Première relance" Visibility="{Binding ExtranetOnly}"/>
+						<ComboBoxItem Content="28 - Deuxième relance" Visibility="{Binding ExtranetOnly}"/>
+						<ComboBoxItem Content="29 - Troisième relance" Visibility="{Binding ExtranetOnly}"/>
+						<ComboBoxItem Content="31 - Transfert client"/>
+						<ComboBoxItem Content="32 - Annulation de la commande" Visibility="{Binding ExtranetOnly}"/>
+						<ComboBoxItem Content="33 - Complèment règlement précommande" Visibility="{Binding ExtranetOnly}"/>
+						<ComboBoxItem Content="40 - Notification transfert facture(s) PDF" />
+					</ComboBox>
+					<GroupBox IsEnabled="{Binding ElementName=CheckBoxMailTemplaceActive, Path=IsChecked}" 
+                              Header="Paramètres pour l'opération" Margin="20,214,20,10">
+						<Grid>
+							<Label Content="Entête de l'email : " HorizontalAlignment="Left" Margin="14,18,0,0" VerticalAlignment="Top" d:LayoutOverrides="VerticalAlignment"/>
+							<TextBox MaxLength="255" x:Name="TextBoxMailTemplaceHeader" Margin="143,14,0,0" TextWrapping="Wrap" HorizontalAlignment="Left" Width="320" Height="25.294" VerticalAlignment="Top" d:LayoutOverrides="VerticalAlignment" />
+							<Label Content="Corps :" HorizontalAlignment="Left" Margin="14,54,0,0" VerticalAlignment="Top" d:LayoutOverrides="GridBox" />
+							<TabControl Margin="116,45,18,6" TabStripPlacement="Left" >
+								<TabItem Header="WYSIWYG" Name="TabItemWYSIWYG">
+									<local:TinyMce x:Name="TinyMceMailTemplateContent" />
+								</TabItem>
+								<TabItem Header="HTML" Name="TabItemHTMLEdit">
+									<Grid>
+										<TextBox Margin="0,0,0,30" Name="TextBoxInsertHTML" ToolTip="Intégration directe du html faire un copier-coller" TextChanged="TextBoxInsertHTML_TextChanged" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" AutoWordSelection="True" />
+										<Button Content="Insérer dans le WYSIWYG" Height="23" HorizontalAlignment="Left" Margin="201,0,0,6" Name="buttonInsertHTML" VerticalAlignment="Bottom" Width="240" Click="buttonInsertHTML_Click" />
+										<Button Content="Charger depuis le WYSIWYG" Height="23" HorizontalAlignment="Left" Margin="15,0,0,6" Name="buttonLoadHTML" VerticalAlignment="Bottom" Width="180" Click="buttonLoadHTML_Click" />
+
+                                        <Button Content="Charger depuis la BDD" Height="23" HorizontalAlignment="Left" Margin="457,0,0,6" Name="buttonLoadDbHTML" VerticalAlignment="Bottom" Width="143" Click="buttonLoadDbHTML_Click" />
+                                        <Button Content="Insérer dans la BDD" Height="23" HorizontalAlignment="Left" Margin="606,0,0,6" Name="buttonInsertDbHTML" VerticalAlignment="Bottom" Width="141" Click="buttonInsertDbHTML_Click" />
+                                    </Grid>
+                                </TabItem>
+                                <TabItem Header="Vue navigateur">
+                                    <WebBrowser Name="ViewWebBrowser" />
+                                </TabItem>
+                            </TabControl>
+                            <Button x:Name="ButtonMailParametre" HorizontalAlignment="Left" Margin="13,94,0,0" Width="98" Click="ButtonMailParametre_Click" Height="41" VerticalAlignment="Top" >
+                                <TextBlock Text="Paramètres disponibles" TextWrapping="Wrap" />
+                            </Button>
+                            <Button Content="Tester le modèle" Height="33" HorizontalAlignment="Left" Margin="13,264,0,0" Name="ButtonTestMailModel" VerticalAlignment="Top" Width="98" Click="ButtonTestMailModel_Click" />
+                            <Label Content="N° commande :" HorizontalAlignment="Left" Margin="14,213,0,0" VerticalAlignment="Top" />
+                            <TextBox Height="23" HorizontalAlignment="Left" Margin="13,235,0,0" Name="textBoxMailTestModelOrderID" VerticalAlignment="Top" Width="98" />
+                        </Grid>
+                    </GroupBox>
+                    <CheckBox Content="Activer l'envoi de mail" x:Name="CheckBoxMailTemplaceActive" HorizontalAlignment="Left" Margin="559,180,0,0" VerticalAlignment="Top" d:LayoutOverrides="HorizontalAlignment" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Outils" Name="tabItemOutils" Visibility="{Binding ExtranetOnly}">
+                <Grid>
+					<GroupBox Header="Paramètres d'exécution de script à la fin de la synchronisation des articles" Margin="8,0,8,6" Height="190" x:Name="GroupBoxOutilsUrlArticles" VerticalAlignment="Top">
+						<Grid>
+                    <TextBox Text="{Binding CronSynchroArticleURL}" HorizontalAlignment="Left" Margin="260,20,0,0" Name="textBoxCronSynchroArticle" VerticalAlignment="Top" Width="593" />
+                    <Label Content="URL d'indexation des nouveaux produits" HorizontalAlignment="Left" Margin="20,24,0,0" Name="labelCronSynchroArticle" VerticalAlignment="Top" />
+
+                    <Label Content="URL à appeler après le traitement des tarifs d'un article :" HorizontalAlignment="Left" Margin="20,74,0,0" VerticalAlignment="Top" />
+                    <TextBox Text="{Binding CronArticleURL}" HorizontalAlignment="Left" Margin="360,70,0,0" VerticalAlignment="Top" Width="493" />
+                    <Label Content="Texte de l'URL à remplacer par l'ID du produit :" HorizontalAlignment="Left" Margin="20,104,0,0" VerticalAlignment="Top" />
+                    <TextBox Text="{Binding CronArticleBalise}" HorizontalAlignment="Left" Margin="360,100,0,0"  VerticalAlignment="Top" Width="180" />
+                    <Label Content="Délai d'attente d'exécution du script (en millisecondes) :" HorizontalAlignment="Left" Margin="20,134,0,0" VerticalAlignment="Top" />
+                    <my:NumericUpDown HorizontalAlignment="Left" Margin="360,130,0,0" Minimum="10" Maximum="10000" Width="100" Value="{Binding CronArticleTimeout, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" />
+						</Grid>
+					</GroupBox>
+                    <CheckBox IsChecked="{Binding LogChronoSynchroStockPriceActif}" Content="Activer l'écriture d'un log des temps de traitement lors de la synchronisation stock et prix" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,190,0,0" />
+
+					<CheckBox IsChecked="{Binding RefreshTempCustomerListDisabled}" Content="Désactiver l'actualisation des listes de clients après une synchronisation article ou stock et prix. " VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,230,0,0" />
+
+					<CheckBox IsChecked="{Binding UnlockProcessorCore}" Content="Désactiver la gestion automatique de la limite du nombre de coeurs processeurs utilisables par PrestaConnect" Height="16" HorizontalAlignment="Left" Margin="20,270,0,0" VerticalAlignment="Top" />
+					<Label Content="Nombre de coeurs allouables à PrestaConnect :" IsEnabled="{Binding UnlockProcessorCore}" HorizontalAlignment="Left" Margin="68,302,0,0" VerticalAlignment="Top" />
+					<my:NumericUpDown IsEnabled="{Binding UnlockProcessorCore}" HorizontalAlignment="Left" Margin="360,298,0,0" Maximum="{Binding SystemEnvironmentProcessorCount}" Minimum="1" Value="{Binding AllocatedProcessorCore, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="100" />
+
+                    <CheckBox IsChecked="{Binding CrystalForceConnectionInfoOnSubReports}" Content="Forcer les informations de connexion pour les sous-états Crystal Report" Height="16" HorizontalAlignment="Left" Margin="20,360,0,0" VerticalAlignment="Top" />
+                    
+					<GroupBox Header="Paramètres d'exécution de script à la fin de la synchronisation des commandes" Margin="8,402,6,0" Height="140" x:Name="GroupBoxOutilsUrlCommandes" VerticalAlignment="Top">
+						<Grid>
+							<Label Content="URL à appeler après le traitement des commandes :" HorizontalAlignment="Left" Margin="20,19,0,0" VerticalAlignment="Top" />
+							<TextBox Text="{Binding CronCommandeURL}" HorizontalAlignment="Left" Margin="360,15,0,0" VerticalAlignment="Top" Width="493" />
+							<Label Content="Texte de l'URL à remplacer par l'Id de la commande :" HorizontalAlignment="Left" Margin="20,49,0,0" VerticalAlignment="Top" />
+							<TextBox Text="{Binding CronCommandeBalise}" HorizontalAlignment="Left" Margin="360,45,0,0"  VerticalAlignment="Top" Width="180" />
+							<Label Content="Délai d'attente d'exécution du script (en millisecondes) :" HorizontalAlignment="Left" Margin="20,79,0,0" VerticalAlignment="Top" />
+							<my:NumericUpDown HorizontalAlignment="Left" Margin="360,75,0,0" Minimum="10" Maximum="10000" Width="100" Value="{Binding CronCommandeTimeout, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" />
+						</Grid>
+					</GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Interface" Name="tabItemInterface" Visibility="{Binding ExtranetOnly}">
+                <Grid>
+                    <Label Content="État par défaut du filtre sur l'état actif/inactif sur la liste des articles :" Height="20" HorizontalAlignment="Left" Margin="18,21,0,0" VerticalAlignment="Top" />
+                    <ListBox DisplayMemberPath="Intitule" Height="74" HorizontalAlignment="Left" ItemsSource="{Binding ListProductFilterActiveDefault}" Margin="406,21,0,0" Name="listBoxProductFilterActiveDefault" SelectedItem="{Binding SelectedProductFilterActiveDefault, Mode=TwoWay}" VerticalAlignment="Top" Width="290" />
+
+					<CheckBox IsChecked="{Binding ProductUpdateValidationDisabled}" Content="Désactiver la demande de validation pour l'enregistrement des modifications article." VerticalAlignment="Top" HorizontalAlignment="Left" Margin="18,121,0,0" />
+
+					<CheckBox IsChecked="{Binding WindowsMaximized}" Content="Afficher les fenêtres en plein écran à leur ouverture" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="18,161,0,0" />
+
+
+					<CheckBox IsChecked="{Binding DisabledWYSIWYG}" Content="Désactiver l'éditeur WYSIWYG" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="18,207,0,0" />
+					<Label Content="Délai d'attente du chargement de l'éditeur de descriptions (en millisecondes) : " HorizontalAlignment="Left" Margin="18,243,0,0" VerticalAlignment="Top" />
+					<view:NumericUpDown Minimum="200" Maximum="10000" Value="{Binding SleepTimeWYSIWYG, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Height="24" Width="87" Margin="439,239,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+					<Label FontSize="10" FontStretch="Normal" FontStyle="Oblique" FontWeight="Normal" HorizontalAlignment="Left" Margin="34,269,0,0" VerticalAlignment="Top">
+						<TextBlock>
+                            * Vous pouvez être amener à modifier ce délai si le chargement des descriptions ne se réalise pas correctement.
+                            <LineBreak /> Cette valeur permet d'adapter le temps de chargement de l'éditeur à votre environnement Windows.
+                        </TextBlock>
+                    </Label>
+                    
+                    <CheckBox IsChecked="{Binding IE11EmulationModeDisabled}" Content="Désactiver le mode d'émulation Internet Explorer 11 pour l'éditeur de descriptions (nécessite de redémarrer l'application)" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="18,319,0,0" />
+                    <CheckBox Content="État par défaut de l'option &quot;Rediriger vers&quot; lors de l'ajout d'articles à une composition." HorizontalAlignment="Left" IsChecked="{Binding RedirectionComposition}" Margin="18,359,0,0" Name="checkBoxRedirectionComposition" VerticalAlignment="Top" />
+                </Grid>
+            </TabItem>
+			<TabItem Header="Requête SQL" x:Name="TabItemSQL" Visibility="Hidden">
+				<Grid>
+					<Label Content="Cet écran permet l'exécution de requête SQL sur les diffents serveurs." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+					<Label Content="Base de données de travail" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top"/>
+					<ComboBox HorizontalAlignment="Left" Margin="196,31,0,0" VerticalAlignment="Top" Width="287" Name="RequestSQLDatabase"/>
+					<TextBox TextWrapping="Wrap" Margin="10,60,10,40" AcceptsReturn="True" Name="RequestSQLText"/>
+					<Button Content="Lancer la requête" HorizontalAlignment="Left" Margin="27,0,0,10" VerticalAlignment="Bottom" Width="168" Height="25" 
+									Name="RequestExecButton" Click="RequestExecButton_Click"/>
+					<Button Content="Lancer la requêt et récupérer le résultat dans un fichier CSV" HorizontalAlignment="Left" Margin="232,0,0,10" 
+									VerticalAlignment="Bottom" Width="420" Height="25" Name="RequestExecButtonCSV" Click="RequestExecButtonCSV_Click"/>
+				</Grid>
+			</TabItem>
+		</TabControl>
+	</Grid>
+</Window>

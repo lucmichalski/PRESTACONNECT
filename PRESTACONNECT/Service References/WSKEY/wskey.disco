@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="https://46.105.150.20:5875/wskey.asmx?wsdl" docRef="https://46.105.150.20:5875/wskey.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="https://46.105.150.20:5875/wskey.asmx" xmlns:q1="http://www.prestaconnect.fr/" binding="q1:WSKeySoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="https://46.105.150.20:5875/wskey.asmx" xmlns:q2="http://www.prestaconnect.fr/" binding="q2:WSKeySoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>

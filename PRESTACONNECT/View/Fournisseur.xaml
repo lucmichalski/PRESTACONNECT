@@ -1,0 +1,62 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+	x:Class="PRESTACONNECT.Fournisseur"
+	x:Name="Window"
+    xmlns:dg="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit"
+	Title="Fournisseur"
+	Width="1024" Height="768"
+	MinWidth="1024" MinHeight="768"
+	WindowStyle="ThreeDBorderWindow" Icon="/PRESTACONNECT;component/prestaconnect.ico" WindowStartupLocation="CenterScreen"
+	ShowInTaskbar="True"
+    Background="{DynamicResource ResourceKey=WindowBackgroundBrush}"
+    >
+    <Grid x:Name="LayoutRoot">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="0.006*"/>
+			<ColumnDefinition Width="0.984*"/>
+			<ColumnDefinition Width="0.01*"/>
+		</Grid.ColumnDefinitions>
+		<Image Source="/PRESTACONNECT;component/img/supplier.png" Width="48" Height="48" HorizontalAlignment="Right" Margin="0,16,8,0" VerticalAlignment="Top" d:LayoutOverrides="HorizontalAlignment, Height" Grid.Column="1" />
+        <TabControl Grid.Column="1" Margin="8,64,8,88">
+			<TabItem Header="Fournisseur" x:Name="TabItemFournisseur" >
+				<Grid>
+					<Label Content="Liste des fournisseurs Sage :" HorizontalAlignment="Left" Margin="20,21,0,0" VerticalAlignment="Top" TabIndex="1" IsHitTestVisible="False" />
+                    <ListBox x:Name="ListBoxFournisseur" Margin="20,41,0,47" ToolTip="Liste des fournisseurs SAGE" Cursor="Hand" SelectionChanged="ListBoxFournisseur_SelectionChanged" HorizontalAlignment="Left" Width="369">
+                        <ListBox.ItemTemplate>
+                            <HierarchicalDataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox IsEnabled="{Binding CanImportSupplier}" IsChecked="{Binding CheckToImport}" />
+                                    <TextBlock Text="{Binding NumIntitule}" />
+                                </StackPanel>
+                            </HierarchicalDataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <GroupBox IsEnabled="False" Header="Informations fournisseur" Height="457" Margin="414,41,17,0" Name="groupBoxSupplierDetail" VerticalAlignment="Top">
+                        <Grid>
+                            <RadioButton Content="Synchroniser" Name="RadioButtonSync" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="33,37,0,0" Cursor="Hand" d:LayoutOverrides="GridBox" />
+                            <RadioButton Content="Ne pas Synchroniser" Name="RadioButtonNotSync" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="195,37,0,0" Cursor="Hand" d:LayoutOverrides="GridBox" />
+                            <Label Content="Nom sur Prestashop :" HorizontalAlignment="Left" Margin="33,77,0,0" VerticalAlignment="Top" d:LayoutOverrides="GridBox" />
+                            <TextBox Name="TextBoxName" Margin="233,69,29,0" TextWrapping="Wrap" VerticalAlignment="Top" MaxLength="128" d:LayoutOverrides="GridBox" />
+                            <Label Content="Description :" HorizontalAlignment="Left" Margin="34,117,0,0" VerticalAlignment="Top" TabIndex="7" d:LayoutOverrides="GridBox" />
+                            <TextBox x:Name="TextBoxDescription" Margin="233,117,29,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="56.04" d:LayoutOverrides="VerticalAlignment, GridBox" />
+                            <Label Content="Balise title :" HorizontalAlignment="Left" Margin="33,197,0,0" VerticalAlignment="Top" d:LayoutOverrides="GridBox" />
+                            <TextBox x:Name="TextBoxTitle" Margin="233,189,29,0" TextWrapping="Wrap" MaxLength="70" VerticalAlignment="Top" d:LayoutOverrides="VerticalAlignment, GridBox" />
+                            <Label Content="Meta Description :" HorizontalAlignment="Left" Margin="33,237,0,0" VerticalAlignment="Top" d:LayoutOverrides="GridBox" />
+                            <TextBox x:Name="TextBoxMetaDescription" Margin="233,237,29,0" TextWrapping="Wrap" MaxLength="160" VerticalAlignment="Top" Height="53.277" d:LayoutOverrides="GridBox" />
+                            <Label Content="Meta mots clefs :" HorizontalAlignment="Left" Margin="33,317,0,0" VerticalAlignment="Top" d:LayoutOverrides="GridBox" />
+                            <TextBox x:Name="TextBoxMetaKeyword" Margin="233,307,29,0" TextWrapping="Wrap" MaxLength="255" VerticalAlignment="Top" Height="45.277" d:LayoutOverrides="GridBox" />
+                            <CheckBox x:Name="CheckBoxActive" Content="Actif" HorizontalAlignment="Left" Margin="33,386,0,0" VerticalAlignment="Top" Cursor="Hand" d:LayoutOverrides="GridBox" />
+                            <Button Content="Enregistrer" Name="ButtonSubmit" HorizontalAlignment="Right" Margin="0,0,29,13" VerticalAlignment="Bottom" Width="122.2" Height="38.003" Cursor="Hand" IsDefault="True" Click="ButtonSubmit_Click" />
+                        </Grid>
+                    </GroupBox>
+                    <Button Content="Tout cocher" Height="23" HorizontalAlignment="Left" Margin="20,0,0,18" Name="buttonAllCheckImportSupplier" VerticalAlignment="Bottom" Width="100" Click="buttonAllCheckImportSupplier_Click" />
+                    <Button Content="Importer les fournisseurs sélectionnés" Height="23" HorizontalAlignment="Right" Margin="0,0,571,18" Name="buttonImportSupplier" VerticalAlignment="Bottom" Width="245" Click="buttonImportSupplier_Click" />
+                </Grid>
+			</TabItem>
+		</TabControl>
+        <Button Content="Synchroniser" x:Name="ButtonSync" HorizontalAlignment="Left" Margin="8,0,0,33.997" VerticalAlignment="Bottom" Width="122.2" Height="38.003" Cursor="Hand" IsDefault="True" Click="ButtonSync_Click" Grid.Column="1"  />
+    </Grid>
+</Window>

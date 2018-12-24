@@ -1,0 +1,142 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+	x:Class="PRESTACONNECT.ConfigurationMail"
+	x:Name="Window"
+	Title="Paramètres mail"
+	WindowStyle="ThreeDBorderWindow" Icon="/PRESTACONNECT;component/prestaconnect.ico" WindowStartupLocation="CenterScreen"
+    ShowInTaskbar="True"
+    Background="{DynamicResource ResourceKey=WindowBackgroundBrush}"
+    Width="664" Height="699" ResizeMode="NoResize">
+
+    <Grid x:Name="LayoutRoot">
+        <Grid Background="#FFD2D2D2" Margin="32,24,32,24">
+            <Label Content="Liste des paramètres disponibles :" HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top"/>
+
+            <Label Content="Identifiant de la commande :" HorizontalAlignment="Left" Margin="20,39,0,0" VerticalAlignment="Top" />
+            <TextBox Margin="0,35,48,0" TextWrapping="Wrap" Text="[ORDERID]" IsReadOnly="True" VerticalAlignment="Top" HorizontalAlignment="Right" Width="160" Name="TextBoxORDERID" />
+            <Button Width="24" Height="24" HorizontalAlignment="Right" Margin="0,35,18,0" VerticalAlignment="Top" Name="ButtonORDERID" Click="ButtonORDERID_Click" ToolTip="Copier dans le presse-papier">
+                <Button.Content>
+                    <Image Source="/PRESTACONNECT;component/Resources/copy.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+                </Button.Content>
+            </Button>
+
+            <Label Content="Date de la commande" Margin="20,69,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment"/>
+            <TextBox Margin="0,65,48,0" TextWrapping="Wrap" Text="[ORDERDATE]" IsReadOnly="True" VerticalAlignment="Top" HorizontalAlignment="Right" Width="160" Name="TextBoxORDERDATE" />
+            <Button Width="24" Height="24" HorizontalAlignment="Right" Margin="0,65,18,0" VerticalAlignment="Top" Name="ButtonORDERDATE" Click="ButtonORDERDATE_Click" ToolTip="Copier dans le presse-papier">
+                <Button.Content>
+                    <Image Source="/PRESTACONNECT;component/Resources/copy.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+                </Button.Content>
+            </Button>
+
+            <Label Content="Prénom du client" HorizontalAlignment="Left" Margin="20,112,0,0"  VerticalAlignment="Top" />
+            <TextBox Margin="0,108,48,0" TextWrapping="Wrap" Text="[ORDERFIRSTNAME]" IsReadOnly="True" VerticalAlignment="Top" HorizontalAlignment="Right" Width="160" Name="TextBoxORDERFIRSTNAME" />
+            <Button Width="24" Height="24" HorizontalAlignment="Right" Margin="0,108,18,0" VerticalAlignment="Top" Name="ButtonORDERFIRSTNAME" ToolTip="Copier dans le presse-papier" Click="ButtonORDERFIRSTNAME_Click">
+                <Button.Content>
+                    <Image Source="/PRESTACONNECT;component/Resources/copy.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+                </Button.Content>
+            </Button>
+            <Label Content="Nom du client" HorizontalAlignment="Left" Margin="20,142,0,0" VerticalAlignment="Top" />
+            <TextBox Margin="0,138,48,0" TextWrapping="Wrap" Text="[ORDERLASTNAME]" IsReadOnly="True" VerticalAlignment="Top" HorizontalAlignment="Right" Width="160" Name="TextBoxORDERLASTNAME" />
+            <Button Width="24" Height="24" HorizontalAlignment="Right" Margin="0,138,18,0" VerticalAlignment="Top" Name="ButtonORDERLASTNAME" ToolTip="Copier dans le presse-papier" Click="ButtonORDERLASTNAME_Click">
+                <Button.Content>
+                    <Image Source="/PRESTACONNECT;component/Resources/copy.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+                </Button.Content>
+            </Button>
+
+            <Label Content="Adresse 1 et 2 à la suite" HorizontalAlignment="Left" Margin="20,184,0,0" VerticalAlignment="Top"/>
+            <TextBox Margin="0,180,48,0" TextWrapping="Wrap" Text="[ORDERADDRESS]" IsReadOnly="True" VerticalAlignment="Top" HorizontalAlignment="Right" Width="160" Name="TextBoxORDERADDRESS" />
+            <Button Width="24" Height="24" HorizontalAlignment="Right" Margin="0,180,18,0" VerticalAlignment="Top" Name="ButtonORDERADDRESS" ToolTip="Copier dans le presse-papier" Click="ButtonORDERADDRESS_Click">
+                <Button.Content>
+                    <Image Source="/PRESTACONNECT;component/Resources/copy.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+                </Button.Content>
+            </Button>
+            <Label Content="Adresse 1 uniquement" HorizontalAlignment="Left" Margin="20,214,0,0" VerticalAlignment="Top" />
+            <TextBox HorizontalAlignment="Right" IsReadOnly="True" Margin="0,210,48,0" Text="[ORDERADDRESS1]" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Name="TextBoxORDERADDRESS1" />
+            <Button Width="24" Height="24" HorizontalAlignment="Right" Margin="0,210,18,0" VerticalAlignment="Top" Name="ButtonORDERADDRESS1" ToolTip="Copier dans le presse-papier" Click="ButtonORDERADDRESS1_Click">
+                <Button.Content>
+                    <Image Source="/PRESTACONNECT;component/Resources/copy.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+                </Button.Content>
+            </Button>
+            <Label Content="Adresse 2 uniquement" HorizontalAlignment="Left" Margin="20,244,0,0" VerticalAlignment="Top" />
+            <TextBox HorizontalAlignment="Right" IsReadOnly="True" Margin="0,240,48,0" Text="[ORDERADDRESS2]" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Name="TextBoxORDERADDRESS2" />
+            <Button Width="24" Height="24" HorizontalAlignment="Right" Margin="0,240,18,0" VerticalAlignment="Top" Name="ButtonORDERADDRESS2" ToolTip="Copier dans le presse-papier" Click="ButtonORDERADDRESS2_Click">
+                <Button.Content>
+                    <Image Source="/PRESTACONNECT;component/Resources/copy.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+                </Button.Content>
+            </Button>
+
+            <Label Content="Code postal du client" HorizontalAlignment="Left" Margin="20,274,0,0"  VerticalAlignment="Top"/>
+            <TextBox Margin="0,270,48,0" TextWrapping="Wrap" Text="[ORDERPOSTCODE]" IsReadOnly="True" HorizontalAlignment="Right" Width="160" VerticalAlignment="Top" Name="TextBoxORDERPOSTCODE" />
+            <Button Width="24" Height="24" HorizontalAlignment="Right" Margin="0,270,18,0" VerticalAlignment="Top" Name="ButtonORDERPOSTCODE" ToolTip="Copier dans le presse-papier" Click="ButtonORDERPOSTCODE_Click">
+                <Button.Content>
+                    <Image Source="/PRESTACONNECT;component/Resources/copy.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+                </Button.Content>
+            </Button>
+            <Label Content="Ville du client" Margin="20,304,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment"/>
+            <TextBox Margin="0,300,48,0" TextWrapping="Wrap" Text="[ORDERCITY]" IsReadOnly="True" VerticalAlignment="Top" HorizontalAlignment="Right" Width="160" Name="TextBoxORDERCITY" />
+            <Button Width="24" Height="24" HorizontalAlignment="Right" Margin="0,300,18,0" VerticalAlignment="Top" Name="ButtonORDERCITY" ToolTip="Copier dans le presse-papier" Click="ButtonORDERCITY_Click">
+                <Button.Content>
+                    <Image Source="/PRESTACONNECT;component/Resources/copy.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+                </Button.Content>
+            </Button>
+            <Label Content="Pays" HorizontalAlignment="Left" Margin="20,334,0,0" VerticalAlignment="Top" />
+            <TextBox HorizontalAlignment="Right" IsReadOnly="True" Margin="0,330,48,0" Text="[ORDERCOUNTRY]" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Name="TextBoxORDERCOUNTRY" />
+            <Button Width="24" Height="24" HorizontalAlignment="Right" Margin="0,330,18,0" VerticalAlignment="Top" Name="ButtonORDERCOUNTRY" ToolTip="Copier dans le presse-papier" Click="ButtonORDERCOUNTRY_Click">
+                <Button.Content>
+                    <Image Source="/PRESTACONNECT;component/Resources/copy.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+                </Button.Content>
+            </Button>
+
+            <Label Content="Téléphone fixe" HorizontalAlignment="Left" Margin="20,376,0,0" VerticalAlignment="Top" />
+            <TextBox HorizontalAlignment="Right" IsReadOnly="True" Margin="0,372,48,0" Text="[ORDERPHONE]" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Name="TextBoxORDERPHONE" />
+            <Button Width="24" Height="24" HorizontalAlignment="Right" Margin="0,372,18,0" VerticalAlignment="Top" Name="ButtonORDERPHONE" ToolTip="Copier dans le presse-papier" Click="ButtonORDERPHONE_Click">
+                <Button.Content>
+                    <Image Source="/PRESTACONNECT;component/Resources/copy.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+                </Button.Content>
+            </Button>
+            <Label Content="Téléphone mobile" HorizontalAlignment="Left" Margin="20,406,0,0" VerticalAlignment="Top" />
+            <TextBox HorizontalAlignment="Right" IsReadOnly="True" Margin="0,402,48,0" Text="[ORDERMOBILE]" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Name="TextBoxORDERMOBILE" />
+            <Button Width="24" Height="24" HorizontalAlignment="Right" Margin="0,402,18,0" VerticalAlignment="Top" Name="ButtonORDERMOBILE" ToolTip="Copier dans le presse-papier" Click="ButtonORDERMOBILE_Click">
+                <Button.Content>
+                    <Image Source="/PRESTACONNECT;component/Resources/copy.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+                </Button.Content>
+            </Button>
+
+            <Label Content="Montant TTC de la commande" Margin="20,448,0,0"  VerticalAlignment="Top" HorizontalAlignment="Left" />
+            <TextBox Margin="0,444,48,0" TextWrapping="Wrap" Text="[ORDERTOTALPAIDTTC]" IsReadOnly="True" VerticalAlignment="Top" HorizontalAlignment="Right" Width="160" Name="TextBoxORDERTOTALPAIDTTC" />
+            <Button Width="24" Height="24" HorizontalAlignment="Right" Margin="0,444,18,0" VerticalAlignment="Top" Name="ButtonORDERTOTALPAIDTTC" ToolTip="Copier dans le presse-papier" Click="ButtonORDERTOTALPAIDTTC_Click">
+                <Button.Content>
+                    <Image Source="/PRESTACONNECT;component/Resources/copy.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+                </Button.Content>
+            </Button>
+            <Label Content="Montant HT de la commande" Margin="20,478,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBox Margin="0,474,48,0" TextWrapping="Wrap" Text="[ORDERTOTALPAIDHT]" IsReadOnly="True" VerticalAlignment="Top" HorizontalAlignment="Right" Width="160" Name="TextBoxORDERTOTALPAIDHT" />
+            <Button Width="24" Height="24" HorizontalAlignment="Right" Margin="0,474,18,0" VerticalAlignment="Top" Name="ButtonORDERTOTALPAIDHT" ToolTip="Copier dans le presse-papier" Click="ButtonORDERTOTALPAIDHT_Click">
+                <Button.Content>
+                    <Image Source="/PRESTACONNECT;component/Resources/copy.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+                </Button.Content>
+            </Button>
+
+            <Label Content="Lien vers le panier à régler (mail précommande uniquement)" HorizontalAlignment="Left" Margin="20,520,0,0" VerticalAlignment="Top" />
+            <TextBox HorizontalAlignment="Right" IsReadOnly="True" Margin="0,516,48,0" Text="[CART_LINK]" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" />
+            <Button Width="24" Height="24" HorizontalAlignment="Right" Margin="0,516,18,0" VerticalAlignment="Top" Name="ButtonCARTLINK" ToolTip="Copier dans le presse-papier" Click="ButtonCARTLINK_Click">
+                <Button.Content>
+                    <Image Source="/PRESTACONNECT;component/Resources/copy.png" Width="16" HorizontalAlignment="Center" Margin="2"/>
+                </Button.Content>
+            </Button>
+            <Label Content="Lien vers le suivi colis (URL Tracking)" HorizontalAlignment="Left" Margin="20,550,0,0" VerticalAlignment="Top" />
+            <TextBox HorizontalAlignment="Right" IsReadOnly="True" Margin="0,546,48,0" Text="[TRACKING_LINK]" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" />
+            <Button Height="24" HorizontalAlignment="Right" Margin="0,546,18,0" Name="ButtonTRACKINGLINK" ToolTip="Copier dans le presse-papier" VerticalAlignment="Top" Width="24" Click="ButtonTRACKINGLINK_Click">
+                <Image HorizontalAlignment="Center" Margin="2" Source="/PRESTACONNECT;component/Resources/copy.png" Width="16" />
+            </Button>
+
+            <Border BorderBrush="#6F6FB5E5" BorderThickness="1" Height="2" Margin="6,97,6,0" VerticalAlignment="Top" />
+            <Border BorderBrush="#6F6FB5E5" BorderThickness="1" Height="2" Margin="6,169,6,0" VerticalAlignment="Top" />
+            <Border BorderBrush="#6F6FB5E5" BorderThickness="1" Height="2" Margin="6,361,6,0" VerticalAlignment="Top" />
+            <Border BorderBrush="#6F6FB5E5" BorderThickness="1" Height="2" Margin="6,434,6,0" VerticalAlignment="Top" />
+            <Border BorderBrush="#6F6FB5E5" BorderThickness="1" Height="2" Margin="6,505,6,0" VerticalAlignment="Top" />
+        </Grid>
+    </Grid>
+</Window>

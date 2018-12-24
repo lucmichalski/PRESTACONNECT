@@ -1,0 +1,91 @@
+﻿<Window x:Class="PRESTACONNECT.View.ConfigurationAvancee"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Configuration avancée" Height="300" Width="520" Icon="/PRESTACONNECT;component/img/setting.png"
+        WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow"
+        Background="{DynamicResource ResourceKey=WindowBackgroundBrush}" Loaded="Window_Loaded">
+    <Window.Style>
+        <Style>
+            <Setter Property="Window.IsEnabled" Value="True"/>
+            <Style.Triggers>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Path=IsBusy}" Value="True" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Window.IsEnabled" Value="False"/>
+                </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Style>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <GroupBox Header="Données" VerticalAlignment="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition  />
+                    <RowDefinition  />
+                </Grid.RowDefinitions>
+                <Label Content="Emplacement du dossier racine des données de l'application :" Margin="2"/>
+                <TextBox x:Name="AppRootFolder" Grid.Row="1" Margin="2" IsReadOnly="True" Text="{Binding Path=AppRootFolder, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <Button Grid.Column="1" Grid.Row="1" Margin="2" Content="..." Width="30" Click="DossierRacineParcourir_Click" />
+            </Grid>
+        </GroupBox>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*" />
+                <ColumnDefinition Width="90*" />
+            </Grid.ColumnDefinitions>
+            <Image Source="/PRESTACONNECT;component/img/info.png" VerticalAlignment="Top" HorizontalAlignment="Right" Height="16" Width="16" Margin="5" />
+            <StackPanel Orientation="Vertical" Grid.Column="1">
+                <Label Content="À savoir :" FontWeight="Bold" Margin="5"/>
+                <TextBlock TextWrapping="WrapWithOverflow" Margin="5,2,5,5">
+                    Lors de la sélection d'un nouvel emplacement pour les données de l'application, le contenu déjà existant est déplacé.
+                    <LineBreak/>Veillez donc à ce qu'aucune instance supplémentaire de PrestaConnect ou GADA ne soit en cours d'exécution lorsque vous souhaitez déplacer vos fichiers.
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="2,5,5,5">
+            <ProgressBar Height="20" Width="100" IsIndeterminate="True">
+                <ProgressBar.Style>
+                    <Style>
+                        <Setter Property="ProgressBar.Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=IsBusy}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="ProgressBar.Visibility" Value="Visible"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ProgressBar.Style>
+            </ProgressBar>
+            <Label VerticalAlignment="Center" Content="{Binding Path=LoadingStep}">
+                <Label.Style>
+                    <Style>
+                        <Setter Property="Label.Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=IsBusy}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Label.Visibility" Value="Visible"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Label.Style>
+            </Label>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right" Margin="5">
+            <Button Content="Appliquer" Height="30" Width="100" Click="Appliquer_Click" />
+        </StackPanel>
+    </Grid>
+</Window>

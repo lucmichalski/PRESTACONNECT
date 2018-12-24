@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.prestaconnect.fr/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.prestaconnect.fr/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.prestaconnect.fr/">
+      <s:element name="HelloWorld">
+        <s:complexType />
+      </s:element>
+      <s:element name="HelloWorldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExistKey">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExistKeyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ExistKeyResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadKey">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadKeyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReadKeyResult" type="tns:Key" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Key">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Product" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Organization" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Dealer" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DUADate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="Sage" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Prestashop" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="BDDSage" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BDDPrestaconnect" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BDDPrestashop" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Domain" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Option1" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Option2" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Option3" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetNow">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetNowResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetNowResult" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HelloWorldSoapIn">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldSoapOut">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExistKeySoapIn">
+    <wsdl:part name="parameters" element="tns:ExistKey" />
+  </wsdl:message>
+  <wsdl:message name="ExistKeySoapOut">
+    <wsdl:part name="parameters" element="tns:ExistKeyResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReadKeySoapIn">
+    <wsdl:part name="parameters" element="tns:ReadKey" />
+  </wsdl:message>
+  <wsdl:message name="ReadKeySoapOut">
+    <wsdl:part name="parameters" element="tns:ReadKeyResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetNowSoapIn">
+    <wsdl:part name="parameters" element="tns:GetNow" />
+  </wsdl:message>
+  <wsdl:message name="GetNowSoapOut">
+    <wsdl:part name="parameters" element="tns:GetNowResponse" />
+  </wsdl:message>
+  <wsdl:portType name="WSKeySoap">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input message="tns:HelloWorldSoapIn" />
+      <wsdl:output message="tns:HelloWorldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExistKey">
+      <wsdl:input message="tns:ExistKeySoapIn" />
+      <wsdl:output message="tns:ExistKeySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReadKey">
+      <wsdl:input message="tns:ReadKeySoapIn" />
+      <wsdl:output message="tns:ReadKeySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNow">
+      <wsdl:input message="tns:GetNowSoapIn" />
+      <wsdl:output message="tns:GetNowSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSKeySoap" type="tns:WSKeySoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap:operation soapAction="http://www.prestaconnect.fr/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExistKey">
+      <soap:operation soapAction="http://www.prestaconnect.fr/ExistKey" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadKey">
+      <soap:operation soapAction="http://www.prestaconnect.fr/ReadKey" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNow">
+      <soap:operation soapAction="http://www.prestaconnect.fr/GetNow" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WSKeySoap12" type="tns:WSKeySoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap12:operation soapAction="http://www.prestaconnect.fr/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExistKey">
+      <soap12:operation soapAction="http://www.prestaconnect.fr/ExistKey" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadKey">
+      <soap12:operation soapAction="http://www.prestaconnect.fr/ReadKey" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNow">
+      <soap12:operation soapAction="http://www.prestaconnect.fr/GetNow" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WSKey">
+    <wsdl:port name="WSKeySoap" binding="tns:WSKeySoap">
+      <soap:address location="https://46.105.150.23/WSKEY.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WSKeySoap12" binding="tns:WSKeySoap12">
+      <soap12:address location="https://46.105.150.23/WSKEY.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

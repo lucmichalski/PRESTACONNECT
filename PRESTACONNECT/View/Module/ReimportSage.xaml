@@ -1,0 +1,58 @@
+﻿<Window 
+    x:Class="PRESTACONNECT.View.Module.ReimportSage"
+    Title="Réimport des données depuis Sage" 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+    xmlns:local="clr-namespace:PRESTACONNECT"
+    xmlns:converter="clr-namespace:Alternetis.Windows.Converters;assembly=Alternetis.Windows"
+	x:Name="Window"
+    xmlns:toolkit="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit"
+	Width="500" Height="761"
+	WindowStyle="ThreeDBorderWindow" Icon="/PRESTACONNECT;component/prestaconnect.ico"
+    WindowStartupLocation="CenterScreen"
+    ShowInTaskbar="True"
+    Background="{DynamicResource ResourceKey=WindowBackgroundBrush}"
+    ResizeMode="NoResize">
+    <Grid x:Name="LayoutRoot" >
+        <Label Content="Options de réimport des informations depuis Sage :" HorizontalAlignment="Left" Margin="21,12,0,0" VerticalAlignment="Top" />
+        <Label Content="{Binding NombreArticleString}" HorizontalAlignment="Left" Margin="44,42,0,0" VerticalAlignment="Top" />
+        
+        <GroupBox Header="Liens catalogues" Margin="12,78,0,0" Height="140" VerticalAlignment="Top" HorizontalAlignment="Left" Width="454">
+            <Grid>
+                <CheckBox IsChecked="{Binding UpdateMainCatalog}" Content="Réimporter le catalogue principal" Height="16" HorizontalAlignment="Left" Margin="18,14,0,0" VerticalAlignment="Top" />
+                <CheckBox IsEnabled="{Binding UpdateMainCatalog}" IsChecked="{Binding LinkParents}" Content="Rattachement automatique aux catalogues parents" Height="16" HorizontalAlignment="Left" Margin="39,36,0,0" VerticalAlignment="Top" />
+                <CheckBox IsEnabled="{Binding UpdateMainCatalog}" IsChecked="{Binding DeleteLinkOldMain}" Content="Supprimer le lien avec l'ancien catalogue principal" Height="16" HorizontalAlignment="Left" Margin="39,58,0,0" VerticalAlignment="Top" />
+                <CheckBox IsEnabled="{Binding UpdateMainCatalog}" IsChecked="{Binding DeleteLinkOldSecondary}" Content="Supprimer les liens avec les anciens catalogues secondaires" Height="16" HorizontalAlignment="Left" Margin="39,80,0,0" VerticalAlignment="Top" />
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Header="Informations articles" Margin="12,232,0,0" Height="273" VerticalAlignment="Top" HorizontalAlignment="Left" Width="454">
+            <Grid>
+                <Label Content="Informations article à actualiser :" HorizontalAlignment="Left" Margin="18,12,0,0" VerticalAlignment="Top" />
+                <CheckBox IsChecked="{Binding UpdateProductName}" Content="Nom du produit" Height="16" HorizontalAlignment="Left" Margin="18,34,0,0" VerticalAlignment="Top" />
+                <CheckBox IsChecked="{Binding UpdateDescriptionShort}" Content="Résumé" Height="16" HorizontalAlignment="Left" Margin="18,56,0,0" VerticalAlignment="Top" />
+                <CheckBox IsChecked="{Binding UpdateDescription}" Content="Description longue" Height="16" HorizontalAlignment="Left" Margin="18,78,0,0" VerticalAlignment="Top" />
+                <CheckBox IsChecked="{Binding UpdateMetaTitle}" Content="Balise title (meta)" Height="16" HorizontalAlignment="Left" Margin="18,100,0,0" VerticalAlignment="Top" />
+                <CheckBox IsChecked="{Binding UpdateMetaDescription}" Content="Meta description" Height="16" HorizontalAlignment="Left" Margin="18,122,0,0" VerticalAlignment="Top" />
+                <CheckBox IsChecked="{Binding UpdateMetaKeywords}" Content="Meta mots-clefs" Height="16" HorizontalAlignment="Left" Margin="18,144,0,0" VerticalAlignment="Top" />
+                <CheckBox IsChecked="{Binding UpdateURL}" Content="URL simplifiée" Height="16" HorizontalAlignment="Left" Margin="18,166,0,0" VerticalAlignment="Top" />
+                <Label Content="{Binding UpdateURLString}" Margin="125,166,0,0" Foreground="Red"  HorizontalAlignment="Left" VerticalAlignment="Top" />
+                <CheckBox IsChecked="{Binding UpdateEAN}" Content="Code barre" Height="16" HorizontalAlignment="Left" Margin="18,188,0,0" VerticalAlignment="Top" />
+                <CheckBox IsChecked="{Binding UpdateActive}" Content="Statut actif/inactif" Height="16" HorizontalAlignment="Left" Margin="18,210,0,0" VerticalAlignment="Top" />
+            </Grid>
+        </GroupBox>
+        
+        <GroupBox Header="Autres fonctions" Margin="12,522,0,0" HorizontalAlignment="Left" Width="454" Height="130" VerticalAlignment="Top">
+            <Grid>
+                <CheckBox IsChecked="{Binding UpdateCharacteristic}" Content="Import des statistiques et informations libres" Height="16" HorizontalAlignment="Left" Margin="17,16,0,0" VerticalAlignment="Top" />
+                <CheckBox IsChecked="{Binding UpdateAttribute}" Content="Import des gammes" Height="16" HorizontalAlignment="Left" Margin="17,38,0,0" VerticalAlignment="Top" />
+                <CheckBox IsEnabled="{Binding ConditioningActive}" IsChecked="{Binding UpdateConditioning}" Content="Import des conditionnements" Height="16" HorizontalAlignment="Left" Margin="17,60,0,0" VerticalAlignment="Top" />
+                <CheckBox IsChecked="{Binding UpdateDateActive}" Content="Modifier la date de mise-à-jour article" Height="16" HorizontalAlignment="Left" Margin="17,80,0,0" VerticalAlignment="Top" />
+            </Grid>
+        </GroupBox>
+        
+        <Button Content="Réimporter les données" Name="ButtonReimportSage" Height="45" HorizontalAlignment="Left" Margin="152,0,0,12" VerticalAlignment="Bottom" Width="164" Click="ButtonReimportSage_Click" />
+    </Grid>
+</Window>

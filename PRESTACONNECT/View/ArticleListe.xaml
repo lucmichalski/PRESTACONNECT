@@ -1,0 +1,57 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+    xmlns:local="clr-namespace:PRESTACONNECT"
+	x:Class="PRESTACONNECT.ArticleListe"
+	x:Name="Window"
+    xmlns:dg="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit"
+	Title="Liste des articles"
+	Width="1024" Height="768"
+	WindowStyle="ThreeDBorderWindow" Icon="/PRESTACONNECT;component/img/Prestaconnect.png" WindowStartupLocation="CenterScreen"
+    ShowInTaskbar="True"
+    Background="{DynamicResource ResourceKey=WindowBackgroundBrush}" Loaded="Window_Loaded" >
+    <Grid x:Name="LayoutRoot" >
+    	<Image Source="/PRESTACONNECT;component/img/article.png" Width="48" Height="48" HorizontalAlignment="Right" Margin="0,12,8,0" VerticalAlignment="Top" d:LayoutOverrides="HorizontalAlignment, Width, Height" Grid.Column="1" />
+		<Label Content="Liste des catalogues :" HorizontalAlignment="Left" Margin="5,19.332,0,0" VerticalAlignment="Top"/>
+		<TextBox x:Name="TextBoxSearchCatalog" Margin="120.877,15.332,0,0" TextWrapping="Wrap" VerticalAlignment="Top" MaxLength="128" TextChanged="TextBoxSearchCatalog_TextChanged" HorizontalAlignment="Left" Width="120" />
+    	<DataGrid Margin="80,45.165,74,0" x:Name="DataGridCatalogue" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" GridLinesVisibility="None" HeadersVisibility="Column" IsReadOnly="True" SelectionMode="Extended" Height="200" VerticalAlignment="Top" SelectionChanged="DataGridCatalogue_SelectionChanged">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Id" x:Name="DataGridTexBoxColumnId" Binding="{Binding Cat_IdWithParent}" Width=".15*" />
+				<DataGridTextColumn Header="Nom" x:Name="DataGridTexBoxColumnNom" Binding="{Binding Cat_Name}" Width=".15*" />
+				<DataGridTextColumn Header="Description" x:Name="DataGridTextBoxColumnDescription" Binding="{Binding Cat_Description}" Width=".35*" />
+				<DataGridCheckBoxColumn Header="Actif" Binding="{Binding Cat_Active}" Width=".10*" />
+				<DataGridCheckBoxColumn Header="Synchronisé" Binding="{Binding Cat_Sync}" Width=".10*" />
+				<DataGridTextColumn Header="Date de modification" x:Name="DataGridTexBoxColumnDate" Binding="{Binding Cat_Date, ConverterCulture=fr}" Width=".15*" />
+			</DataGrid.Columns>
+		</DataGrid>
+		<Label Content="Liste des articles : " x:Name="LabelListeArticle" HorizontalAlignment="Left" Margin="5,257,0,0" VerticalAlignment="Top"/>
+		<CheckBox Cursor="Hand" x:Name="CheckBoxSearchOnlyCatalog" Content="Articles uniquement du catalogue" HorizontalAlignment="Left" Margin="120.877,257,0,0" VerticalAlignment="Top" 
+                  Checked="CheckBoxSearchOnlyCatalog_Checked" Unchecked="CheckBoxSearchOnlyCatalog_Unchecked" />
+		<TextBox x:Name="TextBoxSearchArticleName" Margin="112,287.5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" MaxLength="128" HorizontalAlignment="Left" Width="175.123" />
+		<TextBox x:Name="TextBoxSearchArticleRef" Margin="294.123,288,0,0" TextWrapping="Wrap" VerticalAlignment="Top" MaxLength="19" HorizontalAlignment="Left" Width="136" />
+		<TextBox x:Name="TextBoxSearchArticleEan13" Margin="440,288,0,0" TextWrapping="Wrap" VerticalAlignment="Top" MaxLength="13" HorizontalAlignment="Left" Width="128" />
+		<CheckBox Cursor="Hand" x:Name="CheckBoxSearchArticleActif" Content="Actif" HorizontalAlignment="Left" Margin="576.001,291.496,0,0" VerticalAlignment="Top" Width="63.999" IsChecked="True" />
+		<CheckBox Cursor="Hand" x:Name="CheckBoxSearchArticleSync" Content="Synchronisé" HorizontalAlignment="Left" Margin="656,291.496,0,0" VerticalAlignment="Top" Width="88" IsChecked="True" />
+		<Button IsDefault="True" Content="Rechercher" x:Name="ButtonSearchArticle" HorizontalAlignment="Right" Margin="0,280.474,74,0" VerticalAlignment="Top" Width="134" Height="38.003" Cursor="Hand" Click="ButtonSearchArticle_Click" />
+		<DataGrid Margin="80,327.96,74,0" x:Name="DataGridArticle" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" GridLinesVisibility="None" HeadersVisibility="Column" IsReadOnly="True" SelectionMode="Extended" Height="312.04" VerticalAlignment="Top" MouseDoubleClick="DataGridArticle_MouseDoubleClick">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Id" x:Name="DataGridTexBoxColumnArticleId" Binding="{Binding Art_Id}" Width=".03*" />
+				<DataGridTextColumn Header="Nom" x:Name="DataGridTexBoxColumnArticleNom" Binding="{Binding Art_Name}" Width=".22*" />
+				<DataGridTextColumn Header="Référence" x:Name="DataGridTextBoxColumnArticleReference" Binding="{Binding Art_Ref}" Width=".16*" />
+				<DataGridTextColumn Header="Ean13" x:Name="DataGridTextBoxColumnArticleCodeBarre" Binding="{Binding Art_Ean13}" Width=".16*" />
+				<DataGridCheckBoxColumn Header="Actif" Binding="{Binding Art_Active}" Width=".10*" />
+				<DataGridCheckBoxColumn Header="Synchronisé" Binding="{Binding Art_Sync}" Width=".10*" />
+				<DataGridTextColumn Header="Date de modification" x:Name="DataGridTexBoxColumnArticleDate" Binding="{Binding Art_Date, ConverterCulture=fr}" Width=".15*" />
+				<DataGridTemplateColumn Header="Modifier" Width=".07*">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+                            <Button  x:Name="DataGridButtonArticleUpdate" Content="Modifier" Cursor="Hand" Click="DataGridButtonArticleUpdate_Click" />
+                        </DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+			</DataGrid.Columns>
+		</DataGrid>
+		<Button Content="Créer un nouvel article" x:Name="ButtonNewArticle" HorizontalAlignment="Right" Margin="0,0,74,28" VerticalAlignment="Bottom" Width="213.26" Height="38.003" Cursor="Hand" Click="ButtonNewArticle_Click"  />
+    </Grid>
+</Window>

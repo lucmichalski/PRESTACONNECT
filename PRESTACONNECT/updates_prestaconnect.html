@@ -1,0 +1,2297 @@
+﻿<html>
+<head>
+    <title>Informations de version</title>
+</head>
+<body>
+    <div style="margin: 0 0 2 0; text-align: justify; word-wrap: break-word; font-family: segoe ui; font-size: 12; background: transparent;">
+        <span style="font-weight: bold;">02/10/2018 Mise à jour 2.12.60.0 :</span>
+        <br />
+        Création de source unique quelque soit les versions de Sage et Prestashop. 
+        <br />
+        Permettre la mise en correspondance entre une règle de panier PrestaShop et un article Sage. 
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">14/05/2018 :</span>
+        <br />
+		    Migration pour Sage 100CV3
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">06/02/2017 Mise à jour 2.12.59.0 :</span>
+        <br />
+        Gestion des modules DWFProductGuiderates et DWFProductExtraFields de PrestaShop.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">06/02/2017 Mise à jour 2.12.58.0 :</span>
+        <br />
+        Correction pour le traitement des taxes des prix des articles (prise en compte des règle de taxe).
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">21/12/2017 Mise à jour 2.12.57.0 :</span>
+        <br />
+        Ajout de la fonctionnalité gérant les différents Marcketplace.
+        <br/> 
+        Ajout d ela fonctionnalité permettant de lancer un script à la fin du traitement d'une commande.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">31/10/2017 Mise à jour 2.12.56.0 :</span>
+        <br />
+        Correction pour prendre en compte les tarifs spécifiques pour les centrales d'achat.
+        <br />
+        <br />
+        <hr />
+		    <span style="font-weight: bold;">01/10/2017 Mise à jour 2.12.55.0 :</span>
+        <br />
+        Ajout de la possibilité de créer le compte client par rapport à l'adresse mail d'un contact d'un service indiqué.
+        <br />
+        <br />
+        <hr />
+		     <span style="font-weight: bold;">28/08/2017 Mise à jour 2.12.54.0 :</span>
+        <br />
+        Correction des requêtes pour la récupération des données de la table ps_attribute_lang (ORDER BY).
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">31/08/2017 Mise à jour 2.12.53.0 :</span>
+        <br />
+		    Modification de la gestion des clauses ORDER BY sur les requêtes MySQL.
+        <br />
+        <br />
+		    Modification activation de la licence en cas de connexion au serveur secondaire.
+        <br />
+        <br />
+        Ajout de la possibilité de filtrer les articles selon l'état de l'information "À synchroniser".
+        <br />
+        <br />
+        Correction synchronisation des caractéristiques.
+        <br />
+        <br />
+        <hr />
+		    <span style="font-weight: bold;">28/08/2017 Mise à jour 2.12.52.0 :</span>
+        <br />
+        Mise à jour de compatibilité pour PrestaShop 1.7.2
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">23/08/2017 Mise à jour 2.12.52.0 :</span>
+        <br />
+        Ajout d'une option permettant l'archivage dans un dossier local ou réseau des PDF générés pour le module "AECInvoiceHistory".
+        <br />
+        <br />
+        Ajout d'une fonction "Exporter le PDF" dans l'écran d'aperçu du modèle d'impression.
+        <br />
+        <br />
+        Ajout de filtres sur les numéros et intitulés client dans l'interface d'export manuel des PDF.
+        <br />
+        <br />
+        Ajout d'une option permettant de désactiver la limitation de l'utilisation des coeurs sur la génération et le transfert des PDF via l'interface.
+        <br />
+        <br />
+        Ajout d'arguments permettant l'automatisation des transferts suivants :
+        <br />- Transfert vers Prestashop des données déclinaisons via l'argument : TransfertAttribute
+        <br />- Transfert vers Prestashop des données caractéristiques produits via l'argument : TransfertFeature
+        <br />
+        <br />
+        Ajout de la gestion de paramètres de filtre sur les arguments suivants :
+        <br />- ImportSageStatInfolibreArticle
+        <br />- TransfertFeature
+        <br />
+        <br />Vous pouvez indiquer respectivement le nom d'une ou plusieurs informations libres article Sage et le numéro ID d'une ou plusieurs caractéristiques Prestashop à traiter.
+        <br />Les syntaxes doivent être sous les formes respectives suivantes : 
+        <br /> >> Argument:NomInfoLibre1#NomInfoLibre2
+        <br /> >> Argument:IDCaracteristiqueA#IDCaracteristiqueB
+        <br />
+        <br />Important : Les espaces dans les noms des informations libres doivent être remplacés par des "_"
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">19/06/2017 Mise à jour 2.12.51.0 :</span>
+        <br />
+        Ajout d'arguments permettant l'automatisation en traitement court de la récupération des paiements vers Sage :
+        <br />- SynchroPaiementJour
+        <br />- SynchroPaiementSemaine
+        <br />- SynchroPaiementMois
+        <br />
+        <br />
+        Ajout de la possibilité de lancer la récupération des paiements depuis l'interface.
+        <br />
+        <br />
+        Les filtres de période sont désormais aussi disponibles pour les synchronisations clients et commandes via l'interface.
+        <br />
+        <br />
+        Correction de la récupération des clients n'ayant pas passé commande lorsqu'ils n'ont pas enregistré d'adresse postale.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">15/06/2017 Mise à jour 2.12.50.0 :</span>
+        <br />
+        Ajout d'arguments permettant l'automatisation en traitement court de la création des documents vers Sage :
+        <br />- DocumentSageJour
+        <br />- DocumentSageSemaine
+        <br />- DocumentSageMois
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">12/06/2017 Mise à jour 2.12.49.0 :</span>
+        <br />
+        Ajout d'une option permettant de désactiver la surcharge des informations de connexion des sous-états Crystal Report.
+        <br />
+        <br />
+        Ajout d'option de réinitialisation sur les paramètres articles "Catégorie tarifaire par défaut" et "Catégorie comptable".
+        <br />
+        <br />
+        Ajout d'une option permettant de désactiver l'éditeur WYSIWYG dans la fiche article et dans la configuration mail.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">12/05/2017 Mise à jour 2.12.48.0 :</span>
+        <br />
+        Ajout d'un écran permettant d'afficher un aperçu du modèle d'impression utilisé pour envoyées les factures comptabilisées en PDF.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">05/05/2017 Mise à jour 2.12.47.0 :</span>
+        <br />
+        Ajout d'arguments permettant de déclencher l'export des factures PDF Sage vers Prestashop par périodes :
+        <br />- ExportFactureSemaine
+        <br />- ExportFactureMois
+        <br />- ExportFactureAnnee
+        <br />
+        <br /><u>Rappel :</u> Cette fonctionnalité nécéssite le module AEC_InvoiceHistory et modèle d'impression Crystal Report.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">28/04/2017 Mise à jour 2.12.46.0 :</span>
+        <br />
+        Ajout d'une option sur l'import des images permettant de rechercher dans les données photos de la base Sage plutôt que de parcourir les fichiers du dossier cible.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">24/04/2017 Mise à jour 2.12.45.0 :</span>
+        <br />
+        Intégration de la fonctionnalité de gestion du stock maximum produit en fonction de l'unité de conditionnement la plus petite, permet ainsi l'affichage du produit hors-stock si le nombre d'unités en stock est inférieur au plus petit conditionnement transféré dans Prestashop.
+        <br />
+        <br />
+        Ajout d'une option permettant de fixer la zone pour l'enregistrement du numéro de téléphone mobile Prestashop sur "Télécopie" dans Sage.
+        <br />
+        <br />
+		Correction option d'activation de l'insertion du commentaire client de la commande Prestashop sur le document Sage.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">21/04/2017 Mise à jour 2.12.44.0 :</span>
+        <br />
+        Correction écriture éco-taxe dans Sage lorsque les taxes sont définies uniquement sur la famille.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">20/04/2017 Mise à jour 2.12.43.0 :</span>
+        <br />
+        Mise à niveau pour compatibilité avec Sage 100C.
+        <br />
+        <br />
+        Ajout d'une option permettant d'appliquer la règle de gestion des données Prestashop sur les prix spécifiques lorsque le prix est identique au prix de base produit.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">03/03/2017 Mise à jour 2.12.42.0 :</span>
+        <br />
+        Ajout d'une option sur l'import des images permettant l'identification des articles en fonction de leur(s) référence(s) client.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">01/03/2017 Mise à jour 2.12.41.0 :</span>
+        <br />
+        Ajout d'une option indiquant à PrestaConnect d'ignorer les prix spécifiques Prestashop possédant des dates de début et de fin lors du transfert des tarifs depuis Sage.
+        <br />
+        <br />
+        Correction de la gestion des tarifs par conditionnement lorsque qu'au moins une des catégories tarifaires est égale au prix de base article.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">17/02/2017 Mise à jour 2.12.40.0 :</span>
+        <br />
+        Ajout de la possibilité de récupérer les informations de livraison enregistrées par le module SoColissimo
+        <br />- Type et ID point relais vers information libre entête de document
+        <br />- Destinataire nom et prénom vers information libre entête de document
+        <br />- Remplacement du numéro de téléphone de l'adresse de livraison
+        <br />- Utilisation du nom du point relais pour définir l'intitulé de l'adresse de livraison
+        <br />
+        <br />La récupération de chaque information peut être activée/désactivée séparément.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">16/02/2017 Mise à jour 2.12.39.0 :</span>
+        <br />
+        Ajout d'une option permettant d'inscrire les informations suivantes de l'adresse de facturation sur les entêtes 1 à 4 des document dans Sage :
+        <br />- Prénom et Nom (Entête 1)
+        <br />- Société (Entête 2)
+        <br />- Adresse (Entête 3)
+        <br />- Code postal et Ville (Entête 4)
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">20/01/2017 Mise à jour 2.12.38.0 :</span>
+        <br />
+        Ajout de la possibilité d'alimenter le numéro de tracking de la commande à partir :
+        <br />- soit d'une information entête 1 à 4 du document 
+        <br />- soit d'une information libre de l'entête de document (type texte uniquement)
+        <br />
+        <br />L'URL de tracking peut désormais être renseignée dans les mails envoyés lors des changements de statuts via la balise [TRACKING_LINK].
+        <br />
+        <br />Si aucun changement de statut de commande n'est effectué par PrestaConnect, le numéro de tracking sera renseigné indépendamment sur l'expédition de la commande.
+        <br />
+        <br />
+        Ajout de la recherche du pays dans Prestashop en fonction du code ISO lors du transfert des clients Sage.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">16/01/2017 Mise à jour 2.12.37.0 :</span>
+        <br />
+        Ajout de la possibilité de désactiver les déclinaisons via la gestion du module Prestashop "AEC_AttributeStatut".
+        <br />
+        <br />
+        Ajout de la gestion du filtre sommeil sur les gammes pour la création des compositions.
+        <br />
+        <br />
+        Ajout d'une fonction d'ajout des déclinaisons pour les articles de composition existants.
+        <br />Celle-ci gère uniquement les compositions dont toutes les déclinaisons sont liées à une unique référence Sage mono-gamme.
+        <br />Le traitement automatique est disponible via l'argument "ImportCompositionGammes".
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">23/12/2016 Mise à jour 2.12.36.2 :</span>
+        <br />
+        Modification du calcul contrôlant les montants entre les commandes Prestashop et Sage afin d'envoyer une alerte mail en cas d'écart.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">22/12/2016 Mise à jour 2.12.36.1 :</span>
+        <br />
+        Ajout possibilité de placer les commentaires de commandes au début ou à la fin du document Sage.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">25/10/2016 Mise à jour 2.12.36.0 :</span>
+        <br />
+        Modification synchronisation des caractéristiques articles.
+        <br />
+        <br />
+        Ajout option de transfert des caractéristiques.
+        <br />
+        <br />
+        Correction génération des tarifs par groupe lorsque l'article ne possède ni remise ni déclinaison.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">20/10/2016 Mise à jour 2.12.35.0 :</span>
+        <br />
+        Adaptation de la gestion des précommandes pour PrestaShop 1.6.
+        <br />
+        <br />
+        Ajout de la gestion de la langue du client Sage pour l'insertion des désignations articles dans les documents Sage.
+        <br />
+        <br />
+        Ajout de filtres avancés pour :
+        <br />- Les articles en pack
+        <br />- Rechercher parmis les références des articles présents dans les compositions
+        <br />
+        <br />
+        Ajout d'une option de transfert des contenus présents dans les packs.
+        <br />
+        <br />
+        Ajout d'une option permettant de calculer les valeurs de stock par dépôt de manière indépendante (option de la mise à zéro en cas de stock négatif).
+        <br />
+        <br />
+        Ajout de la possibilité de déplacer un catalogue à la racine de la boutique.
+        <br />
+        <br />
+        Ajout d'une option permettant la synchronisation du catalogue sélectionné et de ses parents.
+        <br />
+        <br />
+        Ajout d'une option permettant d'importer chaque niveau de catalogue Sage vers la racine si le parent n'est pas sélectionné ou déjà importé.
+        <br />
+        <br />
+        Ajout du recalcul du niveau pour les enfants lors du déplacement d'un catalogue.
+        <br />
+        <br />
+        Ajout de la possibilité d'importer des articles Sage hors catalogue.
+        <br />
+        <br />
+        Ajout d'options pour alimenter les champs nom et prénom lors du transfert de client Sage vers PrestaShop.
+        <br />
+        <br />
+        Ajout sur les filtres d'import de la possibilité d'utiliser les valeurs des informations libres article de type texte et table.
+        <br />
+        <br />
+        Ajout au module d'export PDF de l'application de la connexion SQL sur les sous-états pour les modèles d'impression Crystal Report.
+        <br />
+        <br />
+        Correction application des filtres sommeil et publié sur la création de composition.
+        <br />
+        <br />
+        Correction du calcul de stocks pour les nomenclatures et conditionnements lors l'indice de quantité du composant est inférieur à 1.
+        <br />
+        <br />
+        Correction suppression catalogue si présence d'une image.
+        <br />
+        <br />
+        Modification de l'affichage des informations lorsqu'un problème de connexion à une base de données est rencontré.
+        <br />
+        <br />
+        Mise-à-jour du logo de la société.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">07/07/2016 Mise à jour 2.12.34.0 :</span>
+        <br />
+        Modification de la gestion du rafraîchissement de la liste des articles après la fermeture d'une fiche détail.
+        <br />
+        <br />
+        Ajout du rattachement des images aux articles simples lorsqu'ils sont attachés à une composition.
+        <br />
+        <br />
+        Correction sélection automatique du groupe d'éléments à synchroniser lors de l'utilisation des filtres types d'article.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">06/07/2016 Mise à jour 2.12.33.0 :</span>
+        <br />
+        Ajout d'une fonctionnalité indiquant la cause du blocage de l'insertion d'une ligne article dans un document Sage.
+        <br />Le message et le produit concerné sont indiqués via des lignes de commentaire dans le document Sage.
+        <br />
+        <br />IMPORTANT : Cette fonctionnalité ne s'applique pas aux problèmes dus à l'ouverture dans Sage des documents générés pendant la synchronisation.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">07/06/2016 Mise à jour 2.12.32.0 :</span>
+        <br />
+        Ajout d'une option pour mettre en majuscule les informations de la fiche client à sa création dans Sage (intitulé, abrégé et informations adresse).
+        <br />
+        <br />
+        Ajout d'une option sur les articles permettant de désactiver la synchronisation des tarifs.
+        <br />Seules les données articles suivantes peuvent alors être synchronisées : descriptions, metas, associations, déclinaisons (gammes / conditionnement / compositions), caractéristiques et stocks.
+        <br />
+        <br />
+        Ajout de la possibilité de choisir les colonnes affichées sur la liste des articles. La gestion s'en effectue via le menu contextuel des entêtes de colonne.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">11/04/2016 Mise à jour 2.12.31.0 :</span>
+        <br />
+        Correction de l'application du "Hors remise" sur les remises familles et clients en cas d'absence de remise sur l'article pour toutes les catégories tarifaires.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">21/03/2016 Mise à jour 2.12.30.0 :</span>
+        <br />
+        Ajout d'options pour le traitement des données déjà liées sur les imports articles et images depuis PrestaShop.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">14/03/2016 Mise à jour 2.12.29.0 :</span>
+        <br />
+        Ajout de l'argument "SynchroStatutCommandeNJours" pour déclencher une mise-à-jour partielle des statuts dans PrestaShop.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">11/03/2016 Mise à jour 2.12.28.0 :</span>
+        <br />
+        Ajout d'une option indiquant d'envoyer à PrestaConnect un stock de 0 à PrestaShop lorsque le stock calculé de Sage est négatif.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">09/03/2016 Mise à jour 2.12.27.0 :</span>
+        <br />
+        Modification de la gestion du déclenchement des synchronisations clients, adresses et commandes vers Sage.
+        <br />
+        <br />
+        Amélioration du filtrage des commandes à transférer vers Sage.
+        <br />
+        <br />
+        Séparation de la création des documents Sage et de la mise-à-jour des statuts dans PrestaShop.
+        <br />
+        <br />
+        Ajout de l'argument "SynchroStatutCommande" pour déclencher uniquement la mise-à-jour des statuts dans PrestaShop.
+        <br />
+        <br />
+        Correction dans la gestion du "Hors remise" lorsque présence de tarifs d'exception client.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">01/03/2016 Mise à jour 2.12.26.0 :</span>
+        <br />
+        Ajout d'un contrôle des modifications apportées avant une demande de suppression de gamme, conditionnement ou composition.
+        <br />
+        <br />
+        Ajout du tri alphabétique forcé sur les listes des catégories/catalogues.
+        <br />
+        <br />
+        Correction d'un problème dans la gestion du mappage Sage-PrestaShop lors de la suppression d'une gamme empêchant de réimporter la gamme Sage si elle a été renommée.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">29/02/2016 Mise à jour 2.12.25.0 :</span>
+        <br />
+        Amélioration gestion des conflits de remises lorsque reprise des tarifs catégories tarifaires pour un client.
+        <br />
+        <br />
+        Modification de la gestion du lien image-déclinaison dans la fonction de remplacement automatique d'image.
+        <br />
+        <br />
+        Modification de la gestion des URL simplifiées sur les catalogues, l'url est désormais réécrite automatiquement par rapport au nom du catalogue.
+        <br />
+        <br />
+        Correction gestion des images catalogues sur les sous-catalogues lorsque seule l'image est modifiée.
+        <br />
+        <br />
+        Modification de la gestion des déclarations "Hors remise" sur les articles et familles.
+        <br />
+        <br />
+        Ajout possibilité de suppression des déclinaisons pour les gammes et conditionnements.
+        <br />
+        <br />
+        Ajout dans "Gamme" de la possibilité d'ajouter des "groupes d'attibuts" et des "attributs".
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">11/02/2016 Mise à jour 2.12.24.0 :</span>
+        <br />
+        Ajout prise en compte des articles de composition dans l'automate de gestion du statut article.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">04/02/2016 Mise à jour 2.12.23.0 :</span>
+        <br />
+        Correction de la gestion de l'envoi de mail de notification lors de la mise à disposition de facture.
+        <br />
+        <br />
+        Externalisation des appels de script.
+        <br />
+        <br />
+        Ajout du remplacement du caractère ASCII "á" (n°160) dans le nettoyage des url simplifiées.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">03/02/2016 Mise à jour 2.12.22.0 :</span>
+        <br />
+        Correction de la lecture du mode de gestion des clients paramétré.
+        <br />
+        <br />
+        Modification du module d'appel de script après la synchronisation des tarifs d'un article.
+        <br />
+        <br />
+        Ajout d'une option permettant de définir le nombre de coeurs du processeur que PrestaConnect est autorisé à utiliser lors des traitements en parallèle.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">29/01/2016 Mise à jour 2.12.21.0 :</span>
+        <br />
+        Amélioration des performances de lecture des valeurs d'attributs Prestashop dans la liste des gammes article.
+        <br />
+        <br />
+        Ajout de la possibilité de créer une composition en la plaçant dans le catalogue courant si aucun lien catalogue avec Sage.
+        <br />
+        <br />
+        Ajout de filtres de sélection rapide sur les déclinaisons de la composition.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">22/01/2016 Mise à jour 2.12.20.0 :</span>
+        <br />
+        Ajout de la gestion du SSL pour la connexion FTP.
+        <br />
+        <br />
+        Modification des limites de caractères pour les metas afin d'assurer la compatibilité des données avec le module Amazon.
+        <br />
+        <br />
+        Ajout de la possibilité d'envoyer un mail aux clients lors du transfert de facture sur l'espace client.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">14/01/2016 Mise à jour 2.12.19.0 :</span>
+        <br />
+        Ajout d'un formulaire de contrôle des liens entre les conditionnements Sage et les déclinaisons correspondantes.
+        <br />
+        Celui-ci permet de réaffecter le lien entre PrestaShop et Sage en se basant sur les intitulés.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">07/01/2016 Mise à jour 2.12.18.0 :</span>
+        <br />
+        Ajout de la gestion de l'import des images par référence article sur les articles de composition.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">06/01/2016 Mise à jour 2.12.17.0 :</span>
+        <br />
+        Ajout de la référence du fournisseur principal dans la liste des articles pour import, le filtre de recherche s'applique également sur cette information.
+        <br />
+        <br />
+        Ajout de la gestion de la marque et du fournisseur pour les articles de composition.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">05/01/2016 Mise à jour 2.12.16.0 :</span>
+        <br />
+        Amélioration de la gestion du transfert des images et documents.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">04/01/2016 Mise à jour 2.12.15.0 :</span>
+        <br />
+        Correction dans la gestion de l'écriture de l'information "déclinaison par défaut" dans les informations par boutique.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">24/12/2015 Mise à jour 2.12.14.0 :</span>
+        <br />
+        Ajout de la gestion de l'affectation des images par déclinaison pour les articles de composition.
+        <br />
+        <br />
+        Ajout de la gestion de l'import des images par référence gamme sur les articles de composition.
+        <br />
+        <br />
+        Ajout de la répercussion de la taxe Sage sélectionnée et alimentation du filtre référence article pour l'ajout de composition lorsque la création de la composition est réalisée à partir d'un article Sage.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">22/12/2015 Mise à jour 2.12.13.0 :</span>
+        <br />
+        Ajout de l'affichage de la société dans la liste des clients PrestaShop en mode BtoB.
+        <br />
+        <br />
+        Modification du contrôle des données pour la lecture des bons de réductions enregistrés sur une commande.
+        <br />
+        <br />
+        Ajout de la lecture des informations libres et statistiques article pour les compositions.
+        <br />Les données sont récupérées uniquement pour la référence de la composition définie comme par défaut.
+        <br />
+        <br />
+        Ajout d'options permettant la saisie de commentaires libres en début de document Sage.
+        <br />
+        <br />
+        Ajout de paramètres de gestion des conflits de remise pour les modes "Cumulé" et "Cascade".
+        <br />
+        <br />
+        Ajout d'une option sur l'import des articles depuis Sage permettant de récupérer uniquement les articles standards.
+        <br />L'objectif est de filtrer les articles en gammes afin de les traiter via la fonctionnalité de composition.
+        <br />
+        <br />
+        Ajout de la prise en charge des articles de composition dans la fonctionnalité de réimport depuis Sage.
+        <br />Les informations récupérées sont basées sur la référence de la composition définie comme par défaut.
+        <br />
+        <br />
+        Ajout d'option de filtrage par type sur la liste des articles.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">14/12/2015 Mise à jour 2.12.12.0 :</span>
+        <br />
+        Ajout du filtrage des articles ajoutés à une composition dans l'import des articles.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">14/12/2015 Mise à jour 2.12.11.1 :</span>
+        <br />
+        Correction erreur enregistrement fiche article suite à un filtrage des données chargées.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">14/12/2015 Mise à jour 2.12.11.0 :</span>
+        <br />
+        Ajout de l'affectation automatique du catalogue principal lors de la création d'un article de composition. Le catalogue affecté est celui sélectionné dans la recherche article.
+        <br />
+        <br />
+        Correction dans la gestion de l'écriture de l'information "déclinaison par défaut".
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">09/12/2015 Mise à jour 2.12.10.0 :</span>
+        <br />
+        Ajout d'une fonction permettant de générer et affecter les valeurs d'attributs pour un groupe lié à une composition à partir des valeurs des énumérés de la gamme 1.
+        <br />
+        <br />
+        Correction détection lien catalogue sur la création de composition à partir d'un article Sage.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">07/12/2015 Mise à jour 2.12.9.0 :</span>
+        <br />
+        Ajout de la possibilité de créer un article de composition en basant les données primaires sur un article Sage.
+        <br />
+        <br />
+        Correction recherche des articles Sage pour ajouter à une composition en cas de code famille non unique dans Sage.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">07/12/2015 Mise à jour 2.12.8.0 :</span>
+        <br />
+        Correction récupération des gammes et conditionnements avant un réimport depuis Sage.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">03/12/2015 Mise à jour 2.12.7.0 :</span>
+        <br />
+        Ajout de la récupération de la référence et du code-barres de l'article de base sur les compositions dans le cas où soit la gamme soit le conditionnement ne possède pas ces informations dans Sage.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">02/12/2015 Mise à jour 2.12.6.0 :</span>
+        <br />
+        Ajout du suivi de l'identification des transporteurs (changement de numéroration après mis-à-jour dans PrestaShop).
+        <br />
+        <br />
+        Modification de la gestion du plein écran sur les fenêtres annexes à l'accueil.
+        <br />
+        <br />
+        Correction fermeture écran de synchronisation des commandes en cas d'absence d'états de commandes à mettre-à-jour.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">02/12/2015 Mise à jour 2.12.5.0 :</span>
+        <br />
+        Ajout du contrôle des informations de la connexion ODBC avant les synchronisations clients, adresses et commandes.
+        <br />
+        <br />
+        Modification du processus de traitement des commandes, les commandes n'ayant pas été synchronisées sont désormais traitées avant la mise-à-jour des états dans PrestaShop.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">01/12/2015 Mise à jour 2.12.4.1 :</span>
+        <br />
+        Modification de la gestion de la synchronisation pour les articles de composition. 
+        <br />
+        <br />
+        Correction du changement de date article sur la fonctionnalité "rediriger vers" lors de l'ajout d'articles à une composition.
+        <br />
+        <br />
+        Ajout d'une option permettant de désactiver la demande d'enregistrement des modifications sur les articles.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">30/11/2015 Mise à jour 2.12.4.0 :</span>
+        <br />
+        Ajout fonctionnalité de transformation d'un article simple en article de composition depuis la fiche article.
+        <br />
+        <br />
+        Modification du filtre de recherche des attributs dans la composition article.
+        <br />
+        <br />
+        Ajout d'une fonctionnalité gérant la redirection lors de l'ajout d'articles à une composition.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">27/11/2015 Mise à jour 2.12.3.0 :</span>
+        <br />
+        Correction lecture des valeurs Sage affectées aux noms et prénoms lors du transfert client vers PrestaShop.
+        <br />
+        <br />
+        Ajout prix de base du produit forcé pour les articles de composition.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">24/11/2015 Mise à jour 2.12.2.0 :</span>
+        <br />
+        Ajout de l'écriture des informations sur la commande dans l'option d'écrasement du numéro de facture.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">19/11/2015 Mise à jour 2.12.1.0 :</span>
+        <br />
+        Correction envoi des codes barres pour les compositions d'articles (limite de 13 caractères dans PrestaShop).
+        <br />
+        <br />
+        Ajout désactivation automatique de la multi-sélection sur la composition article, si celle-ci n'utilise qu'un seul groupe d'attribut.
+        <br />
+        <br />
+        Ajout de l'affichage des valeurs d'attributs PrestaShop liées aux gammes et conditionnements dans la fiche article.
+        <br />
+        <br />
+        Modification du système de contrôle de la licence d'utilisation.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">18/11/2015 Mise à jour 2.12.0.1 :</span>
+        <br />
+        Correction mise-à-jour de l'information déclinaison par défaut.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">13/11/2015 Mise à jour 2.12.0.0 :</span>
+        <br />
+        Ajout de l'identification des images par rapport aux références des gammes lors de l'import images, et d'une interface de gestion des attributions des images par déclinaisons (liées à des gammes uniquement).
+        <br />
+        <br />
+        Ajout de la possibilité de définir des filtres d'import sur les intitulés pour les articles, énumérés de gammes et de conditionnement.
+        <br />
+        <br />
+        Ajout fonctionnalité de création d'article de composition, permet de créer des déclinaisons à partir d'articles Sage différents. Nécessite une élévation de la licence PrestaConnect.
+        <br />
+        <br />
+        Ajout d'une fonction de suppression d'article. Pour pouvoir être supprimé l'article ne doit pas avoir de lien avec un produit PrestaShop ou l'article Sage doit avoir été supprimé.
+        <br />
+        <br />
+        Ajout de la récupération des informations ci-après lorsque la synchronisation article s'effectue dans le sens PrestaConnect vers PrestaShop :
+		<br />- déclinaison"par défaut"
+		<br />- rattachement des images aux déclinaisons (liées à des gammes uniquement)
+		<br />- caractéristiques produits
+		<br />Ces informations ont également été intégrés dans le processus d'import des données articles depuis PrestaShop.
+        <br />
+        <br />
+		Ajout sur la liste des articles de l'affichage d'un détail pour les articles sélectionnés.
+		<br />Ce détail contient l'affichage de l'image par défaut de l'article, ainsi que des informations de base concernant l'article Sage et le produit PrestaShop.
+        <br />
+        <br />
+        Ajout d'icônes sur la liste des articles afin de faciliter la distinction des types d'articles : simple, mono-gamme, multi-gammes, conditionnement, composition. 
+		<br />
+        <br />
+        Correction calcul des tarifs lorsque présence de prix net par quantité par catégorie tarifaire.
+        <br />
+        <br />
+        Ajout d'une fonction permettant l'envoi des modèles de mail à un destinaire de test avec des données réelles.
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">30/10/2015 Mise à jour 2.11.0.4 :</span>
+        <br />
+        Correction mise-à-jour des infos par boutique sur les déclinaisons.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">28/10/2015 Mise à jour 2.11.0.3 :</span>
+        <br />
+        Correction création des packs dans PrestaShop.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">22/10/2015 Mise à jour 2.11.0.2 :</span>
+        <br />
+        Ajout de la gestion du module "Portefeuille clients", PrestaConnect permet :
+        <br />- d'associer les comptes employés de PrestaShop aux collaborateurs de Sage.
+        <br />- d'affecter les comptes employés aux clients.
+        <br />
+        <br />
+        Le traitement peut être automatisé en utilisant l'argument "SynchroPortfolioCustomerEmployee".        
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">21/10/2015 Mise à jour 2.11.0.1 :</span>
+        <br />
+        Évolution du système d'attribution des groupes en fonction des codes risques :
+        <br />- Ajout option de détachement du groupe, si le champ "Type de contrôle" dans Sage a pour valeur "Compte bloqué".
+        <br />- Ajout rattachement à un groupe par défaut, si le client était rattaché uniquement au groupe lié au code risque.
+        <br />
+        <br />
+        Ajout d'une option indiquant à PrestaConnect d'utiliser le champ "Société" de PrestaShop pour définir les intitulés client et adresse dans Sage.
+        <br />
+        <br />
+        Ajout d'une option spécifiant que le champ "Siret" sur la fiche client Sage doit être alimenté à partir du numéro d'identification fiscale (renseigné par le client sur son adresse PrestShop).
+        <br />
+        <br />
+        <hr />
+		<span style="font-weight: bold;">20/10/2015 Mise à jour 2.11 :</span>
+        <br />
+        Ajout gestion des modules "Extranet" pour PrestaShop :
+        <br />- "AEC_BalanceOustanding"
+        <br />- "AEC_Representative"
+        <br />
+        <br />
+        Ces fonctionnalités sont accessibles depuis la fenêtre "Client / Modules".
+        <br />
+        Elles peuvent être automatisées respectivement via les arguments "ExportAECBalance" et "ExportAECRepresentative". 
+        <br />
+        <br />
+        Correction import des images depuis PrestaShop.
+		<br />
+        <br />
+        Ajout de vues HTML et navigateur dans la gestion des modèles de mail.
+		<br />
+        <br />
+        Ajout d'une option permettant d'autoriser ou non les chiffres pour les champs nom et prénom lors du transfert de compte client de Sage vers PrestaShop.
+		<br />
+        <br />
+        Correction mineure sur la lecture des tarifs.
+		<br />
+        <br />
+        Adaptation pour PrestaShop 1.6.1.x
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">07/09/2015 Mise à jour 1618.2.10.29 :</span>
+        <br />
+        Ajout d'une fonctionnalité de synchronisation des déclinaisons de PrestaConnect vers PrestaShop via l'interface.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">15/07/2015 Mise à jour 1618.2.10.28 :</span>
+        <br />
+        Ajout contrôle longueur intitulé pour l'insertion des lignes de bons de réduction.
+        <br />
+        <br />
+		Correction sur l'écriture des informations libres client lors de l'utilisation des caractéristiques clients.
+        <br />
+        <br />
+		Correction activation option envoi de la quantité des conditionnements dans le champ "UPC" des déclinaisons.
+		<br />
+        <br />
+        Correction application du filtre sur la liste des clients en mode "BtoB".
+		<br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">06/07/2015 Mise à jour 1618.2.10.27 :</span>
+        <br />
+        Modification de la gestion des logs dans le suivi des temps de traitement de la synchronisation stock et prix.
+        <br />
+        <br />
+        Ajout d'une gestion d'erreur de plus bas niveau lors de l'utilisation d'appel de script après le traitement d'un article.
+        <br />
+        <br />
+        Mise en conformité avec Sage 100 I7 version 8.01.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">24/06/2015 Mise à jour 16177.2.10.26 :</span>
+        <br />
+        Ajout d'une fonctionnalité permettant d'affecter les clients aux groupes en fonction des codes risque Sage.
+        <br />
+        Le traitement peut également être automatisé avec l'argument "SynchroGroupCodeRisque".
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">22/06/2015 Mise à jour 16177.2.10.25 :</span>
+        <br />
+        Correction du chargement des données lors du filtrage des gammes avant l'import des articles depuis Sage.
+        <br />
+        <br />
+        Correction lecture premier pallier de prix par quantité lorsque le prix saisi est égal au prix de vente de la catégorie tarifaire. 
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">12/06/2015 Mise à jour 16177.2.10.24 :</span>
+        <br />
+        Modification de la désactivation complète d'un article dans l'automate "GestionStatutArticle".
+        <br />
+        <br />
+        Amélioration du calcul de stock par élément des nomenclatures.
+        <br />
+        <br />
+        Correction de l'affichage des clients déjà mappés en mode BtoB lorsqu'il y a un filtre de date sur les commandes.
+        <br />
+        <br />
+        Ajout de paramètres permettant de définir quels types d'adresse mail doivent être acceptés pour l'identification des comptes PrestaShop lors du transfert des clients Sage.
+        <br />
+        <br />
+        Ajout d'un verrouillage lors de l'import des statistiques et informations libres afin d'éviter la création de doublons lors du traitement parallèle.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">12/05/2015 Mise à jour 16177.2.10.23 :</span>
+        <br />
+		Correction insertion des bons de réductions lorsque le document est saisi en HT et que l'article Sage utilisé pour la saisie de la ligne possède de la TVA.
+        <br />
+        <br />
+        Correction sur la gestion du module "AEC_CustomerInfo" et ajout d'une option d'activation manuelle du module.
+        <br />
+        <br />
+        Correction de l'affichage du délai d'attente pour le script article.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">11/05/2015 Mise à jour 16177.2.10.22 :</span>
+        <br />
+        Ajout de la possibilité de supprimer :
+        <br />
+        - les liens avec les catégories tarifaires pour les groupes de client.
+        <br />
+        - les liens avec les caractéristiques pour les différents types d'informations article.
+        <br />
+        <br />
+        Ajout d'un accès à la gestion des catégories comptables par pays dans les informations de document Sage.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">07/05/2015 Mise à jour 16177.2.10.21 :</span>
+        <br />
+        Ajout de paramètres permettant d'appeler un script après le traitement des tarifs d'un article.
+        <br />
+        Gère l'identification du produit et un timeout pour la durée du script.
+        <br />
+        <br />
+        Ajout d'une fonction de contrôle et de nettoyage des numéros APE/NAF lors du transfert de client Sage vers PrestaShop.
+        <br />
+        <br />
+        Mise en option de l'envoi de la quantité dans l'UPC des déclinaisons pour les conditionnements.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">06/05/2015 Mise à jour 16177.2.10.20 :</span>
+        <br />
+        Ajout d'une option permettant d'identifier les méthodes de paiement PrestaShop à partir d'un libellé partiel.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">05/05/2015 Mise à jour 16177.2.10.19 :</span>
+        <br />
+        Modification de la gestion de la valeur de quantité insérée dans l'UPC des déclinaisons pour les articles en conditionnement.
+        <br />
+        <br />
+        Redéfinition des modes de remise "Cumulée" et "Cascade" en "Cumulée avec catégorie/famille" et "Cascade avec catégorie/famille".
+        <br />
+        Ajout des modes de remise "Cumulée" et "Cascade", excluant les remises définies par catégorie tarifaire/famille.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">24/04/2015 Mise à jour 16177.2.10.18 :</span>
+        <br />
+        Ajout d'une option permettant de supprimer automatiquement les valeurs des caractéristiques lorsque l'information Sage est vide ou nulle.
+        <br />
+        <br />
+        Amélioration de la gestion de la date de modification lors de l'import des valeurs des statistiques et informations libres articles.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">22/04/2015 Mise à jour 16177.2.10.17 :</span>
+        <br />
+        Ajout d'une option de remplacement des fichiers en fonction de la date et de la taille sur l'import images.
+        <br />
+        <br />
+        Ajout d'une option de suppression des images dont le fichier source n'existe plus, la suppression s'effectue avant l'import.
+        <br />
+        <br />
+        Ajout d'un contrôle empêchant de déplacer un catalogue dans un ses enfants.
+        <br />
+        <br />
+        Amélioration du système d'ajout manuel d'images.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">17/04/2015 Mise à jour 16177.2.10.16 :</span>
+        <br />
+        Amélioration des performances sur l'import automatique des articles Sage.
+        <br />
+        <br />
+        Modification de l'activation en pack d'un article de type nomenclature commerciale/composé si celui-ci possède un conditionnement.
+        <br />
+        <br />
+        Modification de la gestion du poids sur les déclinaisons.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">14/04/2015 Mise à jour 16177.2.10.15 :</span>
+        <br />
+        Modification de la valeur par défaut de la date de disponibilité pour les produits et déclinaisons.
+        <br />
+        <br />
+        Ajout d'une option permettant le renseignement de la civilité du client PrestaShop dans le champ "Qualité" de Sage.
+        <br />
+        <br />
+        Ajout de l'actualisation automatique de la liste des clients après une synchronisation manuelle en mode BtoC.
+        <br />
+        <br />
+        Ajout d'un filtre de période sur la fonction d'historique de documents.
+        <br />
+        <br />
+        Ajout d'un filtre de date dans la recherche sur la liste des articles.
+        <br />
+        <br />
+        Ajout de la gestion de l'envoi du numéro de client Sage dans PrestaShop (nécessite le module "AEC_CustomerInfo").
+        <br />
+        Pour les clients déjà mappés l'envoi peut être réalisé via l'argument "ExportInfosClient".
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">31/03/2015 Mise à jour 16177.2.10.14 :</span>
+        <br />
+        Amélioration du temps de chargement des informations clients avant une synchronisation article.
+        <br />
+        <br />
+        Correction d'un problème de rafraîchissement de la liste des articles Sage lors d'un import manuel.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">24/03/2015 Mise à jour 16177.2.10.13 :</span>
+        <br />
+        Ajout d'un bouton permettant de recharger manuellement les descriptions dans la
+        fiche article.
+        <br />
+        <br />
+        Amélioration nettoyage des urls simplifiées.
+        <br />
+        <br />
+        Ajout nettoyage des caractères spéciaux saisissables sur les codes barres dans Sage
+        pour la compatibilité avec PrestaShop.
+        <br />
+        <br />
+        Ajout d'une option indiquant à PrestaConnect d'inclure ou non les fichiers de type
+        image lors de l'import des médias de Sage.
+        <br />
+        <br />
+        Ajout d'une option permettant de supprimer automatiquement les documents joints
+        provenant de Sage s'ils n'y sont plus référencés.
+        <br />
+        <br />
+        Correction affichage liste des pays dans les options de numérotation client en cas
+        de désactivation d'un pays dans PrestaShop.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">17/03/2015 Mise à jour 16177.2.10.12 :</span>
+        <br />
+        Ajout d'une option permettant d'envoyer les fournisseurs Sage en tant que fournisseurs
+        dans PrestaShop afin de renseigner les références fournisseurs des produits.
+        <br />
+        <br />
+        Ajout d'options indiquant à PrestaConnect d'insérer des lignes de commentaires indiquant
+        les "messages" saisis par les clients sur leur commande PrestaShop ainsi que les
+        informations complémentaires pour les adresses de livraison et de facturation. Le
+        texte saisi par le client est inséré dans le glossaire de la ligne de commentaire.
+        <br />
+        <br />
+        Correction nettoyage des caractères spéciaux sur les informations article.
+        <br />
+        <br />
+        Modification génération du .htaccess pour le module d'export en PDF des documents
+        Sage.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">09/03/2015 Mise à jour 16177.2.10.11 :</span>
+        <br />
+        Correction du changement de statut de la commande si l'option de remplacement du
+        numéro de facture est utilisée.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">09/03/2015 Mise à jour 16177.2.10.10 :</span>
+        <br />
+        Ajout de la gestion des bons de commande Sage dans l'envoi de l'historique de document
+        Sage (nécessite une mise-à-jour du module AEC_InvoiceHistory).
+        <br />
+        <br />
+        Correction sur le module d'export des informations mode de paiement.
+        <br />
+        <br />
+        Correction de l'insertion du libellé d'unité de vente dans les lignes de document
+        Sage.
+        <br />
+        <br />
+        Correction sur la fonctionnalité de passage en paiement accepté.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">27/02/2015 Mise à jour 16177.2.10.9 :</span>
+        <br />
+        Correction synchronisation des commandes si les nouveaux paramètres de création
+        de devis n'ont pas été initiliasés.
+        <br />
+        <br />
+        Correction insertion des composés de nomenclature si les poids articles sont nuls
+        dans la base de données Sage.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">26/02/2015 Mise à jour 16177.2.10.8 :</span>
+        <br />
+        Ajout d'une fonctionnalité permettant de créer un devis Sage selon le statut de
+        commande PrestaShop.
+        <br />
+        <br />
+        Ajout d'une option permettant d'associer manuellement plusieurs comptes PrestaShop
+        à un même client Sage en mode BtoB.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">23/02/2015 Mise à jour 16177.2.10.7 :</span>
+        <br />
+        Améliorations sur le module d'export d'historique de factures.
+        <br />
+        <br />
+        Correction sur le module d'export des informations collaborateur.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">11/02/2015 Mise à jour 16177.2.10.6 :</span>
+        <br />
+        Ajout de la possibilité de remplacer le numéro du département par le code ISO du
+        pays dans la numérotation du client Sage et selon les pays.
+        <br />
+        <br />
+        Ajout d'une option indiquant à PrestaConnect de remplacer le numéro de facture dans
+        PrestaShop par celui provenant de Sage lors du changement de statut de la commande.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">02/02/2015 Mise à jour 16177.2.10.5 :</span>
+        <br />
+        Ajout de la possibilité de réimporter les valeurs de Sage pour les articles existants.
+        <br />
+        <br />
+        Ajout de la possibilité d'importer les conditionnements pour tous les articles ou
+        une liste partielle d'articles.
+        <br />
+        <br />
+        Ajout de la possibilité de mettre à jour les poids des produits lors de la synchronisation
+        des stocks.
+        <br />
+        <br />
+        Ajout de la possibilité de renseigner un "espace" dans le champ "prénom" lors du
+        transfert d'un client Sage vers PrestaShop.
+        <br />
+        <br />
+        Ajout gestion de l'insertion des composés par gamme dans le bon de commande Sage
+        lors de l'utilisation d'un article en gamme de type nomenclature commerciale-composé.
+        <br />
+        <br />
+        Ajout d'un module permettant l'envoi de l'encours client Sage autorisé et utilisé
+        vers PrestaShop via l'argument "SynchroEncoursClient" (nécessite le module "AEC_Outstanding").
+        <br />
+        <br />
+        Ajout de la possibilité de renseigner la date de disponibilité en stock du produit
+        à partir d'une information libre article de Sage.
+        <br />
+        <br />
+        Ajout de la possibilité de renseigner la quantité minimale du produit à partir de
+        l'intitulé du conditionnement ou de l'unité de vente article de Sage.
+        <br />
+        <br />
+        Correction ajout d'une gamme non importée depuis la fiche article.
+        <br />
+        <br />
+        Correction fonctionnalité de conversion des énumérés de gamme en poids avec application
+        de coefficient.
+        <br />
+        <br />
+        Correction calcul du poids sur les conditionnements.
+        <br />
+        <br />
+        Correction sur l'option de récupération des numéros de téléphones pour les adresses
+        de livraison lors du transfert des clients de Sage vers PrestaShop.
+        <br />
+        <br />
+        Correction sur l'import des conditionnements et des informations libres Sage lorsque
+        l'énuméré contient une apostrophe.
+        <br />
+        <br />
+        Ajout de la suppression des caractères "¦" et "|" dans la réécriture des URL simplifiées.
+        <br />
+        <br />
+        Ajout de la possibilité de renseigner le mode de règlement de l'échéancier du bon
+        de commande Sage.
+        <br />
+        <br />
+        Amélioration des performances sur les synchronisation "Stocks" et "Stocks et Prix".
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">10/12/2014 Mise à jour 16177.2.10.4 :</span>
+        <br />
+        Ajout prise en charge des tarifs défini en devise sur les catégories tarifaires.
+        <br />
+        <br />
+        Corrections mineures sur les calculs de remises lorsque appliquées en cascade.
+        <br />
+        <br />
+        Ajout de la possibilité d'insérer la référence alphanumérique de la commande PrestaShop
+        dans le champ référence du bon de commande Sage.
+        <br />
+        <br />
+        Ajout de la possibilité de transférer les informations article "Poids Net" et "Poids
+        Brut" en tant que caractéristiques dans PrestaShop.
+        <br />
+        <br />
+        Correction sur la saisie de règlement dans Sage si l'intitulé du mode de paiement
+        PrestaShop dépasse 35 caractères.
+        <br />
+        <br />
+        Ajout d'un paramètre permettant de définir le délai d'attente du chargement de l'éditeur
+        WYSIWYG utilisé pour les descriptions articles (délai en millisecondes).
+        <br />
+        <br />
+        Correction de la détection de l'état actif/inactif par modèle dans la fonction d'envoi
+        d'e-mail lors du changement de statut de commande.
+        <br />
+        <br />
+        Modification du fonctionnement des tâches lancées par les arguments :
+        <br />
+        - SynchroStock
+        <br />
+        - SynchroStockPrice
+        <br />
+        - SynchroClient
+        <br />
+        - SynchroDocument
+        <br />
+        <br />
+        Modification de la saisie de lignes de commentaires lorsque le produit ciblé par
+        une règle OleaPromo n'est pas identifiable.
+        <br />
+        <br />
+        Ajout de la sélection automatique d'opération partielle lorsque l'utilisateur effectue
+        un filtre par catalogue ou via une recherche sur la liste des articles.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">21/11/2014 Mise à jour 16177.2.10.3 :</span>
+        <br />
+        Ajout d'une option permettant de sélectionner sur quels "Code Taxe (1 à 3)" de Sage
+        doivent être lus et écrits la TVA et l'éco-taxe.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">17/11/2014 Mise à jour 16177.2.10.2 :</span>
+        <br />
+        Ajout de la possibilité de l'envoi de l'historique de document Sage vers Prestashop
+        via l'argument "ExportFacture".
+        <br />
+        <br />
+        Correction mineure sur la synchronisation des adresses lorsque le numéro de mobile
+        a la valeur nulle en base de données.
+        <br />
+        <br />
+        Ajout d'un module de transfert des informations de collaborateur par client vers
+        Prestashop (nécessite le module AEC_Customer_Collaborateur).
+        <br />
+        <br />
+        Ajout d'un module de transfert des information de modalités de paiement par client
+        vers Prestashop (nécessite le module AEC_Customer_Payement).
+        <br />
+        <br />
+        Ajout d'un système d'affectation des articles aux catalogues en se basant sur des
+        informations libres et statistiques articles.
+        <br />
+        <br />
+        Correction du calcul du stock pour les nomenclatures/packs lorsqu'un des articles
+        ne possède pas de stock.
+        <br />
+        <br />
+        Correction des données de stock envoyées à PrestaShop faisant suite à la mise-à-jour
+        1.6.0.9.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">22/07/2014 Mise à jour 16177.2.10.1 :</span>
+        <br />
+        Refonte du système de saisie des caractéristiques dans la fiche article.
+        <br />
+        <br />
+        Ajout d'une fonctionnalité permettant de déplacer un catalogue dans l'arborescence.
+        <br />
+        <br />
+        Ajout d'une option permettant d'ouvrir les fenêtres en plein écran par défaut.
+        <br />
+        <br />
+        Correction conversion du poids de l'article lorsque différentes unités de poids
+        sont utilisées dans Sage.
+        <br />
+        <br />
+        Ajout de l'exclusion des bons de réductions si commande identifiée en tant que précommande.
+        <br />
+        <br />
+        Optimisations mineures sur la gestion des données PrestaShop lors de la synchronisation
+        des tarifs.
+        <br />
+        <br />
+        Modification du lien vers le panier de solde de précommande afin que le client arrive
+        à l'étape de sélection de l'adresse.
+        <br />
+        <br />
+        Évolution des informations disponibles pour l'envoi des mails :
+        <br />
+        - Ajout de la possibilité de séparer les informations "Address1" et "Address2"
+        <br />
+        - Ajout des informations pays, téléphone fixe et téléphone domicile
+        <br />
+        <br />
+        Évolution du module de gestion des précommandes, il est désormais possible de choisir
+        une information libre d'entête de document dans laquelle placer une valeur paramétrable
+        lorsque le règlement de solde est affecté à la commande Sage.
+        <br />
+        <br />
+        Ajout saisie de la date de facture lorsque c'est PrestaConnect qui renseigne le
+        numéro de facture dans PrestaShop.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">09/06/2014 Mise à jour 16177.2.10.0 :</span>
+        <br />
+        Refonte du système de gestion des gammes et conditionnements, les énumérés sont
+        désormais directement créés dans PrestaShop lors de l'import des articles.
+        <br />
+        <br />
+        Ajout du renseignement des champs "SIRET" et "APE" sur les clients ainsi que du
+        "numéro de TVA" sur les adresses lors du transfert des clients de Sage vers PrestaShop.
+        <br />
+        <br />
+        Correction gestion des catégories comptables par Pays.
+        <br />
+        <br />
+        Ajout du préchargement de l'éditeur de description.
+        <br />
+        <br />
+        Corrections mineures sur la synchronisation des tarifs.
+        <br />
+        <br />
+        Ajout compatibilité avec PrestaShop 1.6
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">14/05/2014 Mise à jour 1770.2.9.9 :</span>
+        <br />
+        Réorganisation et correction du mappage manuel des clients en BtoB.
+        <br />
+        <br />
+        Modification de la structure des données du module de transfert des factures comptabilisées
+        au format PDF vers l'espace client Prestashop (nécessite la mise-à-jour du module
+        AEC_InvoiceHistory).
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">29/04/2014 Mise à jour 1770.2.9.8 :</span>
+        <br />
+        Ajout d'une option indiquant à PrestaConnect de mettre à jour l'adresse de la fiche
+        client Sage à partir de l'adresse de facturation de la dernière commande synchronisée.
+        <br />
+        <br />
+        Ajout d'une option d'insertion d'une nomenclature "Article lié" en tant que packaging.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">04/04/2014 Mise à jour 1770.2.9.7 :</span>
+        <br />
+        Ajout d'un module de gestion avancée de la disponibilité de stock (nécessite l'intégration
+        d'"AEC_Stock" dans PrestaShop).
+        <br />
+        <br />
+        Ajout de la possibilité d'importer de façon automatique les valeurs des caractéristiques
+        pour les articles depuis PrestaShop via l'argument "ImportPrestashopCaracteristiqueArticle",
+        ou depuis Sage via l'argument "ImportSageStatInfolibreArticle".
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">31/03/2014 Mise à jour 1770.2.9.6 :</span>
+        <br />
+        Modification du système de chargement dans l'écran de gestion des catalogues.
+        <br />
+        <br />
+        Correction de la récupération des catalogues Sage sélectionnés dans l'import.
+        <br />
+        <br />
+        Modifications du système de synchronisation des documents joints lorsque des erreurs
+        FTP sont rencontrées.
+        <br />
+        <br />
+        Les options d'import article "Statut Actif/Inactif" et "Rattachement aux catalogues
+        parents" sont désormais enregistrées automatiquement et appliquées à l'import automatique.
+        <br />
+        <br />
+        Ajout du recalcul du numéro de document si déjà utilisé dans la gestion commerciale.
+        <br />
+        <br />
+        Ajout d'une option "Aucun" pour le paramètre stock à afficher.
+        <br />
+        <br />
+        Ajout de la réorganisation des positions et de la couverture lorsqu'il y a un conflit
+        avec des images ajoutées dans PrestaShop.
+        <br />
+        <br />
+        Correction sur la gestion de l'indicateur de mise en cache des documents joints
+        liés aux produits.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">27/02/2014 Mise à jour 1770.2.9.5 :</span>
+        <br />
+        Ajout de fonctionnalité permettant de répercuter le changement d'adresse durant
+        le processus de précommande.
+        <br />
+        <br />
+        Ajout récupération de la position dans le nom de fichier lorsque du type "Reference_Position.Extension"
+        pour une image et du type "Reference_Suffixe_Position.Extension" pour un document
+        <br />
+        <br />
+        Ajout gestion éco-taxe calculée par poids net.
+        <br />
+        Correction insertion de l'éco-taxe pour les composés de nomenclature.
+        <br />
+        <br />
+        Amélioration du chargement des données lors de la synchronisation des commandes.
+        <br />
+        <br />
+        Ajout prise en compte des valeurs nulles dans les données de stock de Sage.
+        <br />
+        <br />
+        Correction sur la récupération du catalogue principal et des catalogues secondaires
+        de PrestaShop vers PrestaConnect.
+        <br />
+        <br />
+        Amélioration de la gestion d'archivage des fichiers logs et augmentation du volume
+        d'archives conservées.
+        <br />
+        <br />
+        Correction affichage des champs "Courriel de l'administrateur du site" et "Création
+        clients / Lettrage automatique" dans la configuration.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">25/02/2014 Mise à jour 1770.2.9.4 :</span>
+        <br />
+        Conversion pour fonctionnement avec Sage 100 version I7.70.
+        <br />
+        <br />
+        Correction fonctionnalité d'alimentation de la marque et du fournisseur à partir
+        d'une information libre ou d'une statistique article.
+        <br />
+        <br />
+        Correction affectation des conditions de livraison sur les bons de commande lorsque
+        différentes entre l'adresse de livraison et le compte client.
+        <br />
+        <br />
+        Correction mineure de performance sur les synchronisations "Stocks", "Stocks et
+        prix" et "Commandes".
+        <br />
+        <br />
+        Modification des informations de montants insérées dans les mails de notifications
+        envoyés par PrestaConnect selon les modules de paiement utilisés.
+        <br />
+        <br />
+        Correction sélection de l'énuméré de conditionnement par défaut lorsque pas d'énuméré
+        principal de défini dans Sage.
+        <br />
+        <br />
+        Modification du système de gestion des règlements complémentaires pour les précommandes.
+        <br />
+        <br />
+        Modification du système de gestion des gratuits avec le module "OleaPromo".
+        <br />
+        <br />
+        Correction affichage des images sur les gammes si système avancé de stockage en
+        local.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">05/02/2014 Mise à jour 17.2.9.3 :</span>
+        <br />
+        Ajout de la possibilité de définir des règles d'importation pour les documents.
+        <br />
+        <br />
+        Correction mineure de la sélection automatique des catalogues enfants dans l'import
+        depuis Sage.
+        <br />
+        <br />
+        Correction du calcul de la position lors de l'ajout de catégorie dans Prestashop.
+        <br />
+        <br />
+        Ajout de la régénération de l'arborescence des catégories dans Prestashop lors de
+        l'ajout de catalogues (nécessite AEC_CategoryTree.php).
+        <br />
+        <br />
+        Correction du filtrage des catalogues à synchroniser lorsque synchronisation partielle
+        d'articles.
+        <br />
+        <br />
+        Correction contrôle d'existence du catalogue dans Prestashop avant envoi nouveau
+        produit.
+        <br />
+        <br />
+        Ajout gestion de la saisie de bon de commande pour les comptes clients Sage utilisant
+        une devise.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">07/01/2014 Mise à jour 17.2.9.2 :</span>
+        <br />
+        Ajout d'un module de gestion des précommandes.
+        <br />
+        <br />
+        Amélioration de la compatibilité des données avec les lecteurs d'écrans (accessibilité).
+        <br />
+        <br />
+        Ajout de la gestion d'informations articles Sage dans le système de liaison avec
+        les caractéristiques Prestashop.
+        <br />
+        <br />
+        Ajout d'un module de transfert des factures comptabilisées au format PDF vers l'espace
+        client Prestashop (nécessite l'installation du module AEC_InvoiceHistory sur votre
+        boutique).
+        <br />
+        <br />
+        Ajout d'une option permettant à Prestaconnect de supprimer les associations entre
+        les catalogues et les produits.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">28/11/2013 Mise à jour 17.2.9.1 :</span>
+        <br />
+        Ajout d'un filtre sur le statut actif/inactif sur la liste des articles, la valeur
+        par défaut du filtre est paramétrable.
+        <br />
+        <br />
+        Ajout d'une option de saisie des frais de port en ligne de document (nécessite un
+        article générique).
+        <br />
+        <br />
+        Ajout d'options de saisie d'informations complémentaires en tant que commentaires
+        en début de document.
+        <br />
+        <br />
+        Ajout d'une option de saisie automatique d'un packaging produit défini via une nomenclature
+        de type "Article lié" et attribué via une information libre.
+        <br />
+        <br />
+        Ajout d'une option permettant l'écriture dans un fichier ".csv" de la liste des
+        comptes créés lors du transfert des comptes clients Sage vers Prestashop.
+        <br />
+        Ajout d'options de renseignement des champs "Nom" et "Prénom" lors du transfert
+        des comptes clients Sage vers Prestashop.
+        <br />
+        <br />
+        Le paramètre de prise en compte des commandes Prestashop à partir d'une date est
+        désormais également appliqué à la recherche des documents dans Sage.
+        <br />
+        <br />
+        Ajout du remplacement des caractères "¼", "½" et "¾" dans la réécriture d'URL simplifiée.
+        <br />
+        <br />
+        Amélioration des performances sur les imports images et documents depuis Prestashop.
+        <br />
+        <br />
+        Correction détection article supprimé de Sage sur les synchronisations "Stock" et
+        "Stock et prix".
+        <br />
+        <br />
+        Ajout du filtrage des catalogues lors d'une synchronisation partielle d'articles
+        ou depuis une fiche article.
+        <br />
+        <br />
+        Ajout de l'affichage de la référence et de l'information "Est un pack" dans la fiche
+        article ainsi que d'un champ permettant de modifier le code barre EAN.
+        <br />
+        <br />
+        Ajout dans les outils de contrôles d'une fonctionnalité de vérification des URL
+        simplifiées.
+        <br />
+        <br />
+        Ajout option de synchronisation des positions et légendes pour les images déjà transférées
+        dans Prestashop.
+        <br />
+        Extension de la possibilité de récupérer des images et documents se trouvant sur
+        des répertoires réseaux.
+        <br />
+        Ajout d'une synchronisation indépendante des images et documents.
+        <br />
+        <br />
+        Ajout d'une option sur l'importation des articles permettant de définir les catalogues
+        parents de ceux cibles en tant que catalogues secondaires.
+        <br />
+        <br />
+        Amélioration de la synchronisation des nouveaux comptes clients.
+        <br />
+        <br />
+        Ajout possibilité de passer sur un système de stockage avancé des fichiers locaux.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">21/10/2013 Mise à jour 17.2.9.0 :</span>
+        <br />
+        Ajout gestion des nouveaux serveurs de licences.
+        <br />
+        <br />
+        Correction gestion éco-taxe lorsque le tarif est défini en TTC dans Sage.
+        <br />
+        Correction détection modification des descriptions articles.
+        <br />
+        <br />
+        Ajout gestion d'articles gratuits en relation avec le module OleaPromo.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">15/10/2013 Mise à jour 17.2.8.26 :</span>
+        <br />
+        Ajout fonctionnalités de gestion des conditionnements Sage en tant que déclinaisons
+        dans Prestashop :
+        <br />
+        - Activation facultative de la gestion des conditionnements
+        <br />
+        - Import du type de conditionnement et des énumérés lors de l'import depuis Sage
+        <br />
+        - Possibilité d'importer manuellement les énumérés de conditionnements manquants
+        par article
+        <br />
+        - Gestion des énumérés de conditionnements dans la fiche article
+        <br />
+        <br />
+        Ajout option d'envoi du stock Sage pour les articles en contremarque
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">07/10/2013 Mise à jour 17.2.8.25 :</span>
+        <br />
+        Ajout fonctionnalités d'interaction avec le module Prestashop "AECCustomerFeature"
+        :
+        <br />
+        - Gestion des champs statistiques client
+        <br />
+        - Gestion des informations libres client
+        <br />
+        - Renseignement des champs dans Sage lors de la création d'un nouveau compte
+        <br />
+        - Renseignement des caractéristiques client lors du transfert d'un compte Sage vers
+        Prestashop
+        <br />
+        - Mise-à-jour des caractéristiques client de Prestashop depuis Sage via l'argument
+        "ImportSageStatInfolibreClient"
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">27/09/2013 Mise à jour 17.2.8.24 :</span>
+        <br />
+        Ajout gestion des images au format PNG.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">26/09/2013 Mise à jour 17.2.8.23 :</span>
+        <br />
+        Ajout fonctionnalité de remplacement des données texte importés depuis les informations
+        libres et les statistiques articles de Sage.
+        <br />
+        Ajout options de renseignement automatique de la marque et du fournisseur du produit
+        à partir d'une statistique ou d'une information libre article.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">13/09/2013 Mise à jour 17.2.8.22 :</span>
+        <br />
+        Correction lecture des informations libres depuis Sage si le nom contient un espace.
+        <br />
+        Ajout prise en charge de l'éco-taxe par famille.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">03/09/2013 Mise à jour 17.2.8.21 :</span>
+        <br />
+        Correction système d'archivage des fichiers log.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">16/08/2013 Mise à jour 17.2.8.20 :</span>
+        <br />
+        Ajout de la régénération du cache Prestashop lors d'ajout/modification/suppression
+        de catalogues (nécessite Alternetis_ClearSmartyCache.php ou AEC_ClearCache.php).
+        <br />
+        <br />
+        Ajout d'une option permettant la mise-à-jour automatique de l'index Prestashop lors
+        de l'ajout des nouveaux produits.
+        <br />
+        <br />
+        Correction d'un problème sur la synchronisation des articles lorsque présence d'articles
+        en nomenclatures/pack.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">12/08/2013 Mise à jour 17.2.8.19 :</span>
+        <br />
+        Ajout d'une fonctionnalité d'import des documents médias de Sage :
+        <br />
+        - Manuellement via le bouton "Importer les médias de Sage" dans les options d'import
+        <br />
+        - Automatiquement via l'argument "ImportSageMedia"
+        <br />
+        <br />
+        Ajout de la possibilité en BtoC de synchroniser la totalité des comptes clients
+        ou seuls ceux ayant passé commande.
+        <br />
+        Ajout d'une option de synchronisation du groupe du client sur PrestaShop avec sa
+        catégorie tarifaire Sage via l'argument "SynchroGroupCatTarif".
+        <br />
+        <br />
+        Ajout de la réinitialisation des images et documents lorsque l'utilisateur valide
+        la recréation d'un article.
+        <br />
+        <br />
+        Ajout d'une fonctionnalité permettant de renseigner le poids des déclinaisons par
+        conversion de l'énuméré et application d'un coefficient via une information libre.
+        <br />
+        <br />
+        Ajout de la gestion des statistiques articles dans le système de liaison avec les
+        caractéristiques Prestashop.
+        <br />
+        <br />
+        Évolution du système de numérotation des comptes clients dans Sage :
+        <br />
+        - Ajout d'éléments disponibles : Nom et n° département
+        <br />
+        - Ajout personnalisation de l'ordre des éléments
+        <br />
+        - Ajout possibilité de surcharger le numéro de compteur
+        <br />
+        <br />
+        Ajout modification du statut de commande Prestashop directement après transfert
+        dans Sage.
+        <br />
+        <br />
+        Ajout insertion automatique du nom de fichier source lors de l'import des images
+        depuis Prestashop.
+        <br />
+        <br />
+        Modification lecture de la référence et du code barre par énuméré de gamme dans
+        Sage.
+        <br />
+        <br />
+        Correction import d'images depuis Prestashop si fichier inexistant sur le FTP.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">15/07/2013 Mise à jour 17.2.8.18 :</span>
+        <br />
+        Ajout gestion de la redirection pour les articles désactivés (version PrestaShop
+        1.5.3 ou supérieure uniquement).
+        <br />
+        Ajout de la gestion des articles supprimés de Sage via l'argument "GestionStatutArticle".
+        <br />
+        Ajout d'un paramètre permettant d'ignorer les clients et commandes enregistrés avant
+        une certaine date.
+        <br />
+        <br />
+        Amélioration des performances d'affichage des listes d'articles.
+        <br />
+        Amélioration de la sélection automatique des catalogues Sage pour l'import et ajout
+        d'un paramètre de sélection des catalogues enfants.
+        <br />
+        Mise en option de l'affichage des articles déjà importés dans l'import depuis Sage.
+        <br />
+        Ajout d'un filtre pour l'import depuis Sage sur les champs désignation, référence
+        et code barre.
+        <br />
+        <br />
+        Correction détection des modifications sur la fenêtre article.
+        <br />
+        Correction récupération de certains champs dates depuis PrestaShop.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">03/07/2013 Mise à jour 17.2.8.17 :</span>
+        <br />
+        Correction synchronisation des gammes de type de coloris.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">02/07/2013 Mise à jour 17.2.8.16 :</span>
+        <br />
+        Correction insertion des composés de nomenclature dans les bons de commande Sage.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">27/06/2013 Mise à jour 17.2.8.15 :</span>
+        <br />
+        Correction synchronisation du prix de base par catégorie tarifaire si présence de
+        remises quantitatives sur l'article et que le premier palier ne possède pas de remise.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">18/06/2013 Mise à jour 17.2.8.14 :</span>
+        <br />
+        Ajout d'une fonctionnalité de synchronisation des paiements enregistrés après le
+        transfert de la commande dans Sage via l'argument "SynchronisationPaiementDiffere".
+        <br />
+        <br />
+        Ajout du filtrage de caractères supplémentaires dans la réécriture d'URL.
+        <br />
+        <br />
+        Correction synchronisation des prix gérés avec un coefficient.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">11/06/2013 Mise à jour 17.2.8.13 :</span>
+        <br />
+        Modification gestion du lancement du programme avec arguments pour exécution des
+        tâches planifiées.
+        <br />
+        Correction détection suppression Produit sur Prestashop
+        <br />
+        <br />
+        Ajout gestion d'articles de remplacements en cas de donnée non mappée ou supprimée.
+        <br />
+        Modification du système de gestion des règlements pour distinction des paiements
+        multiples.
+        <br />
+        <br />
+        Ajout d'options pour l'importation des articles depuis Sage.
+        <br />
+        Ajout de paramètres pour l'enregistrement des dossiers d'import d'images et de documents.
+        <br />
+        <br />
+        Ajout de fonctionnalités d'import automatique :
+        <br />
+        - Import des catalogues Sage via l'argument "ImportSageCatalogue"
+        <br />
+        - Import des articles Sage via l'argument "ImportSageArticle"
+        <br />
+        - Import des images du dossier d'import via l'argument "ImportImage"
+        <br />
+        - Import des documents joints du dossier d'import via l'argument "ImportDocument"
+        <br />
+        - Regroupement de ces imports via l'argument "ImportSageComplet"
+        <br />
+        <br />
+        Ajout outil de contrôle de présence des articles dans Prestashop.
+        <br />
+        Intégration outil de nettoyage des images produits pour lesquelles les fichiers
+        ne se trouvent plus sur le serveur.
+        <br />
+        <br />
+        Ajout d'une fonctionnalité de gestion automatique du statut "Actif / Inactif" des
+        articles selon les paramètres d'affichage des articles "Sommeil" et "Publié sur
+        le site" via l'argument "GestionStatutArticle".
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">22/05/2013 Mise à jour 17.2.8.12 :</span>
+        <br />
+        Ajout système de liaison entre les informations libres Sage et les caractéristiques
+        Prestashop.
+        <br />
+        Ajout système de synchronisation partielle des articles, le filtrage concerne les
+        données : articles, énumérés de gamme, stocks et prix.
+        <br />
+        Ajout import dans Prestaconnect des valeurs des informations libres pour les articles.
+        <br />
+        <br />
+        Correction import des documents joints.
+        <br />
+        Gestion de la suppression des éléments dans Prestashop lors de la suppression d'un
+        document joint pour un article.
+        <br />
+        Correction suppression d'image dans Prestashop si nouveau système de stockage utilisé
+        dans Prestashop.
+        <br />
+        Modification système de génération des images selon les types et tailles définis
+        dans Prestashop.
+        <br />
+        Correction détection suppression Produit sur Prestashop
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">17/05/2013 Mise à jour 17.2.8.11 :</span>
+        <br />
+        Ajout de la possibilité de définir un statut Prestashop pour la commande et d'envoyer
+        un mail au client lorsqu'elle a été transformée en "facture comptabilisée" dans
+        Sage.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">06/05/2013 Mise à jour 17.2.8.10 :</span>
+        <br />
+        Modification du système de déclenchement de l'émission de la facture dans Prestashop
+        lors du passage en facture dans Sage.
+        <br />
+        Modification du système d'affichage du numéro de document Sage dans les listes de
+        commandes.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">25/04/2013 Mise à jour 17.2.8.9 :</span>
+        <br />
+        Modification gestion de la position des articles en ajout dans les catalogues.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">22/04/2013 Mise à jour 17.2.8.8 :</span>
+        <br />
+        Amélioration gestion des sous-dossiers de stockage des images.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">18/04/2013 Mise à jour 17.2.8.7 :</span>
+        <br />
+        Amélioration gestion du parallélisme sur les synchronisations.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">17/04/2013 Mise à jour 17.2.8.6 :</span>
+        <br />
+        Correction sur la gestion des niveaux pour l'import des catalogues depuis Prestashop
+        1.5.
+        <br />
+        Améliorations d'ergonomie sur les listes de catalogues.
+        <br />
+        Modification sur l'import des articles, l'import peut s'effectuer même si la catalogue
+        Sage n'a pas été importé.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">10/04/2013 Mise à jour 17.2.8.5 :</span>
+        <br />
+        Ajout de la gestion des différentes méthodes de stockage des images de Prestashop.
+        <br />
+        La méthode de stockage s'applique sur l'envoi des nouvelles images et sur leur récupération
+        de Prestashop vers PrestaConnect.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">09/04/2013 Mise à jour 17.2.8.4 :</span>
+        <br />
+        Ajout gestion lecture des modules de règlements pour Prestashop 1.5.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">04/04/2013 Mise à jour 17.2.8.3 :</span>
+        <br />
+        Correction importation des images depuis Sage.
+        <br />
+        Correction mise-à-jour statut de commande Prestashop.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">29/03/2013 Mise à jour 17.2.8.2 :</span>
+        <br />
+        Correction valeur par défaut des prix spécifiques dans Prestashop lorsque pas de
+        remises.
+        <br />
+        Modification gestion état de synchronisation dans la liste des articles.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">21/03/2013 Mise à jour 17.2.8.1 :</span>
+        <br />
+        Modification gestion du prix unitaire net dans les commandes Sage par rapport aux
+        éléments déjà calculés dans Prestashop.
+        <br />
+        Correction d'un problème d'insertion de remise à 0 dans les prix spécifiques.
+        <br />
+        Ajout possibilité de modification des états d'activation et de synchronisation depuis
+        la liste des articles sur la sélection affichée.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">27/02/2013 Mise à jour 17.2.8.0 :</span>
+        <br />
+        Évolution du transfert des clients Sage vers Prestashop.
+        <br />
+        Les différents paramètres de gestion possible sont accessibles dans l'écran de configuration
+        "Client"-"Tranfert client".
+        <br />
+        Le transfert peut-être effectué automatiquement via le paramètre "TransfertSageClient".
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">04/02/2013 Mise à jour 17.2.7.6 :</span>
+        <br />
+        Ajout possibilité de suppression du catalogue Prestashop à condition que celui-ci
+        n'ait pas de sous-catalogue et ne contienne pas d'article.
+        <br />
+        <br />
+		<hr />
+        <span style="font-weight: bold;">30/01/2013 Mise à jour 17.2.7.5 :</span>
+        <br />
+        Correction d'un problème de chargement des catalogues.
+        <br />
+        Ajout d'une demande de validation des imports catalogue et article depuis Sage.
+        <br />
+        Correction possibilité de suppression du catalogue dans PrestaConnect si celui-ci
+        n'existe plus dans PrestaShop.
+        <br />
+        Correction identification du catalogue parent lors de l'import depuis Sage.
+        <br />
+        <br />
+		<hr />
+        <span style="font-weight: bold;">11/01/2013 Mise à jour 17.2.7.4 :</span>
+        <br />
+        Correction lecture de l'historique des statuts de la commande Prestashop avant mise-à-jour
+        automatique du statut selon le niveau de document Sage.
+        <br />
+        Correction définition de la déclinaison par défaut.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">04/12/2012 Mise à jour 17.2.7.3 :</span>
+        <br />
+        La synchronisation des stocks peut maintenant s'effectuer de façon automatique via
+        le paramètre "SynchroStock".
+        <br />
+        Correction sur la recherche de compte client Sage pour le transfert vers Prestashop.
+        <br />
+        Correction filtrage des transporteurs Prestashop "supprimés" ou désactivés.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">20/11/2012 Mise à jour 17.2.7.2 :</span>
+        <br />
+        Évolution de la gestion des catalogues, le lien entre le catalogue dans PrestaConnect
+        et le catalogue dans Sage est désormais facultatif.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">12/11/2012 Mise à jour 17.2.7.1 :</span>
+        <br />
+        Correction synchronisation des énumérés liés à la deuxième gamme de l'article lors
+        d'une synchronisation mono-article.
+        <br />
+        <br />
+        <hr />
+        <span style="font-weight: bold;">09/11/2012 Mise à jour 17.2.7.0 :</span>
+        <br />
+        <span style="font-weight: bold;">Évolutions majeures</span>
+        <br />
+        Évolution des systèmes de gestion des catalogues et d'import depuis Sage.
+        <br />
+        Séparation des synchronisations des gammes et des énumérés de gammes.
+        <br />
+        Ajout outil de création d'un compte client Prestashop à partir d'un client Sage
+        avec génération aléatoire du mot de passe et envoi d'un mail paramétrable à l'adresse
+        mail du compte.
+        <br />
+        Ajout option de définition de l'emplacement de stockage des images articles et catalogues.
+        <br />
+        Ajout option d'évolution du statut de commande vers "Paiement accepté".
+        <br />
+        Ajout option de relance des commandes impayées et d'annulation automatique.
+        <br />
+        Ajout option de définition de l'intitulé d'adresse de livraison dans Sage.
+        <br />
+        Ajout option de centralisation des commandes et adresses de livraisons vers un compte
+        client Sage générique.
+        <br />
+        Ajout synchronisation mono article.
+        <br />
+        <br />
+        <span style="font-weight: bold;">Interface</span>
+        <br />
+        Ajout possibilité de rafraîchissement de la liste des dernières commandes.
+        <br />
+        Déplacement de l'accès aux commandes de synchronisation article.
+        <br />
+        <br />
+        <span style="font-weight: bold;">Évolutions mineures</span>
+        <br />
+        Ajout filtrage des clients Prestashop seuls ceux ayant passé commande sont synchronisés.
+        <br />
+        Ajout d'une alerte si la gamme par défaut n'a pas été définie lors de l'enregistrement
+        de la fiche article.
+        <br />
+        Ajout d'un filtrage complémentaire dans l'Url Rewriting.
+        <br />
+        Stabilité de l'envoi des images sur le ftp accrue.
+        <br />
+        Ajout suppression de l'image Prestashop lors de la suppression d'une image article
+        dans Prestaconnect.
+        <br />
+        Ajout système de recherche de compte client Sage en mode BtoB.
+        <br />
+        Ajout filtrage des adresses de livraisons, seules les adresses actives dans Prestashop
+        ou utilisées dans une commande sont synchronisées.
+        <br />
+        Gestion du type HT/TTC sur les lignes Sage en fonction du type de la catégorie tarifaire
+        définie en paramètre.
+        <br />
+        Ajout possibilité de synchroniser uniquement les stocks articles.
+        <br />
+        <br />
+        <span style="font-weight: bold;">Corrections</span>
+        <br />
+        Correction initialisation case à cocher "Coloris" lorsque la gamme n'a pas été importée.
+        <br />
+        Correction filtrage des gammes Sage sur le type de gamme "Produit".
+        <br />
+        Correction lecture fiche article si "En sommeil" dans Sage.
+        <br />
+        Correction lecture du poids de l'article dans Sage lors de la synchronisation.
+        <br />
+        Correction création du lien entre les énumérés de gammes et les déclinaisons articles
+        dans Prestashop.
+        <br />
+        Correction attribution des déclinaisons lors d'un import article Sage lorsque celui-ci
+        utilise 2 gammes.
+        <br />
+        Correction de l'identification de la référence article dans l'import d'images lors
+        celle-ci contient des caractères spéciaux.
+        <br />
+        Correction filtrage des transporteurs Prestashop selon le statut actif.
+        <br />
+        Correction de l'application dans Prestashop des niveaux de quantité pour lesquels
+        il n'y a pas de remise de définie dans Sage.
+        <br />
+        Correction application des remises au prix unitaire dans les lignes de documents
+        Sage.
+        <br />
+        Correction initialisation des champs de saisi des modèles de mail.
+        <br />
+        Correction sur la synchronisation des tarifs spécifiques par gamme.
+        <br />
+        <br />
+        <hr />
+        31/05/2012 Mise à jour 17.2.6.3 :
+        <br />
+        Correction récupération du taux de taxe du transporteur Prestashop pour calcul des
+        frais de ports dans Sage.
+        <br />
+        Correction import des catalogues depuis Sage.
+        <br />
+        Ajout de champs identifiants pour l'import des images pour contrôle des images déjà
+        importées.
+        <br />
+        Ajout calcul du prochain numéro client si préfixe client Prestaconnect déjà utilisé
+        dans les numéros clients Sage.
+        <br />
+        Correction détection des adresses de livraisons Prestashop déjà existantes dans
+        Sage.
+        <br />
+        <br />
+        11/05/2012 Mise à jour 17.2.6.2 : Ajout de la possibilité de parcourir les dossiers
+        pour l'import des images article Sage.
+        <br />
+        Correction sur l'ajout d'image à un article.
+        <br />
+        Correction initialisation de l'image catalogue.
+        <br />
+        Ajout d'un contrôle supplémentaire sur l'import des images depuis Sage.
+        <br />
+        <br />
+        10/05/2012 Mise à jour 17.2.6.1 : Ajout d'une option permettant de définir la longueur
+        de la valeur numérique pour les nouveaux comptes clients synchronisés.
+        <br />
+        Mise à jour de la liste des comptes généraux clients. Tous les comptes dont la "Nature"
+        dans Sage est définie sur "Client" sont affichés.
+        <br />
+        Correction de la liste des collaborateurs, seuls ceux définis comme "Vendeur" dans
+        Sage sont désormais affichés.
+        <br />
+        <br />
+        15/03/2012 Mise à jour 17.2.6.0 : Ajout d'une nouvelle fonctionnalité permettant
+        de gérer les règlements dans Prestaconnect.
+        <br />
+        <br />
+        <hr />
+        05/03/2012 Mise à jour 17.2.5.3 : Mise à jour corrective sur la synchronisation
+        des commandes avec gammes.
+        <br />
+        <br />
+        29/02/2012 Mise à jour 17.2.5.2 : Mise à jour corrective sur la liste des articles
+        par catalogue.
+        <br />
+        <br />
+        24/02/2012 Mise à jour 17.2.5.1 : Mise à jour du "À propos de".
+        <br />
+        <br />
+        20/02/2012 Mise à jour 17.2.5.0 : Mise à jour pour fonctionnement avec Sage I7.
+        <br />
+        <br />
+        <hr />
+        20/02/2012 Mise à jour 1.2.5.0 : Mise à jour permettant de régénérer les images
+        depuis Prestashop
+        <br />
+        <br />
+        07/12/2011 Mise à jour 1.2.1.0 : Gestion des remises quantitatives en pourcentages.
+        <br />
+        Gestion des nomenclatures commerciales/composés en tant que Pack dans Prestashop.
+        <br />
+        <br />
+        02/12/2011 Mise à jour 1.2.0.0 : Amélioration de la visibilité sur les basses résolutions.
+        <br />
+        Ajout de la gestion des images pour les catalogues.
+        <br />
+        Amélioration de l'ergonomie de l'écran article.
+        <br />
+        Ajout d'options pour l'import depuis Sage pour les catalogues et les articles
+        <br />
+        Ajout du programme de mise à jour automatique de PrestaConnect.
+        <br />
+        <br />
+        <hr />
+        16/11/2011 Mise à jour 1.0.0.11 : Mise à jour permettant à PrestaConnect de remonter
+        le numéro de facture Sage en numéro de facture Prestashop.
+        <br />
+        Les factures sont maintenant unifiées.
+        <br />
+        <br />
+        09/11/2011 Mise à jour 1.0.0.10 : Correction d'un problème concernant les poids
+        des commandes.
+        <br />
+        Correction d'un problème concernant l'impression des commandes.
+        <br />
+        <br />
+        08/11/2011 Mise à jour 1.0.0.9 : Correction d'un problème permettant au préfixe
+        Client d'accepter des caractères spéciaux.
+        <br />
+        Correction d'un problème permettant de ne pas mettre de code risque sur la synchronisation
+        des clients.
+        <br />
+        Correction d'un problème permettant de ne pas mettre de périodicité sur la synchronisation
+        des clients.
+        <br />
+        <br />
+        <hr />
+        06/10/2011 Mise à jour 1.0.0.8 : Correction d'un problème sur la synchronisation
+        des stocks pour les articles gérés en gammes.
+        <br />
+        <br />
+        19/09/2011 Mise à jour 1.0.0.7 : Correction d'un problème sur la taille des codes
+        barres articles.
+        <br />
+        Sage permet un code barre article de 19 caractères.
+        <br />
+        Prestashop permet un code barre article de 13 caractères.
+        <br />
+        Si un code barre Sage est plus long que 13 caractères, celui-ci sera tronqué.
+        <br />
+        <br />
+        08/09/2011 Mise à jour 1.0.0.6 : Ajout d'une fonctionnalité d'import depuis Sage.
+        <br />
+        <br />
+        Ajout d'une fonctionnalité d'import depuis Prestashop.
+        <br />
+        <br />
+        26/08/2011 Mise à jour 1.0.0.5 : Suppression de la gestion du positionnement des
+        articles dans PrestaConnect en vue d'une amélioration du système.
+        <br />
+        La règle de la mise à jour 1.0.0.4 s'applique toujours sur la gestion de ces positionnements.
+        <br />
+        <br />
+        <hr />
+        26/08/2011 Mise à jour 1.0.0.4 : Correction concernant les positions articles et
+        catalogues
+        <br />
+        Si la position d'un article ou d'un catalogue est déjà utilisée par un autre article
+        ou catalogue, celui-ci se mettra à jour en trouvant la prochaine position disponible.
+        <br />
+        <br />
+        Ajout d'une fonctionnalité permettant de resynchroniser un catalogue, une gamme
+        ou un fournisseur supprimé(e) dans Prestashop.
+        <br />
+        <br />
+        Ajout d'une fonctionnalité n'affichant pas les catalogues dont l'option est définie
+        sur "ne pas synchroniser".
+        <br />
+        <br />
+        Correction des fonctions "Voulez-vous validez l'article en cours ?", pour les articles,
+        catalogues, gammes et fournisseurs.
+        <br />
+        <br />
+        <hr />
+        24/08/2011 Mise à jour 1.0.0.3 : Ajout d'une fonctionnalité permettant de resynchroniser
+        un article supprimé dans PrestaShop.
+        <br />
+        Ajout de la synchronisation des documents joints pour les articles.
+        <br />
+        Ajout de la gestion des licences.
+        <br />
+        <br />
+        <hr />
+        05/08/2011 Mise à jour 1.0.0.2 : Ajout d'une option permettant de ne synchroniser
+        que les stocks et les prix dans le module article.
+        <br />
+        <br />
+        Le paramètre "SynchroStockPrice" a été ajouté afin d'exécuter cette fonctionnalité
+        via une tâche planifiée.
+        <br />
+        <br />
+        <hr />
+        Prestaconnect est un logiciel de synchronisation entre Sage 100 Gestion Commerciale SQL
+        100C+ et Prestashop 1.7.2+
+    </div>
+</body>
+</html>

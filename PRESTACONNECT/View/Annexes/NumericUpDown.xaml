@@ -1,0 +1,24 @@
+﻿<UserControl
+    x:Class="PRESTACONNECT.View.NumericUpDown"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    mc:Ignorable="d" 
+    d:DesignHeight="26" d:DesignWidth="120">
+    <Grid x:Name="LayoutRoot">
+        <Grid x:Name="NumericUpDownLayoutRoot">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="13" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="12" />
+                <RowDefinition Height="12" />
+            </Grid.RowDefinitions>
+            <TextBox Name="NUDTextBox" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="2" TextAlignment="Right" PreviewKeyDown="NUDTextBox_PreviewKeyDown" PreviewKeyUp="NUDTextBox_PreviewKeyUp" Padding="1,1,15,1" TextChanged="NUDTextBox_TextChanged" />
+            <RepeatButton Name="NUDButtonUP" Grid.Column="1" Grid.Row="0" FontSize="8" FontFamily="Marlett" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="NUDButtonUP_Click">5</RepeatButton>
+            <RepeatButton Name="NUDButtonDown" Grid.Column="1" Grid.Row="1" FontSize="8"  FontFamily="Marlett" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="13" VerticalAlignment="Bottom" Click="NUDButtonDown_Click">6</RepeatButton>
+        </Grid>
+    </Grid>
+</UserControl>
